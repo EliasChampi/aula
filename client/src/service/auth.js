@@ -1,4 +1,4 @@
-import cache from "../helpers/cache"
+import cache from "../helpers/cache";
 
 import axios from "axios";
 const API_URL = "http://localhost:5000/api/auth/";
@@ -10,12 +10,12 @@ class AuthService {
       return axios
         .post(API_URL + "signin", payload)
         .then(response => {
-          cache.setItem("user",response.data);
+          cache.setItem("user", response.data);
           resolve(response.data);
         })
         .catch(err => {
-          reject(err.response.data)
-        })
+          reject(err.response.data);
+        });
     });
   }
   // logout
@@ -24,7 +24,7 @@ class AuthService {
   }
   // getCurrentUser
   getCurrentUser() {
-    return cache.getItem('user');
+    return cache.getItem("user");
   }
 }
 

@@ -1,4 +1,4 @@
-const authJwt = require("./authJwt");
+const verifyToken = require("./verifyToken");
 module.exports = {
-  authJwt
+  verifyToken
 };

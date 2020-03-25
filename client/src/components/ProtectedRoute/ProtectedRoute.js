@@ -1,7 +1,7 @@
-import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { Main } from 'layouts';
+import React from "react";
+import { Route, Redirect } from "react-router-dom";
+import PropTypes from "prop-types";
+import { Main } from "layouts";
 
 const ProtectedRoute = props => {
   const { isAuthed, component: Component, ...rest } = props;
@@ -10,13 +10,13 @@ const ProtectedRoute = props => {
       {...rest}
       render={matchProps => {
         if (isAuthed) {
-          return ( 
-          <Main>
-             <Component {...matchProps} />
-          </Main>
-          )
+          return (
+            <Main>
+              <Component {...matchProps} />
+            </Main>
+          );
         }
-        return <Redirect to="/login"/>
+        return <Redirect to="/login" />;
       }}
     />
   );

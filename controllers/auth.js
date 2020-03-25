@@ -3,7 +3,7 @@ const config = require("../config/auth");
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
-exports.signin = (req, res) => {
+function signin(req, res) {
   let Model = {};
   let image = "default_men.png";
   if (req.body.type === "apoderado") {
@@ -34,7 +34,7 @@ exports.signin = (req, res) => {
         expiresIn: 60
       });
 
-      if (req.body.type === "docente"){
+      if (req.body.type === "docente") {
         image = entity.image;
       }
       res.status(200).send({
@@ -49,4 +49,8 @@ exports.signin = (req, res) => {
     .catch(err => {
       res.status(500).send({ message: err.message });
     });
+}
+
+module.exports = {
+  signin
 };

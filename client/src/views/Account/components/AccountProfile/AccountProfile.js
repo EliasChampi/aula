@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import moment from 'moment';
 import { makeStyles } from '@material-ui/styles';
 import {
   Card,
@@ -13,7 +12,7 @@ import {
   Button,
   LinearProgress
 } from '@material-ui/core';
-import { AuthContext } from 'context/auth';
+import { AuthContext } from '../../../../context/auth';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -60,14 +59,14 @@ const AccountProfile = props => {
               color="textSecondary"
               variant="body1"
             >
-              {user.dni}
+              DNI: {user.dni}
             </Typography>
             <Typography
               className={classes.dateText}
               color="textSecondary"
               variant="body1"
             >
-              {moment().format('hh:mm A')}
+              ROL: {user.mode}
             </Typography>
           </div>
           <Avatar
@@ -76,7 +75,7 @@ const AccountProfile = props => {
           />
         </div>
         <div className={classes.progress}>
-          <Typography variant="body1">Perfil complatado: 70%</Typography>
+          <Typography variant="body1">Perfil completado: 70%</Typography>
           <LinearProgress
             value={70}
             variant="determinate"

@@ -1,15 +1,15 @@
-import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import React from "react";
+import { Route, Redirect } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const PublicRoute = props => {
   const { isAuthed, component: Component, ...rest } = props;
   return (
     <Route
       {...rest}
-      render={matchProps => (
-        !isAuthed ? <Component {...matchProps} /> : <Redirect to="/dashboard"/> 
-      )}
+      render={matchProps =>
+        !isAuthed ? <Component {...matchProps} /> : <Redirect to="/dashboard" />
+      }
     />
   );
 };

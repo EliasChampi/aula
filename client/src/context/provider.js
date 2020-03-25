@@ -1,2 +1,2 @@
-export { AuthProvider } from "./auth"
-export { ToastProvider } from "./toast"
+export { AuthProvider } from "./auth";
+export { ToastProvider } from "./toast";

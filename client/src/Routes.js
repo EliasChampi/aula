@@ -1,49 +1,38 @@
-import React,{useContext} from 'react';
-import { Switch, Redirect } from 'react-router-dom';
-import { AuthContext } from "./context/auth"
-import { ProtectedRoute,PublicRoute } from './components';
+import React, { useContext } from "react";
+import { Switch, Redirect } from "react-router-dom";
+import { AuthContext } from "./context/auth";
+import { ProtectedRoute, PublicRoute } from "./components";
 
 import {
-  Dashboard as DashboardView,
-  Student as StudentView,
+  Course as CourseView,
   Account as AccountView,
   Settings as SettingsView,
   SignIn as SignInView,
   NotFound as NotFoundView
-} from './views';
+} from "./views";
 
 const Routes = () => {
   const { isAuthed } = useContext(AuthContext);
   return (
     <Switch>
-      <Redirect
-        exact
-        from="/"
-        to="/dashboard"
-      />
+      <Redirect exact from="/" to="/dashboard" />
       <ProtectedRoute
-        component={DashboardView}
+        component={CourseView}
         exact
         isAuthed={isAuthed}
         path="/dashboard"
       />
       <ProtectedRoute
-        component={StudentView}
-        exact
-        isAuthed={isAuthed}
-        path="/users"
-      />
-      <ProtectedRoute
         component={AccountView}
         exact
         isAuthed={isAuthed}
-        path="/account"
+        path="/mis-datos"
       />
       <ProtectedRoute
         component={SettingsView}
         exact
         isAuthed={isAuthed}
-        path="/settings"
+        path="/configuracion"
       />
       <PublicRoute
         component={SignInView}
