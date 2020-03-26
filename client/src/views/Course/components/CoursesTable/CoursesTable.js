@@ -39,8 +39,7 @@ const CoursesTable = props => {
                   <TableCell>Sede</TableCell>
                   <TableCell>Curso</TableCell>
                   <TableCell>Nivel</TableCell>
-                  <TableCell>Grado</TableCell>
-                  <TableCell>Sección</TableCell>
+                  <TableCell>Grado y Sección</TableCell>
                   <TableCell>Cantidad de Estudiantes</TableCell>
                   <TableCell>Acciones</TableCell>
                 </TableRow>
@@ -48,11 +47,12 @@ const CoursesTable = props => {
               <TableBody>
                 {courses.map(item => (
                   <TableRow className={classes.tableRow} hover key={item.code}>
-                    <TableCell>{item.section.degree.cycle.branch.name}</TableCell>
+                    <TableCell>
+                      {item.section.degree.cycle.branch.name}
+                    </TableCell>
                     <TableCell>{item.course.name}</TableCell>
                     <TableCell>{item.section.degree.cycle.title}</TableCell>
-                    <TableCell>{item.section.degree.code.substr(-1)}</TableCell>
-                    <TableCell>{item.section.section_name}</TableCell>
+                    <TableCell>{item.section.degree.code.substr(-2)}</TableCell>
                     <TableCell>15</TableCell>
                     <TableCell></TableCell>
                   </TableRow>

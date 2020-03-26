@@ -23,7 +23,8 @@ const Teacher = require("./teacher.js");
 const Op = Sequelize.Op;
 const operatorsAliases = {
   $like: Op.like,
-  $not: Op.not
+  $not: Op.not,
+  $and: Op.and
 };
 
 const sequelize = new Sequelize(DB, USER, PASSWORD, {
@@ -59,7 +60,7 @@ db.OperativeTeacher.belongsTo(db.Course, {
   foreignKey: "course_code",
   targetKey: "code"
 });
-// section -operative Teacher
+// section - operative Teacher
 db.Section.hasMany(db.OperativeTeacher, {
   as: "teachers",
   foreignKey: "section_code",
@@ -102,5 +103,38 @@ db.Cycle.belongsTo(db.Branch, {
   as: "branch",
   foreignKey: "branch_code",
   targetKey: "code"
+});
+// Register - Student
+db.Student.hasMany(db.Register, {
+  as: "registers",
+  foreignKey: "student_dni",
+  sourceKey: "dni"
+});
+db.Register.belongsTo(db.Student, {
+  as: "student",
+  foreignKey: "student_dni",
+  targetKey: "dni"
+});
+// Section - Register
+db.Section.hasMany(db.Register, {
+  as: "registers",
+  foreignKey: "section_code",
+  sourceKey: "code"
+});
+db.Register.belongsTo(db.Section, {
+  as: "section",
+  foreignKey: "section_code",
+  targetKey: "code"
+});
+// Family - Student
+db.Family.belongsToMany(db.Student, {
+  through: "family_student",
+  foreignKey: "family_code",
+  sourceKey: "code"
+});
+db.Student.belongsToMany(db.Family, {
+  through: "family_student",
+  foreignKey: "student_dni",
+  sourceKey: "dni"
 });
 module.exports = db;

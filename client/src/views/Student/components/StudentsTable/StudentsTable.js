@@ -24,6 +24,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const StudentsTable = props => {
+  const { students } = props;
   const { className, courses, ...rest } = props;
   const classes = useStyles();
 
@@ -35,21 +36,29 @@ const StudentsTable = props => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Parentesco</TableCell>
                   <TableCell>DNI</TableCell>
                   <TableCell>Estudiante</TableCell>
+                  <TableCell>Año</TableCell>
+                  <TableCell>Nivel</TableCell>
+                  <TableCell>Grado y Sección</TableCell>
                   <TableCell>Estado</TableCell>
                   <TableCell>Acciones</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                <TableRow className={classes.tableRow} hover>
-                  <TableCell>Papa</TableCell>
-                  <TableCell>15481548</TableCell>
-                  <TableCell>Kate Mia Gabriel</TableCell>
-                  <TableCell>Activo</TableCell>
-                  <TableCell></TableCell>
-                </TableRow>
+                {students.map(item => (
+                  <TableRow className={classes.tableRow} hover key={item.code}>
+                    <TableCell>{item.student_dni}</TableCell>
+                    <TableCell>
+                      {`${item.student.name} ${item.student.surname} ${item.student.second_surname}`}
+                    </TableCell>
+                    <TableCell>{item.section.code.substr(0, 4)}</TableCell>
+                    <TableCell>{item.section.degree.cycle.title}</TableCell>
+                    <TableCell>{item.section.code.substr(-2)}</TableCell>
+                    <TableCell>{item.state}</TableCell>
+                    <TableCell></TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </div>
