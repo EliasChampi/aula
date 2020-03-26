@@ -9,24 +9,24 @@ module.exports = function(Sequelize, sequelize) {
       },
       section_code: {
         type: Sequelize.STRING
-        /*           references: {
-                model: Section,
-                key: "code"
-            } */
+        /*         references: {
+          model: Section,
+          key: "code"
+        } */
       },
       teacher_dni: {
         type: Sequelize.STRING
         /*         references: {
-                model: Teacher,
-                key: "dni"
-            } */
+          model: Teacher,
+          key: "dni"
+        } */
       },
       course_code: {
         type: Sequelize.STRING
-        /*        references: {
-                model: Course,
-                key: "code"
-            } */
+        /*         references: {
+          model: Course,
+          key: "code"
+        } */
       }
     },
     {

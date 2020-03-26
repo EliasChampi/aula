@@ -31,7 +31,7 @@ function signin(req, res) {
         });
       }
       var token = jwt.sign({ dni: entity.dni }, config.secret, {
-        expiresIn: 60
+        expiresIn: process.env.JWTTTL
       });
 
       if (req.body.type === "docente") {

@@ -1,3 +1,3 @@
 module.exports = {
-  year: new Date().getFullYear()
+  year: process.env.YEAR
 };

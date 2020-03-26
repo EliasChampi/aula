@@ -3,7 +3,7 @@ const router = require("./routes.js");
 module.exports = function(app) {
   app.use(
     cors({
-      origin: "http://localhost:3000"
+      origin: process.env.ORIGIN
     })
   );
   app.use(function(req, res, next) {

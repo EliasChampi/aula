@@ -23,9 +23,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const CoursesTable = props => {
+const StudentsTable = props => {
   const { className, courses, ...rest } = props;
-
   const classes = useStyles();
 
   return (
@@ -36,27 +35,21 @@ const CoursesTable = props => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Sede</TableCell>
-                  <TableCell>Curso</TableCell>
-                  <TableCell>Nivel</TableCell>
-                  <TableCell>Grado</TableCell>
-                  <TableCell>Sección</TableCell>
-                  <TableCell>Cantidad de Estudiantes</TableCell>
+                  <TableCell>Parentesco</TableCell>
+                  <TableCell>DNI</TableCell>
+                  <TableCell>Estudiante</TableCell>
+                  <TableCell>Estado</TableCell>
                   <TableCell>Acciones</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {courses.map(item => (
-                  <TableRow className={classes.tableRow} hover key={item.code}>
-                    <TableCell>{item.section.degree.cycle.branch.name}</TableCell>
-                    <TableCell>{item.course.name}</TableCell>
-                    <TableCell>{item.section.degree.cycle.title}</TableCell>
-                    <TableCell>{item.section.degree.code.substr(-1)}</TableCell>
-                    <TableCell>{item.section.section_name}</TableCell>
-                    <TableCell>15</TableCell>
-                    <TableCell></TableCell>
-                  </TableRow>
-                ))}
+                <TableRow className={classes.tableRow} hover>
+                  <TableCell>Papa</TableCell>
+                  <TableCell>15481548</TableCell>
+                  <TableCell>Kate Mia Gabriel</TableCell>
+                  <TableCell>Activo</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
               </TableBody>
             </Table>
           </div>
@@ -66,9 +59,9 @@ const CoursesTable = props => {
   );
 };
 
-CoursesTable.propTypes = {
+StudentsTable.propTypes = {
   className: PropTypes.string,
-  courses: PropTypes.array.isRequired
+  students: PropTypes.array.isRequired
 };
 
-export default CoursesTable;
+export default StudentsTable;

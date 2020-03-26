@@ -9,9 +9,9 @@ module.exports = function(Sequelize, sequelize) {
       title: {
         type: Sequelize.STRING
       },
-      from_date: {
+      /*       from_date: {
         type: Sequelize.DATE
-      },
+      }, */
       branch_code: {
         type: Sequelize.INTEGER
         /*             references: {

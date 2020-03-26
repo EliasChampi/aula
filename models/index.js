@@ -48,10 +48,59 @@ db.Register = Register(Sequelize, sequelize);
 db.Section = Section(Sequelize, sequelize);
 db.Student = Student(Sequelize, sequelize);
 //endModels
-
-//asociations
+// course - operative Teacher
+db.Course.hasMany(db.OperativeTeacher, {
+  as: "teachers",
+  foreignKey: "course_code",
+  sourceKey: "code"
+});
 db.OperativeTeacher.belongsTo(db.Course, {
-  as: "courses",
-  foreignKey: "course_code"
+  as: "course",
+  foreignKey: "course_code",
+  targetKey: "code"
+});
+// section -operative Teacher
+db.Section.hasMany(db.OperativeTeacher, {
+  as: "teachers",
+  foreignKey: "section_code",
+  sourceKey: "code"
+});
+db.OperativeTeacher.belongsTo(db.Section, {
+  as: "section",
+  foreignKey: "section_code",
+  targetKey: "code"
+});
+// degree - section
+db.Degree.hasMany(db.Section, {
+  as: "sections",
+  foreignKey: "degree_code",
+  sourceKey: "code"
+});
+db.Section.belongsTo(db.Degree, {
+  as: "degree",
+  foreignKey: "degree_code",
+  targetKey: "code"
+});
+// cycle - degree
+db.Cycle.hasMany(db.Degree, {
+  as: "degrees",
+  foreignKey: "cycle_code",
+  sourceKey: "code"
+});
+db.Degree.belongsTo(db.Cycle, {
+  as: "cycle",
+  foreignKey: "cycle_code",
+  targetKey: "code"
+});
+// branch - cycle
+db.Branch.hasMany(db.Cycle, {
+  as: "cycles",
+  foreignKey: "branch_code",
+  sourceKey: "code"
+});
+db.Cycle.belongsTo(db.Branch, {
+  as: "branch",
+  foreignKey: "branch_code",
+  targetKey: "code"
 });
 module.exports = db;

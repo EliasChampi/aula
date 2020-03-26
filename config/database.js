@@ -1,8 +1,8 @@
 module.exports = {
   HOST: "localhost",
-  USER: "postgres",
-  PASSWORD: "root",
-  DB: "test",
+  USER: process.env.DBUSER,
+  PASSWORD: process.env.DBPASS,
+  DB: process.env.DBNAME,
   dialect: "postgres",
   pool: {
     max: 5,

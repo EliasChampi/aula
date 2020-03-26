@@ -1,5 +1,12 @@
-const { OperativeTeacher, Course } = require("../models");
-const { year } = require("../config/utils.js");
+const {
+  OperativeTeacher,
+  Course,
+  Section,
+  Degree,
+  Cycle,
+  Branch
+} = require("../models");
+const { year } = require("../config/utils");
 async function fetchByTeacher(req, res) {
   try {
     const values = await OperativeTeacher.findAll({
@@ -12,7 +19,29 @@ async function fetchByTeacher(req, res) {
       include: [
         {
           model: Course,
-          as: "courses"
+          as: "course"
+        },
+        {
+          model: Section,
+          as: "section",
+          include: [
+            {
+              model: Degree,
+              as: "degree",
+              include: [
+                {
+                  model: Cycle,
+                  as: "cycle",
+                  include: [
+                    {
+                      model: Branch,
+                      as: "branch"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
     });

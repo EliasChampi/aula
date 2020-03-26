@@ -120,7 +120,7 @@ const SignIn = props => {
         history.push("/");
       })
       .catch(err => {
-        show(err.message, "warn");
+        show(err.message, "error");
       });
   };
 

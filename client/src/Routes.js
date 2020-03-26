@@ -8,16 +8,18 @@ import {
   Account as AccountView,
   Settings as SettingsView,
   SignIn as SignInView,
-  NotFound as NotFoundView
+  NotFound as NotFoundView,
+  Student as StudentView
 } from "./views";
 
 const Routes = () => {
-  const { isAuthed } = useContext(AuthContext);
+  const { isAuthed, user } = useContext(AuthContext);
+  const DashView = user.mode === "docente" ? CourseView : StudentView;
   return (
     <Switch>
       <Redirect exact from="/" to="/dashboard" />
       <ProtectedRoute
-        component={CourseView}
+        component={DashView}
         exact
         isAuthed={isAuthed}
         path="/dashboard"

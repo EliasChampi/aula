@@ -1,3 +1,3 @@
 module.exports = {
-  secret: "ekse-secret-key"
+  secret: process.env.KEY
 };
