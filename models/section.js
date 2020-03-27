@@ -11,10 +11,6 @@ module.exports = function(Sequelize, sequelize) {
       },
       degree_code: {
         type: Sequelize.STRING
-        /*             references: {
-                model: Degree,
-                key: "code"
-            } */
       }
     },
     {

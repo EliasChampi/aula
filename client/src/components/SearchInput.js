@@ -27,7 +27,6 @@ const useStyles = makeStyles(theme => ({
 
 const SearchInput = props => {
   const { className, onChange, style, ...rest } = props;
-
   const classes = useStyles();
 
   return (

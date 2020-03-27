@@ -9,7 +9,8 @@ import {
   Settings as SettingsView,
   SignIn as SignInView,
   NotFound as NotFoundView,
-  Student as StudentView
+  Student as StudentView,
+  BySection as BySectionView
 } from "./views";
 
 const Routes = () => {
@@ -23,6 +24,12 @@ const Routes = () => {
         exact
         isAuthed={isAuthed}
         path="/dashboard"
+      />
+      <ProtectedRoute
+        component={BySectionView}
+        exact
+        isAuthed={isAuthed}
+        path="/estudiantes-por-seccion/:section_code"
       />
       <ProtectedRoute
         component={AccountView}

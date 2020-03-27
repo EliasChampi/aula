@@ -32,15 +32,15 @@ const Notifications = props => {
     <Card {...rest} className={clsx(classes.root, className)}>
       <form>
         <CardHeader
-          subheader="Manage the notifications"
-          title="Notifications"
+          subheader="Administración de Notificaciones"
+          title="Notificationes"
         />
         <Divider />
         <CardContent>
           <Grid container spacing={6} wrap="wrap">
             <Grid className={classes.item} item md={4} sm={6} xs={12}>
               <Typography gutterBottom variant="h6">
-                Notifications
+                Notificationes
               </Typography>
               <FormControlLabel
                 control={
@@ -58,25 +58,16 @@ const Notifications = props => {
                     defaultChecked //
                   />
                 }
-                label="Push Notifications"
+                label="Notificationes push"
               />
               <FormControlLabel
                 control={<Checkbox color="primary" />}
-                label="Text Messages"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    color="primary"
-                    defaultChecked //
-                  />
-                }
-                label="Phone calls"
+                label="Mensajes Sms"
               />
             </Grid>
             <Grid className={classes.item} item md={4} sm={6} xs={12}>
               <Typography gutterBottom variant="h6">
-                Messages
+                Mensajes
               </Typography>
               <FormControlLabel
                 control={
@@ -89,7 +80,7 @@ const Notifications = props => {
               />
               <FormControlLabel
                 control={<Checkbox color="primary" />}
-                label="Push Notifications"
+                label="Notificationes push"
               />
               <FormControlLabel
                 control={
@@ -98,15 +89,15 @@ const Notifications = props => {
                     defaultChecked //
                   />
                 }
-                label="Phone calls"
+                label="Mensajes Sms"
               />
             </Grid>
           </Grid>
         </CardContent>
         <Divider />
         <CardActions>
-          <Button color="primary" variant="outlined">
-            Save
+          <Button color="primary" variant="contained">
+            Guardar
           </Button>
         </CardActions>
       </form>

@@ -1,20 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import { makeStyles } from "@material-ui/core";
 import StudentTable from "./components/StudentsTable";
 import { AuthContext } from "context/auth";
 import api from "../../service/register";
 import { ToastContext } from "context/toast";
-const useStyles = makeStyles(theme => ({
-  root: {
-    padding: theme.spacing(3)
-  },
-  content: {
-    marginTop: theme.spacing(2)
-  }
-}));
-const Student = () => {
-  const classes = useStyles();
+import { Card, CardContent, CardHeader, Divider } from "@material-ui/core";
 
+const Student = () => {
   const { user } = useContext(AuthContext);
   const { show } = useContext(ToastContext);
   const [students, setStudents] = useState([]);
@@ -30,11 +21,16 @@ const Student = () => {
       });
   }, []);
   return (
-    <div className={classes.root}>
-      <div className={classes.content}>
+    <Card>
+      <CardHeader
+        subheader="Estudiantes de las cuales soy Apoderado"
+        title="Listado de Estudiantes"
+      />
+      <Divider />
+      <CardContent>
         <StudentTable students={students} />
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 };
 export default Student;

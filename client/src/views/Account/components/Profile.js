@@ -12,7 +12,7 @@ import {
   Button,
   LinearProgress
 } from '@material-ui/core';
-import { AuthContext } from '../../../../context/auth';
+import { AuthContext } from '../../../context/auth';
 
 const useStyles = makeStyles(theme => ({
   root: {},

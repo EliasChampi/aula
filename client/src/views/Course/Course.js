@@ -1,44 +1,34 @@
 import React, { useState, useEffect, useContext } from "react";
-import { makeStyles } from "@material-ui/styles";
-import { UsersToolbar, CoursesTable } from "./components";
+import { CoursesTable } from "./components";
 import api from "../../service/course";
 import { AuthContext } from "context/auth";
 import { ToastContext } from "context/toast";
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    padding: theme.spacing(3)
-  },
-  content: {
-    marginTop: theme.spacing(2)
-  }
-}));
+import { Card, CardContent, CardHeader, Divider } from "@material-ui/core";
 
 const Course = () => {
-  const classes = useStyles();
   const { user } = useContext(AuthContext);
   const { show } = useContext(ToastContext);
   const [courses, setCourses] = useState([]);
-  
+
   useEffect(() => {
-    api.fetchByTeacher(user.dni).then(r => {
-      setCourses(r.values)
-    }).catch(err => {
-      show(err.message, "error");
-    });
-    return () => {
-      setCourses([]);
-    }; 
+    api
+      .fetchByTeacher(user.dni)
+      .then(r => {
+        setCourses(r.values);
+      })
+      .catch(err => {
+        show(err.message, "error");
+      });
   }, []);
 
-
   return (
-    <div className={classes.root}>
-      <UsersToolbar />
-      <div className={classes.content}>
+    <Card>
+      <CardHeader subheader="Listado de cursos que esta dictando en el presente año" title="Cursos y Secciónes" />
+      <Divider />
+      <CardContent>
         <CoursesTable courses={courses} />
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 };
 

@@ -47,6 +47,26 @@ async function fetchByFamily(req, res) {
   }
 }
 
+async function fetchBySection(req, res) {
+  try {
+    const values = await Register.findAll({
+      where: {
+        section_code: req.params.section_code
+      },
+      include: [
+        {
+          model: Student,
+          as: "student"
+        }
+      ]
+    });
+    return res.status(200).json({ values });
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+}
+
 module.exports = {
-  fetchByFamily
+  fetchByFamily,
+  fetchBySection
 };

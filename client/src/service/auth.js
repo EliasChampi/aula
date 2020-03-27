@@ -11,8 +11,8 @@ class AuthService {
           cache.setItem("user", response.data);
           resolve(response.data);
         })
-        .catch(err => {
-          reject(err.response.data);
+        .catch(errMessage => {
+          reject(errMessage);
         });
     });
   }

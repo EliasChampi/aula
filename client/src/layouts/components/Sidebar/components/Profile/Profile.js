@@ -16,9 +16,6 @@ const useStyles = makeStyles(theme => ({
   avatar: {
     width: 60,
     height: 60
-  },
-  name: {
-    marginTop: theme.spacing(1)
   }
 }));
 
@@ -37,10 +34,9 @@ const Profile = props => {
         src={"/images/" + user.image}
         to="/mis-datos"
       />
-      <Typography className={classes.name} variant="h4">
-        {user.name + " " + user.surname}
-      </Typography>
-      <Typography variant="h5">{user.mode}</Typography>
+      <Typography variant="h4">{user.name}</Typography>
+      <Typography variant="h5">{user.surname}</Typography>
+      <Typography variant="subtitle2">{user.mode}</Typography>
     </div>
   );
 };

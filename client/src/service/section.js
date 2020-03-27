@@ -1,11 +1,12 @@
 import request from "./request";
-class CourseSevice {
-  fetchByTeacher(dni) {
+
+class SectionService {
+  fetch(code) {
     return new Promise((resolve, reject) => {
-        request
-        .get("/courses/" + dni)
+      request
+        .get("/section/" + code)
         .then(r => {
-            resolve(r.data);
+          resolve(r.data);
         })
         .catch(errMessage => {
           reject(errMessage);
@@ -14,4 +15,4 @@ class CourseSevice {
   }
 }
 
-export default new CourseSevice();
+export default new SectionService();

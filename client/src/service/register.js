@@ -8,12 +8,20 @@ class RegisterService {
         .then(r => {
           resolve(r.data);
         })
-        .catch(r => {
-          reject(err => {
-            reject(err.response.data);
-          });
+        .catch(errMessage => {
+          reject(errMessage);
         });
     });
+  }
+
+  fetchBySection (code){
+    return new Promise((resolve, reject) => {
+      request.get("/regs_by_section/" + code).then(r => {
+        resolve(r.data);
+      }).catch(errMessage => {
+        reject(errMessage);
+      })
+    })
   }
 }
 

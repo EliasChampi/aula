@@ -31,14 +31,20 @@ request.interceptors.response.use(
     return response;
   },
   error => {
-    switch (error.response.status) {
-      case 401:
-          cache.removeItem("user");
-        break;
-      default:
-        break
+    let errData = {
+      message: "No tienes conexion a Internet"
+    };
+    if (error.response) {
+      errData = error.response.data;
+      switch (error.response.status) {
+        case 401:
+            cache.removeItem("user");
+          break;
+        default:
+          break
+      }
     }
-    return Promise.reject(error);
+    return Promise.reject(errData);
   }
 );
 

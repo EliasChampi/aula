@@ -8,7 +8,6 @@ import { Sidebar, Topbar, Footer } from "./components";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    paddingTop: 56,
     height: "100%",
     [theme.breakpoints.up("sm")]: {
       paddingTop: 64
@@ -18,6 +17,8 @@ const useStyles = makeStyles(theme => ({
     paddingLeft: 240
   },
   content: {
+    padding: theme.spacing(3),
+    marginTop: theme.spacing(2),
     height: "100%"
   }
 }));
