@@ -9,6 +9,7 @@ import {
   TableRow,
   Button
 } from "@material-ui/core";
+import { state } from "common/decorator";
 
 const StudentsTable = props => {
   const { students } = props;
@@ -36,7 +37,7 @@ const StudentsTable = props => {
               <TableCell>{item.section.code.substr(0, 4)}</TableCell>
               <TableCell>{item.section.degree.cycle.title}</TableCell>
               <TableCell>{item.section.code.substr(-2)}</TableCell>
-              <TableCell>{item.state}</TableCell>
+              <TableCell>{state[item.state]}</TableCell>
               <TableCell>
                 <Button size="small" variant="contained" color="primary">
                   Ver Tareas

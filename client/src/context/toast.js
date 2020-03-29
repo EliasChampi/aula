@@ -39,12 +39,13 @@ export const ToastProvider = ({ children }) => {
       }}
     >
       <Snackbar
+        autoHideDuration={3000}
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "center"
         }}
         open={open}
-        autoHideDuration={4000}
+        onClose={() => setOpen(false)}
       >
         <SnackbarContent
           style={{ backgroundColor: color }}

@@ -14,6 +14,12 @@ module.exports = function(Sequelize, sequelize) {
       },
       second_surname: {
         type: Sequelize.STRING
+      },
+      telephone: {
+        type: Sequelize.STRING
+      },
+      birthdate: {
+        type: Sequelize.DATE
       }
     },
     {

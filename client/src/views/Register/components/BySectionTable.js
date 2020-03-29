@@ -9,7 +9,8 @@ import {
   TableRow,
   Button
 } from "@material-ui/core";
-
+import moment from "common/moment"
+import { state } from "common/decorator"
 const BySectionTable = props => {
   const { data } = props;
 
@@ -31,9 +32,9 @@ const BySectionTable = props => {
             <TableRow hover key={item.code}>
               <TableCell>{item.student_dni}</TableCell>
               <TableCell>{`${item.student.name} ${item.student.surname} ${item.student.second_surname}`}</TableCell>
-              <TableCell>{item.state}</TableCell>
-              <TableCell>999999999</TableCell>
-              <TableCell>15 de Enero</TableCell>
+              <TableCell>{state[item.state]}</TableCell>
+              <TableCell>{item.student.telephone}</TableCell>
+              <TableCell>{moment(item.student.birthdate).format("DD [de] MMMM")}</TableCell>
               <TableCell>
                 <Button color="primary" size="small" variant="contained">
                   Notas
