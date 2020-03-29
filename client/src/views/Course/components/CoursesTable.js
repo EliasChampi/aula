@@ -41,11 +41,16 @@ const CoursesTable = props => {
                   size="small"
                   color="primary"
                   variant="contained"
-                  to={"/estudiantes-por-seccion/"+item.section_code}
+                  to={"/estudiantes-por-seccion/" + item.section_code}
                 >
                   Estudiantes
                 </Button>
-                <Button size="small" variant="contained">
+                <Button
+                  component={Link}
+                  size="small"
+                  variant="contained"
+                  to={"/unidades/" + item.code}
+                >
                   Temas
                 </Button>
               </TableCell>

@@ -28,7 +28,7 @@ const BySectionTable = props => {
         </TableHead>
         <TableBody>
           {data.map(item => (
-            <TableRow  hover key={item.code}>
+            <TableRow hover key={item.code}>
               <TableCell>{item.student_dni}</TableCell>
               <TableCell>{`${item.student.name} ${item.student.surname} ${item.student.second_surname}`}</TableCell>
               <TableCell>{item.state}</TableCell>

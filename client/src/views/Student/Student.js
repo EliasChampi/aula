@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import StudentTable from "./components/StudentsTable";
 import { AuthContext } from "context/auth";
-import api from "../../service/register";
+import api from "service/register";
 import { ToastContext } from "context/toast";
 import { Card, CardContent, CardHeader, Divider } from "@material-ui/core";
 
@@ -11,14 +11,20 @@ const Student = () => {
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
+    let mounted = true;
     api
       .fetchByFamily(user.dni)
       .then(r => {
-        setStudents(r.values);
+        if (mounted) {
+          setStudents(r.values);
+        }
       })
       .catch(err => {
         show(err.message, "error");
       });
+    return () => {
+      mounted = false;
+    };
   }, []);
   return (
     <Card>

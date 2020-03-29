@@ -3,19 +3,11 @@ import { Switch, Redirect } from "react-router-dom";
 import { AuthContext } from "./context/auth";
 import { ProtectedRoute, PublicRoute } from "./components";
 
-import {
-  Course as CourseView,
-  Account as AccountView,
-  Settings as SettingsView,
-  SignIn as SignInView,
-  NotFound as NotFoundView,
-  Student as StudentView,
-  BySection as BySectionView
-} from "./views";
+import view from "./views";
 
 const Routes = () => {
   const { isAuthed, user } = useContext(AuthContext);
-  const DashView = user.mode === "docente" ? CourseView : StudentView;
+  const DashView = user.mode === "docente" ? view.Course : view.Student;
   return (
     <Switch>
       <Redirect exact from="/" to="/dashboard" />
@@ -26,31 +18,37 @@ const Routes = () => {
         path="/dashboard"
       />
       <ProtectedRoute
-        component={BySectionView}
+        component={view.BySection}
         exact
         isAuthed={isAuthed}
         path="/estudiantes-por-seccion/:section_code"
       />
       <ProtectedRoute
-        component={AccountView}
+        component={view.LearnUnit}
+        exact
+        isAuthed={isAuthed}
+        path="/unidades/:op_code"
+      />
+      <ProtectedRoute
+        component={view.Account}
         exact
         isAuthed={isAuthed}
         path="/mis-datos"
       />
       <ProtectedRoute
-        component={SettingsView}
+        component={view.Settings}
         exact
         isAuthed={isAuthed}
         path="/configuracion"
       />
       <PublicRoute
-        component={SignInView}
+        component={view.SignIn}
         exact
         isAuthed={isAuthed}
         path="/login"
       />
       <ProtectedRoute
-        component={NotFoundView}
+        component={view.NotFound}
         exact
         isAuthed={isAuthed}
         path="/desconocido"

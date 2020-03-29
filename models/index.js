@@ -19,6 +19,7 @@ const Register = require("./register.js");
 const Section = require("./section.js");
 const Student = require("./student.js");
 const Teacher = require("./teacher.js");
+const LearnUnit = require("./learnunit.js");
 
 const Op = Sequelize.Op;
 const operatorsAliases = {
@@ -48,6 +49,7 @@ db.OperativeTeacher = OperativeTeacher(Sequelize, sequelize);
 db.Register = Register(Sequelize, sequelize);
 db.Section = Section(Sequelize, sequelize);
 db.Student = Student(Sequelize, sequelize);
+db.LearnUnit = LearnUnit(Sequelize, sequelize);
 //endModels
 // course - operative Teacher
 db.Course.hasMany(db.OperativeTeacher, {
@@ -136,5 +138,16 @@ db.Student.belongsToMany(db.Family, {
   through: "family_student",
   foreignKey: "student_dni",
   sourceKey: "dni"
+});
+// operative - learnunits
+db.OperativeTeacher.hasMany(db.LearnUnit, {
+  as: "learns",
+  foreignKey: "operative_teacher_code",
+  sourceKey: "code"
+});
+db.LearnUnit.belongsTo(db.OperativeTeacher, {
+  as: "operative",
+  foreignKey: "operative_teacher_code",
+  targetKey: "code"
 });
 module.exports = db;

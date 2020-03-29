@@ -1,9 +1,8 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-
 import { Notifications, Password } from "./components";
 
-const Settings = () => {;
+const Settings = () => {
   return (
     <Grid container spacing={4}>
       <Grid item md={7} xs={12}>

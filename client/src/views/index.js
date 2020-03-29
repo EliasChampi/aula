@@ -1,7 +1,19 @@
-export { default as Account } from './Account';
-export { default as NotFound } from './NotFound';
-export { default as Settings } from './Settings';
-export { default as SignIn } from './SignIn';
-export { default as Course } from './Course';
-export { default as Student } from './Student';
-export { default as BySection } from "./Register"
+import Account from "./Account/Account";
+import NotFound from "./NotFound/NotFound";
+import Settings from "./Settings/Settings";
+import SignIn from "./SignIn/SignIn";
+import Course from "./Course/Course";
+import Student from "./Student/Student";
+import BySection from "./Register/BySection";
+import LearnUnit from "./LearnUnit/LearnUnit";
+
+export default {
+  Account,
+  NotFound,
+  Settings,
+  SignIn,
+  Course,
+  Student,
+  BySection,
+  LearnUnit
+};

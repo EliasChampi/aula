@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import { AuthContext } from "context/auth";
 
-const AccountDetails = props => {
+const Details = props => {
   const { user } = useContext(AuthContext);
   const handleChange = event => {
     /*  setValues({
@@ -63,4 +63,4 @@ const AccountDetails = props => {
   );
 };
 
-export default AccountDetails;
+export default Details;

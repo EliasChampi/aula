@@ -6,7 +6,15 @@ class SectionService {
       request
         .get("/section/" + code)
         .then(r => {
-          resolve(r.data);
+          const res = r.data.values;
+          if (res !== null) {
+            const title = `${res.code.substr(-2)} de ${
+              res.degree.cycle.title
+            }. ${res.degree.cycle.branch.name}`;
+            resolve(title);
+          } else {
+            resolve(false);
+          }
         })
         .catch(errMessage => {
           reject(errMessage);
