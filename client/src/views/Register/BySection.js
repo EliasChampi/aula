@@ -11,19 +11,22 @@ const BySection = ({ match }) => {
   const [subtitle, setSubtitle] = useState("");
   useEffect(() => {
     let mounted = true;
-    sectionApi.fetch(match.params.section_code).then(res => {
-      if (res !== false && mounted) {
-        setSubtitle(res);
-        api
-          .fetchBySection(match.params.section_code)
-          .then(r => {
-            setRegisters(r.values);
-          })
-          .catch(err => {
-            show(err.message, "error");
-          });
-      }
-    });
+    const fetchData = () => {
+      sectionApi.fetch(match.params.section_code).then(res => {
+        if (res !== false && mounted) {
+          setSubtitle(res);
+          api
+            .fetchBySection(match.params.section_code)
+            .then(r => {
+              setRegisters(r.values);
+            })
+            .catch(err => {
+              show(err.message, "error");
+            });
+        }
+      });
+    };
+    fetchData();
     return () => {
       mounted = false;
     };

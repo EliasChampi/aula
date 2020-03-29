@@ -4,7 +4,7 @@ import cache from "../helpers/cache";
  * creating a new axios instance
  */
 const request = axios.create({
-  baseURL: "http://localhost:5000/api/",
+  baseURL: process.env.REACT_APP_API_URL,
   timeout: 100000
 });
 
@@ -38,10 +38,10 @@ request.interceptors.response.use(
       errData = error.response.data;
       switch (error.response.status) {
         case 401:
-            cache.removeItem("user");
+          cache.removeItem("user");
           break;
         default:
-          break
+          break;
       }
     }
     return Promise.reject(errData);

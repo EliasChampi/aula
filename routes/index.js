@@ -3,7 +3,7 @@ const router = require("./routes.js");
 module.exports = function(app) {
   app.use(
     cors({
-      origin: process.env.ORIGIN
+      origin: process.env.CLIURL
     })
   );
   app.use(function(req, res, next) {

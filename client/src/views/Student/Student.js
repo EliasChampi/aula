@@ -12,16 +12,19 @@ const Student = () => {
 
   useEffect(() => {
     let mounted = true;
-    api
-      .fetchByFamily(user.dni)
-      .then(r => {
-        if (mounted) {
-          setStudents(r.values);
-        }
-      })
-      .catch(err => {
-        show(err.message, "error");
-      });
+    const fetchStudents = () => {
+      api
+        .fetchByFamily(user.dni)
+        .then(r => {
+          if (mounted) {
+            setStudents(r.values);
+          }
+        })
+        .catch(err => {
+          show(err.message, "error");
+        });
+    };
+    fetchStudents();
     return () => {
       mounted = false;
     };
