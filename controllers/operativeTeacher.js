@@ -51,6 +51,13 @@ async function fetchByTeacher(req, res) {
   }
 }
 
+/* async function fetchByCodeWithRelations (res, req){
+  try {
+    const value = fetchOne()
+  } catch (error) {
+    
+  }
+} */
 module.exports = {
   fetchByTeacher
 };

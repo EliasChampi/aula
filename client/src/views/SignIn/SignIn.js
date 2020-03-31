@@ -1,7 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
-import { withRouter } from "react-router-dom";
-import PropTypes from "prop-types";
-import validate from "validate.js";
+import React, { useEffect, useContext } from "react";
 import { makeStyles } from "@material-ui/styles";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import {
@@ -17,22 +14,9 @@ import {
   FormControlLabel,
   Radio
 } from "@material-ui/core";
-import AuthService from "../../service/auth";
-import { AuthContext, ToastContext } from "../../context/consumer";
-const schema = {
-  dni: {
-    presence: { allowEmpty: false, message: "campo requerido" },
-    length: {
-      maximum: 8
-    }
-  },
-  password: {
-    presence: { allowEmpty: false, message: "campo requerido" },
-    length: {
-      maximum: 10
-    }
-  }
-};
+import AuthService from "service/auth";
+import { AuthContext, ToastContext } from "context/consumer";
+import useForm from "common/useForm";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -76,45 +60,35 @@ const SignIn = props => {
   const classes = useStyles();
   const { setUser } = useContext(AuthContext);
   const { show } = useContext(ToastContext);
-  const [formState, setFormState] = useState({
-    isValid: false,
-    values: {
-      type: "apoderado"
-    },
-    touched: {},
-    errors: {}
-  });
 
-  useEffect(() => {
-    const errors = validate(formState.values, schema);
-    setFormState(formState => ({
-      ...formState,
-      isValid: errors ? false : true,
-      errors: errors || {}
-    }));
-  }, [formState.values]);
-
-  const handleChange = event => {
-    event.persist();
-    setFormState(formState => ({
-      ...formState,
-      values: {
-        ...formState.values,
-        [event.target.name]:
-          event.target.type === "checkbox"
-            ? event.target.checked
-            : event.target.value
-      },
-      touched: {
-        ...formState.touched,
-        [event.target.name]: true
-      }
-    }));
+  const schema = {
+    dni: { value: "", error: "" },
+    password: { value: "", error: "" },
+    type: { value: "apoderado", error: "" }
   };
 
-  const handleSignIn = event => {
-    event.preventDefault();
-    AuthService.login(formState.values)
+  const validatorSchema = {
+    dni: {
+      required: true,
+      validator: {
+        func: value => value.length === 8,
+        error: "DNI debe contener 8 Caracteres"
+      }
+    },
+    password: {
+      required: true,
+      validator: {
+        func: value => value.length > 5,
+        error: "Su contraseña posee mas caracteres"
+      }
+    },
+    type: {
+      required: true
+    }
+  };
+
+  const onSubmitForm = state => {
+    AuthService.login(state)
       .then(r => {
         setUser(r);
         history.push("/");
@@ -124,8 +98,25 @@ const SignIn = props => {
       });
   };
 
-  const hasError = field =>
-    formState.touched[field] && formState.errors[field] ? true : false;
+  const delay = () => new Promise(resolve => setTimeout(resolve, 3000));
+
+  const {
+    values,
+    errors,
+    dirty,
+    handleOnChange,
+    handleOnSubmit,
+    setStateSchema,
+    disable
+  } = useForm(schema, validatorSchema, onSubmitForm);
+
+  useEffect(() => {
+    delay().then(() => {
+      setStateSchema(schema);
+    });
+  }, []);
+
+  const { dni, password, type } = values;
 
   return (
     <div className={classes.root}>
@@ -133,7 +124,7 @@ const SignIn = props => {
         <CardContent>
           <form
             className={classes.form}
-            onSubmit={handleSignIn}
+            onSubmit={handleOnSubmit}
             autoComplete="off"
           >
             <div style={{ textAlign: "center" }}>
@@ -149,8 +140,8 @@ const SignIn = props => {
               <RadioGroup
                 row
                 name="type"
-                value={formState.values.type}
-                onChange={handleChange}
+                value={type}
+                onChange={handleOnChange}
               >
                 <FormControlLabel
                   value="apoderado"
@@ -169,32 +160,29 @@ const SignIn = props => {
             <Divider />
             <TextField
               className={classes.textField}
-              error={hasError("dni")}
+              error={errors.dni && dirty.dni}
               fullWidth
-              helperText={hasError("dni") ? formState.errors.dni[0] : null}
+              helperText={errors.dni}
               label="Ingrese su DNI"
               name="dni"
-              onChange={handleChange}
-              type="text"
-              value={formState.values.dni || ""}
+              onChange={handleOnChange}
+              value={dni || ""}
             />
             <TextField
               className={classes.textField}
-              error={hasError("password")}
+              error={errors.password && dirty.password}
               fullWidth
-              helperText={
-                hasError("password") ? formState.errors.password[0] : null
-              }
+              helperText={errors.password}
               label="Contraseña"
               name="password"
-              onChange={handleChange}
+              onChange={handleOnChange}
               type="password"
-              value={formState.values.password || ""}
+              value={password || ""}
             />
             <Button
               className={classes.signInButton}
               color="primary"
-              disabled={!formState.isValid}
+              disabled={disable}
               fullWidth
               size="large"
               type="submit"
@@ -214,8 +202,4 @@ const SignIn = props => {
   );
 };
 
-SignIn.propTypes = {
-  history: PropTypes.object
-};
-
-export default withRouter(SignIn);
+export default SignIn;

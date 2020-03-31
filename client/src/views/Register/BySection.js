@@ -1,30 +1,33 @@
 import React, { useState, useEffect, useContext } from "react";
 import { BySectionTable } from "./components";
-import api from "../../service/register";
-import sectionApi from "../../service/section";
+import api from "service/register";
 import { ToastContext } from "context/toast";
-import { Card, CardContent, CardHeader, Divider } from "@material-ui/core";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+  Button
+} from "@material-ui/core";
+import Operative from "views/wrapper/Operative";
 
 const BySection = ({ match }) => {
   const { show } = useContext(ToastContext);
   const [registers, setRegisters] = useState([]);
-  const [subtitle, setSubtitle] = useState("");
+  const { op_code, section_code } = match.params;
   useEffect(() => {
     let mounted = true;
     const fetchData = () => {
-      sectionApi.fetch(match.params.section_code).then(res => {
-        if (res !== false && mounted) {
-          setSubtitle(res);
-          api
-            .fetchBySection(match.params.section_code)
-            .then(r => {
-              setRegisters(r.values);
-            })
-            .catch(err => {
-              show(err.message, "error");
-            });
-        }
-      });
+      api
+        .fetchBySection(section_code)
+        .then(r => {
+          if (mounted) {
+            setRegisters(r.values);
+          }
+        })
+        .catch(err => {
+          show(err.message);
+        });
     };
     fetchData();
     return () => {
@@ -32,14 +35,22 @@ const BySection = ({ match }) => {
     };
   }, []);
 
+  const RightButton = () => (
+    <Button variant="contained" color="primary">
+      Imprimir
+    </Button>
+  );
+
   return (
-    <Card>
-      <CardHeader subheader={subtitle} title="Listado de Estudiantes" />
-      <Divider />
-      <CardContent>
-        <BySectionTable data={registers} />
-      </CardContent>
-    </Card>
+    <Operative title="Estudiantes" RightButton={RightButton}>
+      <Card>
+        <CardHeader subheader="Listado de Estudiantes" title="Estudiantes" />
+        <Divider />
+        <CardContent>
+          <BySectionTable data={registers} />
+        </CardContent>
+      </Card>
+    </Operative>
   );
 };
 

@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PerfectScrollbar from "react-perfect-scrollbar";
-import { Link } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -12,7 +11,7 @@ import {
 } from "@material-ui/core";
 
 const CoursesTable = props => {
-  const { courses } = props;
+  const { courses, handleAction } = props;
 
   return (
     <PerfectScrollbar>
@@ -37,21 +36,19 @@ const CoursesTable = props => {
               <TableCell>15</TableCell>
               <TableCell>
                 <Button
-                  component={Link}
                   size="small"
                   color="primary"
                   variant="contained"
-                  to={"/estudiantes-por-seccion/" + item.section_code}
+                  onClick={() => handleAction("/estudiantes", item)}
                 >
                   Estudiantes
                 </Button>
                 <Button
-                  component={Link}
                   size="small"
                   variant="contained"
-                  to={"/unidades/" + item.code}
+                  onClick={() => handleAction("/unidades", item)}
                 >
-                  Temas
+                  Unidades
                 </Button>
               </TableCell>
             </TableRow>
@@ -63,7 +60,8 @@ const CoursesTable = props => {
 };
 
 CoursesTable.propTypes = {
-  courses: PropTypes.array.isRequired
+  courses: PropTypes.array.isRequired,
+  handleAction: PropTypes.func
 };
 
 export default CoursesTable;

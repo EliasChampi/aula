@@ -21,13 +21,19 @@ const Routes = () => {
         component={view.BySection}
         exact
         isAuthed={isAuthed}
-        path="/estudiantes-por-seccion/:section_code"
+        path="/estudiantes/:section_code/:op_code"
       />
       <ProtectedRoute
         component={view.LearnUnit}
         exact
         isAuthed={isAuthed}
-        path="/unidades/:op_code"
+        path="/unidades/:section_code/:op_code"
+      />
+      <ProtectedRoute
+       component={view.CreateLearn}
+       exact
+       isAuthed={isAuthed}
+       path="/crear_unidad/:section_code/:op_code"
       />
       <ProtectedRoute
         component={view.Account}

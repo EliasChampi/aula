@@ -4,8 +4,9 @@ import api from "service/course";
 import { AuthContext } from "context/auth";
 import { ToastContext } from "context/toast";
 import { Card, CardContent, CardHeader, Divider } from "@material-ui/core";
+import cache from "helpers/cache";
 
-const Course = () => {
+const Course = props => {
   const { user } = useContext(AuthContext);
   const { show } = useContext(ToastContext);
   const [courses, setCourses] = useState([]);
@@ -30,6 +31,14 @@ const Course = () => {
     };
   }, []);
 
+  const handleAction = (from, item) => {
+    const key = `op_${item.code}_sec_${item.section_code}`;
+    if (!cache.hasThis(key)) {
+      cache.setItem(key, item);
+    }
+    props.history.push(`${from}/${item.section_code}/${item.code}`);
+  }
+
   return (
     <Card>
       <CardHeader
@@ -38,7 +47,7 @@ const Course = () => {
       />
       <Divider />
       <CardContent>
-        <CoursesTable courses={courses} />
+        <CoursesTable courses={courses} handleAction={handleAction}/>
       </CardContent>
     </Card>
   );

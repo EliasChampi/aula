@@ -1,18 +1,26 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Card, CardHeader, Divider, CardContent } from "@material-ui/core";
-import api from "../../service/learnunit";
+import {
+  Card,
+  CardHeader,
+  Divider,
+  CardContent,
+  Button
+} from "@material-ui/core";
+import api from "service/learnunit";
 import { ToastContext } from "context/toast";
 import { LearnsTable } from "./components";
+import Operative from "views/wrapper/Operative";
+import { Link } from "react-router-dom";
 
 const LearnUnit = ({ match }) => {
   const [learns, setlearns] = useState([]);
   const { show } = useContext(ToastContext);
-
+  const { section_code, op_code } = match.params;
   useEffect(() => {
     let mounted = true;
     const fetchLearns = () => {
       api
-        .fetchByOperative(match.params.op_code)
+        .fetchByOperative(op_code)
         .then(r => {
           if (mounted) {
             setlearns(r.values);
@@ -28,14 +36,27 @@ const LearnUnit = ({ match }) => {
     };
   }, []);
 
+  const RightButton = () => (
+    <Button
+      component={Link}
+      variant="contained"
+      color="primary"
+      to={`/crear_unidad/${section_code}/${op_code}`}
+    >
+      Agregar
+    </Button>
+  );
+
   return (
-    <Card>
-      <CardHeader subheader="Unidades de Aprendizaje" title="Unidades" />
-      <Divider />
-      <CardContent>
-        <LearnsTable learns={learns} />
-      </CardContent>
-    </Card>
+    <Operative title="Unidades de Aprendizaje" RightButton={RightButton}>
+      <Card>
+        <CardHeader subheader="Unidades de Aprendizaje" title="Unidades" />
+        <Divider />
+        <CardContent>
+          <LearnsTable learns={learns} />
+        </CardContent>
+      </Card>
+    </Operative>
   );
 };
 export default LearnUnit;

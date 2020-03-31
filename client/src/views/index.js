@@ -6,7 +6,7 @@ import Course from "./Course/Course";
 import Student from "./Student/Student";
 import BySection from "./Register/BySection";
 import LearnUnit from "./LearnUnit/LearnUnit";
-
+import CreateLearn from "./LearnUnit/Create";
 export default {
   Account,
   NotFound,
@@ -15,5 +15,6 @@ export default {
   Course,
   Student,
   BySection,
-  LearnUnit
+  LearnUnit,
+  CreateLearn
 };
