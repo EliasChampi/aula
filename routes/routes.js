@@ -21,5 +21,6 @@ router.get(
   section.fetchByCodeWithRelations
 );
 router.get("/learns/:op_code", middleware.verifyToken, learn.fetchByOperative);
-
+router.post("/learns", middleware.verifyToken, learn.store);
+router.put("/learns/:code", middleware.verifyToken, learn.update);
 module.exports = router;

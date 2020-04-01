@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import Operative from "views/wrapper/Operative";
 import useForm from "common/useForm";
+import api from "service/learnunit";
 import {
   Card,
   CardHeader,
@@ -15,6 +16,8 @@ import {
   MenuItem
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
+import { ToastContext } from "context/toast";
+import cache from "helpers/cache";
 const useStyles = makeStyles(theme => ({
   margin: {
     margin: theme.spacing(1)
@@ -23,16 +26,17 @@ const useStyles = makeStyles(theme => ({
 
 const CreateLearn = props => {
   const classes = useStyles();
-  const { op_code, section_code } = props.match.params;
-
-  const stateSchema = {
-    title: { value: "", error: "" },
+  const { op_code, section_code, code } = props.match.params;
+  const { show } = useContext(ToastContext);
+  const [title, setTitle] = useState("Crear");
+  let stateSchema = {
+    name: { value: "", error: "" },
     description: { value: "", error: "" },
     trim: { value: "1er", error: "" }
   };
 
   const validationSchema = {
-    title: {
+    name: {
       required: true,
       validator: {
         func: value => value.length < 50,
@@ -51,10 +55,25 @@ const CreateLearn = props => {
     }
   };
 
-  const delay = () => new Promise(resolve => setTimeout(resolve, 3000));
+  //const delay = () => new Promise(resolve => setTimeout(resolve, 3000));
+  const saveData = data => {
+    if (title === "Crear") {
+      return api.store(data);
+    }
+    data.code = code;
+    return api.update(data, code);
+  };
 
   const onSubmitForm = state => {
-    console.log(state);
+    state.operative_teacher_code = op_code;
+    saveData(state)
+      .then(r => {
+        show(r.message, "success");
+        props.history.push(`/unidades/${section_code}/${op_code}`);
+      })
+      .catch(err => {
+        show(err.message || err, "error");
+      });
   };
 
   const {
@@ -68,12 +87,24 @@ const CreateLearn = props => {
   } = useForm(stateSchema, validationSchema, onSubmitForm);
 
   useEffect(() => {
-    delay().then(() => {
-      setStateSchema(stateSchema);
-    });
+    if (typeof code !== "undefined" && cache.hasThis("learn_" + code)) {
+      setTitle("Modificar");
+      const upschema = cache.getItem("learn_" + code);
+      stateSchema = {
+        name: { value: upschema.name, error: "" },
+        description: { value: upschema.description, error: "" },
+        trim: { value: upschema.trim, error: "" }
+      };
+    }
+    setStateSchema(stateSchema);
+    /*     delay().then(() => {
+    }); */
+    return () => {
+      cache.removeItem("learn_" + code);
+    };
   }, []);
 
-  const { title, description, trim } = values;
+  const { name, description, trim } = values;
 
   const RightButton = () => (
     <Button
@@ -87,22 +118,22 @@ const CreateLearn = props => {
   );
 
   return (
-    <Operative title="Crear una nuevo unidad" RightButton={RightButton}>
+    <Operative title={`${title} una unidad`} RightButton={RightButton}>
       <Card>
-        <CardHeader title="Crear una nueva Unidad" />
+        <CardHeader title={`${title} una unidad`} />
         <Divider />
         <CardContent>
           <Grid container spacing={3}>
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                error={errors.title && dirty.title}
-                helperText={errors.title}
+                error={errors.name && dirty.name}
+                helperText={errors.name}
                 label="Titulo"
                 margin="dense"
-                name="title"
+                name="name"
                 onChange={handleOnChange}
-                value={title}
+                value={name}
               />
               <TextField
                 fullWidth

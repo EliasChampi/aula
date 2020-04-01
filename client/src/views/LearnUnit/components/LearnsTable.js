@@ -6,12 +6,15 @@ import {
   TableCell,
   TableBody,
   TableRow,
-  Button
+  IconButton
 } from "@material-ui/core";
+import CreateIcon from "@material-ui/icons/Create";
+import AsignIcon from "@material-ui/icons/Assignment";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import moment from "moment";
 const LearnsTable = props => {
-  const { learns } = props;
+  const { learns, handleEdit } = props;
   return (
     <PerfectScrollbar>
       <Table>
@@ -21,25 +24,37 @@ const LearnsTable = props => {
             <TableCell>Titulo</TableCell>
             <TableCell>Trimestre</TableCell>
             <TableCell>Fecha de Creación</TableCell>
-            <TableCell>Acciones</TableCell>
+            <TableCell>Ver Tareas</TableCell>
+            <TableCell>Modificar</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {learns.map(item => (
             <TableRow hover key={item.code}>
+              <TableCell>{item.code}</TableCell>
               <TableCell>{item.name}</TableCell>
               <TableCell>{item.trim}</TableCell>
-              <TableCell>{item.created_at}</TableCell>
               <TableCell>
-                <Button
-                  component={Link}
-                  size="small"
+                {moment(item.created_at).format("DD [de] MMMM [del] YYYY")}
+              </TableCell>
+              <TableCell>
+                <IconButton
                   color="primary"
-                  variant="contained"
-                  to={"/estudiantes-por-seccion/" + item.section_code}
+                  aria-label="upload picture"
+                  component="span"
                 >
-                  Ver Tareas
-                </Button>
+                  <AsignIcon />
+                </IconButton>
+              </TableCell>
+              <TableCell>
+                <IconButton
+                  color="primary"
+                  aria-label="modificar"
+                  component="span"
+                  onClick={() => handleEdit(item)}
+                >
+                  <CreateIcon />
+                </IconButton>
               </TableCell>
             </TableRow>
           ))}
@@ -50,7 +65,8 @@ const LearnsTable = props => {
 };
 
 LearnsTable.propTypes = {
-  learns: PropTypes.array.isRequired
+  learns: PropTypes.array.isRequired,
+  handleEdit: PropTypes.func
 };
 
 export default LearnsTable;
