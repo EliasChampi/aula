@@ -20,7 +20,7 @@ const Section = require("./section.js");
 const Student = require("./student.js");
 const Teacher = require("./teacher.js");
 const LearnUnit = require("./learnunit.js");
-
+const Task = require("./task.js");
 const Op = Sequelize.Op;
 const operatorsAliases = {
   $like: Op.like,
@@ -50,6 +50,7 @@ db.Register = Register(Sequelize, sequelize);
 db.Section = Section(Sequelize, sequelize);
 db.Student = Student(Sequelize, sequelize);
 db.LearnUnit = LearnUnit(Sequelize, sequelize);
+db.Task = Task(Sequelize, sequelize);
 //endModels
 // course - operative Teacher
 db.Course.hasMany(db.OperativeTeacher, {
@@ -148,6 +149,17 @@ db.OperativeTeacher.hasMany(db.LearnUnit, {
 db.LearnUnit.belongsTo(db.OperativeTeacher, {
   as: "operative",
   foreignKey: "operative_teacher_code",
+  targetKey: "code"
+});
+// learUnit - task
+db.LearnUnit.hasMany(db.Task, {
+  as: "tasks",
+  foreignKey: "learnunit_code",
+  sourceKey: "code"
+});
+db.Task.belongsTo(db.LearnUnit, {
+  as: "learn",
+  foreignKey: "learnunit_code",
   targetKey: "code"
 });
 module.exports = db;

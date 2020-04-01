@@ -8,17 +8,9 @@ module.exports = function(Sequelize, sequelize) {
       },
       section_code: {
         type: Sequelize.STRING
-        /*             references: {
-                model: Section,
-                key: "code"
-            } */
       },
       student_dni: {
         type: Sequelize.STRING
-        /*            references: {
-                model: student,
-                key: "dni"
-            } */
       },
       state: {
         type: Sequelize.STRING

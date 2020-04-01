@@ -8,10 +8,6 @@ module.exports = function(Sequelize, sequelize) {
       },
       cycle_code: {
         type: Sequelize.STRING
-        /*             references: {
-                model: Cycle,
-                key: "code"
-            } */
       }
     },
     {
