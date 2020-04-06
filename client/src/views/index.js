@@ -7,6 +7,8 @@ import Student from "./Student/Student";
 import BySection from "./Register/BySection";
 import LearnUnit from "./LearnUnit/LearnUnit";
 import CreateLearn from "./LearnUnit/Create";
+import Task from "./Task/Task";
+import Calification from "./Register/Calification";
 export default {
   Account,
   NotFound,
@@ -16,5 +18,7 @@ export default {
   Student,
   BySection,
   LearnUnit,
-  CreateLearn
+  CreateLearn,
+  Task,
+  Calification
 };

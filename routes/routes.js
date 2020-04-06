@@ -1,11 +1,12 @@
 const { Router } = require("express");
 const router = Router();
 const middleware = require("../middlewares");
-const auth = require("../controllers/auth.js");
-const op = require("../controllers/operativeTeacher.js");
+const auth = require("../controllers/auth");
+const op = require("../controllers/operativeTeacher");
 const reg = require("../controllers/register");
 const section = require("../controllers/section");
 const learn = require("../controllers/learnunit");
+const task = require("../controllers/task");
 router.post("/auth/signin", auth.signin);
 router.get("/courses/:dni", middleware.verifyToken, op.fetchByTeacher);
 router.get("/regs_by_family/:dni", middleware.verifyToken, reg.fetchByFamily);
@@ -21,6 +22,14 @@ router.get(
   section.fetchByCodeWithRelations
 );
 router.get("/learns/:op_code", middleware.verifyToken, learn.fetchByOperative);
+router.get("/learn/:code", middleware.verifyToken, learn.fetchByCode);
 router.post("/learns", middleware.verifyToken, learn.store);
 router.put("/learns/:code", middleware.verifyToken, learn.update);
+router.get(
+  "/operatives/:l_code",
+  middleware.verifyToken,
+  learn.fetchOperatives
+);
+router.get("/tasks_d/:l_code", middleware.verifyToken, task.fetchByLearn);
+router.get("/task/:code", middleware.verifyToken, task.fetchByCodeWithLearn);
 module.exports = router;

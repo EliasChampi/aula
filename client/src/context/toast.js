@@ -67,8 +67,8 @@ export const ToastProvider = ({ children }) => {
   );
 };
 
-/* export const withToastContext = ChildComponent => props => (
+export const withToastContext = ChildComponent => props => (
     <ToastContext.Consumer>
         {context => <ChildComponent {...props} toast={context} />}
     </ToastContext.Consumer>
-);  */
+);  

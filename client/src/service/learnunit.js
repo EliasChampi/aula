@@ -14,6 +14,19 @@ class LearnUnitService {
     });
   }
 
+  fetchByCode(code) {
+    return new Promise((resolve, reject) => {
+      request
+        .get("/learn/" + code)
+        .then(r => {
+          resolve(r.data);
+        })
+        .catch(errMessage => {
+          reject(errMessage);
+        });
+    });
+  }
+
   store(data) {
     return new Promise((resolve, reject) => {
       request

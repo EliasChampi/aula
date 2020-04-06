@@ -1,13 +1,14 @@
-module.exports = function(Sequelize, sequelize) {
-  return sequelize.define(
+"use strict";
+module.exports = function(sequelize, DataTypes) {
+  const Course = sequelize.define(
     "Course",
     {
       code: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         primaryKey: true
       },
       name: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING
       }
     },
     {
@@ -16,4 +17,12 @@ module.exports = function(Sequelize, sequelize) {
       updatedAt: "updated_at"
     }
   );
+  Course.associate = function(models) {
+    Course.hasMany(models.OperativeTeacher, {
+      as: "teachers",
+      foreignKey: "course_code",
+      sourceKey: "code"
+    });
+  };
+  return Course;
 };

@@ -30,16 +30,22 @@ const Routes = () => {
         path="/unidades/:section_code/:op_code"
       />
       <ProtectedRoute
-        component={view.CreateLearn}
+        component={view.Task}
         exact
         isAuthed={isAuthed}
-        path="/crear_unidad/:section_code/:op_code"
+        path="/tareas/:section_code/:op_code/:code"
       />
       <ProtectedRoute
         component={view.CreateLearn}
         exact
         isAuthed={isAuthed}
-        path="/modificar_unidad/:section_code/:op_code/:code"
+        path="/crear_unidad"
+      />
+      <ProtectedRoute
+        component={view.CreateLearn}
+        exact
+        isAuthed={isAuthed}
+        path="/modificar_unidad/:code"
       />
       <ProtectedRoute
         component={view.Account}

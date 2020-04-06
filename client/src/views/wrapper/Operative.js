@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Typography, Button } from "@material-ui/core";
 import PropTypes from "prop-types";
-import api from "service/section";
 import cache from "helpers/cache";
 import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/styles";

@@ -1,19 +1,20 @@
-module.exports = function(Sequelize, sequelize) {
-  return sequelize.define(
+"use strict";
+module.exports = function(sequelize, DataTypes) {
+  const Register = sequelize.define(
     "Register",
     {
       code: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         primaryKey: true
       },
       section_code: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING
       },
       student_dni: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING
       },
       state: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING
       }
     },
     {
@@ -22,4 +23,23 @@ module.exports = function(Sequelize, sequelize) {
       updatedAt: false
     }
   );
+  Register.associate = function(models) {
+    Register.belongsToMany(models.Task, {
+      as: "tasks",
+      through: "register_task",
+      foreignKey: "register_code",
+      sourceKey: "code"
+    });
+    Register.belongsTo(models.Student, {
+      as: "student",
+      foreignKey: "student_dni",
+      targetKey: "dni"
+    });
+    Register.belongsTo(models.Section, {
+      as: "section",
+      foreignKey: "section_code",
+      targetKey: "code"
+    });
+  };
+  return Register;
 };

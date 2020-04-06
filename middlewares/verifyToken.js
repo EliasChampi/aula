@@ -4,13 +4,13 @@ module.exports = function(req, res, next) {
   const token = req.headers["x-access-token"];
   if (!token) {
     return res.status(403).send({
-      message: "Token de autenticación requerido"
+      message: "falta token de seguridad, vuelva a iniciar sesión"
     });
   }
   jwt.verify(token, secret, (err, decoded) => {
     if (err) {
       return res.status(401).send({
-        message: "No estas autorizado"
+        message: "Token de seguridad ha expirado, vuelva a iniciar sesión"
       });
     }
     req.dni = decoded.dni;

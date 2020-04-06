@@ -1,22 +1,23 @@
-module.exports = function(Sequelize, sequelize) {
-  return sequelize.define(
+"use strict";
+module.exports = function(sequelize, DataTypes) {
+  const Teacher = sequelize.define(
     "Teacher",
     {
       dni: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         primaryKey: true
       },
       name: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING
       },
       surname: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING
       },
       image: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING
       },
       password: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING
       }
     },
     {
@@ -25,4 +26,6 @@ module.exports = function(Sequelize, sequelize) {
       updatedAt: "updated_at"
     }
   );
+
+  return Teacher;
 };

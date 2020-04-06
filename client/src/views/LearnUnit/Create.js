@@ -1,5 +1,4 @@
 import React, { useEffect, useContext, useState } from "react";
-import Operative from "views/wrapper/Operative";
 import useForm from "common/useForm";
 import api from "service/learnunit";
 import {
@@ -13,22 +12,30 @@ import {
   FormControl,
   Select,
   InputLabel,
-  MenuItem
+  MenuItem,
+  CardActions,
+  List,
+  ListItem,
+  ListItemIcon,
+  Checkbox,
+  ListItemText,
+  Typography
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import { ToastContext } from "context/toast";
 import cache from "helpers/cache";
+import { Link } from "react-router-dom";
+import { Header } from "views/Course/components";
+import withCourses from "components/hoc/withCourses";
 const useStyles = makeStyles(theme => ({
   margin: {
     margin: theme.spacing(1)
   }
 }));
 
-const CreateLearn = props => {
+const CreateLearn = ({ courses, history, match, show }) => {
   const classes = useStyles();
-  const { op_code, section_code, code } = props.match.params;
-  const { show } = useContext(ToastContext);
   const [title, setTitle] = useState("Crear");
+  const [checked, setChecked] = useState([]);
   let stateSchema = {
     name: { value: "", error: "" },
     description: { value: "", error: "" },
@@ -55,21 +62,31 @@ const CreateLearn = props => {
     }
   };
 
-  //const delay = () => new Promise(resolve => setTimeout(resolve, 3000));
   const saveData = data => {
     if (title === "Crear") {
       return api.store(data);
     }
-    data.code = code;
-    return api.update(data, code);
+    data.code = match.params.code;
+    return api.update(data, match.params.code);
+  };
+
+  const handleToggle = code => {
+    const currentIndex = checked.indexOf(code);
+    const newChecked = [...checked];
+    if (currentIndex === -1) {
+      newChecked.push(code);
+    } else {
+      newChecked.splice(currentIndex, 1);
+    }
+    setChecked(newChecked);
   };
 
   const onSubmitForm = state => {
-    state.operative_teacher_code = op_code;
+    state.ops = checked;
     saveData(state)
       .then(r => {
         show(r.message, "success");
-        props.history.push(`/unidades/${section_code}/${op_code}`);
+        history.push("/dashboard");
       })
       .catch(err => {
         show(err.message || err, "error");
@@ -87,6 +104,7 @@ const CreateLearn = props => {
   } = useForm(stateSchema, validationSchema, onSubmitForm);
 
   useEffect(() => {
+    const { code } = match.params;
     if (typeof code !== "undefined" && cache.hasThis("learn_" + code)) {
       setTitle("Modificar");
       const upschema = cache.getItem("learn_" + code);
@@ -97,8 +115,6 @@ const CreateLearn = props => {
       };
     }
     setStateSchema(stateSchema);
-    /*     delay().then(() => {
-    }); */
     return () => {
       cache.removeItem("learn_" + code);
     };
@@ -109,16 +125,21 @@ const CreateLearn = props => {
   const RightButton = () => (
     <Button
       variant="contained"
-      onClick={handleOnSubmit}
-      color="primary"
-      disabled={disable}
+      color="default"
+      component={Link}
+      to="/dashboard"
     >
-      Guardar
+      Cancelar
     </Button>
   );
 
   return (
-    <Operative title={`${title} una unidad`} RightButton={RightButton}>
+    <React.Fragment>
+      <Header
+        subtitle="Las unidades sirven para agrupar tareas segun el tema"
+        title="Unidades de Aprendizaje"
+        RightButton={RightButton}
+      />
       <Card>
         <CardHeader title={`${title} una unidad`} />
         <Divider />
@@ -129,7 +150,7 @@ const CreateLearn = props => {
                 fullWidth
                 error={errors.name && dirty.name}
                 helperText={errors.name}
-                label="Titulo"
+                label="Nombre de Unidad"
                 margin="dense"
                 name="name"
                 onChange={handleOnChange}
@@ -164,10 +185,55 @@ const CreateLearn = props => {
               </FormControl>
             </Grid>
           </Grid>
+          <Divider />
+          <Typography variant="subtitle1">
+            Seleccione las secciones que utilizarán esta unidad
+          </Typography>
+          <List>
+            {courses.map(item => {
+              const labelId = `checkbox-list-label-${item.code}`;
+              return (
+                <ListItem
+                  key={item.code}
+                  button
+                  onClick={() => handleToggle(item.code)}
+                >
+                  <ListItemIcon>
+                    <Checkbox
+                      edge="start"
+                      checked={checked.indexOf(item.code) !== -1}
+                      tabIndex={-1}
+                      disableRipple
+                      inputProps={{ "aria-labelledby": labelId }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText
+                    id={labelId}
+                    primary={`${
+                      item.section.degree.cycle.branch.name
+                    }: ${item.section.code.substr(-2)} de ${
+                      item.section.degree.cycle.title
+                    }`}
+                    secondary={item.course.name}
+                  />
+                </ListItem>
+              );
+            })}
+          </List>
         </CardContent>
+        <CardActions>
+          <Button
+            color="primary"
+            variant="contained"
+            disabled={disable || !checked.length}
+            onClick={handleOnSubmit}
+          >
+            Guardar Cambios
+          </Button>
+        </CardActions>
       </Card>
-    </Operative>
+    </React.Fragment>
   );
 };
 
-export default CreateLearn;
+export default withCourses(CreateLearn);

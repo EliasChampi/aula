@@ -1,16 +1,17 @@
-module.exports = function(Sequelize, sequelize) {
-  return sequelize.define(
+"use strict";
+module.exports = function(sequelize, DataTypes) {
+  const Section = sequelize.define(
     "Section",
     {
       code: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         primaryKey: true
       },
       section_name: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING
       },
       degree_code: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING
       }
     },
     {
@@ -18,4 +19,22 @@ module.exports = function(Sequelize, sequelize) {
       timestamps: false
     }
   );
+  Section.associate = function(models) {
+    Section.hasMany(models.OperativeTeacher, {
+      as: "teachers",
+      foreignKey: "section_code",
+      sourceKey: "code"
+    });
+    Section.belongsTo(models.Degree, {
+      as: "degree",
+      foreignKey: "degree_code",
+      targetKey: "code"
+    });
+    Section.hasMany(models.Register, {
+      as: "registers",
+      foreignKey: "section_code",
+      sourceKey: "code"
+    });
+  };
+  return Section;
 };

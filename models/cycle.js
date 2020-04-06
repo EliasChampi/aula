@@ -1,16 +1,17 @@
-module.exports = function(Sequelize, sequelize) {
-  return sequelize.define(
+"use strict";
+module.exports = function(sequelize, DataTypes) {
+  const Cycle = sequelize.define(
     "Cycle",
     {
       code: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         primaryKey: true
       },
       title: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING
       },
       branch_code: {
-        type: Sequelize.INTEGER
+        type: DataTypes.INTEGER
       }
     },
     {
@@ -19,4 +20,17 @@ module.exports = function(Sequelize, sequelize) {
       updatedAt: "updated_at"
     }
   );
+  Cycle.associate = function(models) {
+    Cycle.hasMany(models.Degree, {
+      as: "degrees",
+      foreignKey: "cycle_code",
+      sourceKey: "code"
+    });
+    Cycle.belongsTo(models.Branch, {
+      as: "branch",
+      foreignKey: "branch_code",
+      targetKey: "code"
+    });
+  };
+  return Cycle;
 };

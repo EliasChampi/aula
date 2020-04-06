@@ -9,7 +9,7 @@ import {
   Divider,
   Button
 } from "@material-ui/core";
-import Operative from "views/wrapper/Operative";
+import Operative from "views/Wrapper/Operative";
 
 const BySection = ({ match }) => {
   const { show } = useContext(ToastContext);

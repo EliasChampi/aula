@@ -1,25 +1,26 @@
-module.exports = function(Sequelize, sequelize) {
-  return sequelize.define(
+"use strict";
+module.exports = function(sequelize, DataTypes) {
+  const Student = sequelize.define(
     "Student",
     {
       dni: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         primaryKey: true
       },
       name: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING
       },
       surname: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING
       },
       second_surname: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING
       },
       telephone: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING
       },
       birthdate: {
-        type: Sequelize.DATE
+        type: DataTypes.DATE
       }
     },
     {
@@ -28,4 +29,13 @@ module.exports = function(Sequelize, sequelize) {
       updatedAt: "updated_at"
     }
   );
+
+  Student.associate = function(models) {
+    Student.hasMany(models.Register, {
+      as: "registers",
+      foreignKey: "student_dni",
+      sourceKey: "dni"
+    });
+  };
+  return Student;
 };

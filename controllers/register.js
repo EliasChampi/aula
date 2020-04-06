@@ -3,8 +3,7 @@ const {
   Student,
   Section,
   Degree,
-  Cycle,
-  Branch
+  Cycle
 } = require("../models");
 const { literal } = require("sequelize");
 async function fetchByFamily(req, res) {
