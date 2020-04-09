@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import WithCourses from "../../components/hoc/withCourses";
 import { dayname } from "common";
 
-const Course = ({ courses, history }) => {
+const Course = ({ courses, history, user }) => {
   const handleAction = (from, item) => {
     const key = `op_${item.code}_sec_${item.section_code}`;
     if (!cache.hasThis(key)) {
@@ -36,7 +36,7 @@ const Course = ({ courses, history }) => {
     <React.Fragment>
       <Header
         subtitle="Aqui estan las secciones que estas dictando este año"
-        title={dayname()}
+        title={dayname(user.name)}
         RightButton={RightButton}
       />
       <Card>

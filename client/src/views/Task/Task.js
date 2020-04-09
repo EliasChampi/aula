@@ -14,10 +14,12 @@ import api from "service/task";
 import { ToastContext } from "context/toast";
 import NewItems from "./components/NewItems";
 import moment from "common/moment";
+import CreateDialog from "./components/CreateDialog";
 const Task = props => {
   const [prioriTasks, setPrioriTasks] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [learn, setLearn] = useState({});
+  const [open, setOpen] = useState(false);
   const { show } = useContext(ToastContext);
   const {
     match: {
@@ -25,10 +27,17 @@ const Task = props => {
     }
   } = props;
   const RightButton = () => (
-    <Button variant="contained" color="primary">
+    <Button variant="contained" color="primary" onClick={() => {
+      setOpen(true);
+    }}>
       Crear nueva Tarea
     </Button>
   );
+
+  const handleClose  = () => {
+    setOpen(false)
+  }
+
 
   useEffect(() => {
     let mounted = true;
@@ -84,6 +93,7 @@ const Task = props => {
           <TasksTable tasks={tasks} />
         </CardContent>
       </Card>
+      <CreateDialog open={open} handleClose={handleClose} l_code={code}/>
     </Operative>
   );
 };

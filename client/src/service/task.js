@@ -5,10 +5,10 @@ class TaskService {
     return new Promise((resolve, reject) => {
       request
         .get("/tasks_d/" + l_code)
-        .then(r => {
+        .then((r) => {
           resolve(r.data);
         })
-        .catch(errMessage => {
+        .catch((errMessage) => {
           reject(errMessage);
         });
     });
@@ -18,10 +18,23 @@ class TaskService {
     return new Promise((resolve, reject) => {
       request
         .get("/task/" + code)
-        .then(r => {
+        .then((r) => {
           resolve(r.data);
         })
-        .catch(errMessage => {
+        .catch((errMessage) => {
+          reject(errMessage);
+        });
+    });
+  }
+
+  store(formData) {
+    return new Promise((resolve, reject) => {
+      request
+        .post("/task", formData)
+        .then((r) => {
+          resolve(r.data);
+        })
+        .catch((errMessage) => {
           reject(errMessage);
         });
     });

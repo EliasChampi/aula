@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/styles";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import {
@@ -12,13 +12,13 @@ import {
   Avatar,
   RadioGroup,
   FormControlLabel,
-  Radio
+  Radio,
 } from "@material-ui/core";
 import AuthService from "service/auth";
 import { AuthContext, ToastContext } from "context/consumer";
-import useForm from "common/useForm";
+import { useForm } from "react-hook-form";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     height: "100%",
     display: "flex",
@@ -26,97 +26,52 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     backgroundImage: "url(images/auth.png)",
     backgroundRepeat: "no-repeat",
-    backgroundSize: "cover"
+    backgroundSize: "cover",
   },
   mycard: {
     [theme.breakpoints.up("md")]: {
-      maxWidth: "30%"
-    }
+      maxWidth: "30%",
+    },
   },
   form: {
     flexBasis: 700,
     [theme.breakpoints.down("sm")]: {
       paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(2)
-    }
+      paddingRight: theme.spacing(2),
+    },
   },
   avatar: {
     margin: "auto",
-    backgroundColor: theme.palette.error.main
+    backgroundColor: theme.palette.error.main,
   },
   title: {
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(3),
   },
   textField: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
   },
   signInButton: {
-    margin: theme.spacing(2, 0)
-  }
+    margin: theme.spacing(2, 0),
+  },
 }));
 
-const SignIn = props => {
+const SignIn = (props) => {
   const { history } = props;
   const classes = useStyles();
   const { setUser } = useContext(AuthContext);
   const { show } = useContext(ToastContext);
+  const { register, handleSubmit, errors } = useForm();
 
-  const schema = {
-    dni: { value: "", error: "" },
-    password: { value: "", error: "" },
-    type: { value: "apoderado", error: "" }
-  };
-
-  const validatorSchema = {
-    dni: {
-      required: true,
-      validator: {
-        func: value => value.length === 8,
-        error: "DNI debe contener 8 Caracteres"
-      }
-    },
-    password: {
-      required: true,
-      validator: {
-        func: value => value.length > 5,
-        error: "Su contraseña posee mas caracteres"
-      }
-    },
-    type: {
-      required: true
-    }
-  };
-
-  const onSubmitForm = state => {
-    AuthService.login(state)
-      .then(r => {
+  const onSubmitForm = (data) => {
+    AuthService.login(data)
+      .then((r) => {
         setUser(r);
         history.push("/");
       })
-      .catch(err => {
+      .catch((err) => {
         show(err.message, "error");
       });
   };
-
-  const delay = () => new Promise(resolve => setTimeout(resolve, 3000));
-
-  const {
-    values,
-    errors,
-    dirty,
-    handleOnChange,
-    handleOnSubmit,
-    setStateSchema,
-    disable
-  } = useForm(schema, validatorSchema, onSubmitForm);
-
-  useEffect(() => {
-    delay().then(() => {
-      setStateSchema(schema);
-    });
-  }, []);
-
-  const { dni, password, type } = values;
 
   return (
     <div className={classes.root}>
@@ -124,7 +79,7 @@ const SignIn = props => {
         <CardContent>
           <form
             className={classes.form}
-            onSubmit={handleOnSubmit}
+            onSubmit={handleSubmit(onSubmitForm)}
             autoComplete="off"
           >
             <div style={{ textAlign: "center" }}>
@@ -137,21 +92,16 @@ const SignIn = props => {
               <Typography color="textSecondary" gutterBottom>
                 Ingrese sus credenciales de autenticación para acceder
               </Typography>
-              <RadioGroup
-                row
-                name="type"
-                value={type}
-                onChange={handleOnChange}
-              >
+              <RadioGroup row name="type" defaultValue="apoderado">
                 <FormControlLabel
                   value="apoderado"
-                  control={<Radio color="primary" />}
+                  control={<Radio inputRef={register} color="primary" />}
                   label="Apoderado"
                   labelPlacement="end"
                 />
                 <FormControlLabel
                   value="docente"
-                  control={<Radio color="primary" />}
+                  control={<Radio inputRef={register} color="primary" />}
                   label="Docente"
                   labelPlacement="end"
                 />
@@ -160,29 +110,35 @@ const SignIn = props => {
             <Divider />
             <TextField
               className={classes.textField}
-              error={errors.dni && dirty.dni}
+              error={!!errors.dni}
               fullWidth
-              helperText={errors.dni}
+              helperText={errors.dni && errors.dni.message}
               label="Ingrese su DNI"
+              inputRef={register({
+                required: "DNI es requerido",
+                validate: value => value.length ===8
+              })}
               name="dni"
-              onChange={handleOnChange}
-              value={dni || ""}
             />
             <TextField
               className={classes.textField}
-              error={errors.password && dirty.password}
+              error={!!errors.password}
               fullWidth
-              helperText={errors.password}
+              helperText={errors.password && errors.password.message}
+              inputRef={register({
+                required: "Contraseña es requerido",
+                minLength: {
+                  value: 4,
+                  message: "contraseña posee mas caracteres",
+                },
+              })}
               label="Contraseña"
               name="password"
-              onChange={handleOnChange}
               type="password"
-              value={password || ""}
             />
             <Button
               className={classes.signInButton}
               color="primary"
-              disabled={disable}
               fullWidth
               size="large"
               type="submit"

@@ -1,32 +1,32 @@
-import React, { Component } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import api from "service/course";
-import { ToastContext } from "context/consumer";
-import cache from "helpers/cache";
+import { ToastContext, AuthContext } from "context/consumer";
+
 export default function withCourses(WrapedComponent) {
-  return class extends Component {
-    state = {
-      courses: []
-    };
-    static contextType = ToastContext;
-    componentDidMount() {
-      const user = cache.getItem("user");
+  return (props) => {
+    const [courses, setCourses] = useState([]);
+    const { show } = useContext(ToastContext);
+    const { user } = useContext(AuthContext);
+
+    useEffect(() => {
+      let mounted = true;
       api
         .fetchByTeacher(user.dni)
-        .then(r => {
-          this.setState({ courses: r.values });
+        .then((r) => {
+          if (mounted) {
+            setCourses(r.values);
+          }
         })
-        .catch(error => {
-          this.context.show(error.message || error, "error");
+        .catch((error) => {
+          show(error.message || error, "error");
         });
-    }
-    render() {
-      return (
-        <WrapedComponent
-          show={this.context.show}
-          courses={this.state.courses}
-          {...this.props}
-        />
-      );
-    }
+      return () => {
+        mounted = false;
+      };
+    }, []);
+
+    return (
+      <WrapedComponent show={show} user={user} courses={courses} {...props} />
+    );
   };
 }

@@ -4,7 +4,8 @@ import { AuthContext } from "context/auth";
 import api from "service/register";
 import { ToastContext } from "context/toast";
 import { Card, CardContent, CardHeader, Divider } from "@material-ui/core";
-
+import { Header } from "views/Course/components";
+import { dayname } from "common";
 const Student = () => {
   const { user } = useContext(AuthContext);
   const { show } = useContext(ToastContext);
@@ -15,12 +16,12 @@ const Student = () => {
     const fetchStudents = () => {
       api
         .fetchByFamily(user.dni)
-        .then(r => {
+        .then((r) => {
           if (mounted) {
             setStudents(r.values);
           }
         })
-        .catch(err => {
+        .catch((err) => {
           show(err.message, "error");
         });
     };
@@ -30,16 +31,22 @@ const Student = () => {
     };
   }, []);
   return (
-    <Card>
-      <CardHeader
-        subheader="Estudiantes de las cuales soy Apoderado"
-        title="Listado de Estudiantes"
+    <React.Fragment>
+      <Header
+        subtitle="Estudiantes de las cuales soy Apoderado"
+        title={dayname()}
       />
-      <Divider />
-      <CardContent>
-        <StudentTable students={students} />
-      </CardContent>
-    </Card>
+      <Card>
+        <CardHeader
+          subheader="Estudiantes de las cuales soy Apoderado"
+          title="Listado de Estudiantes"
+        />
+        <Divider />
+        <CardContent>
+          <StudentTable students={students} />
+        </CardContent>
+      </Card>
+    </React.Fragment>
   );
 };
 export default Student;

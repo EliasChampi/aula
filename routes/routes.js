@@ -32,4 +32,5 @@ router.get(
 );
 router.get("/tasks_d/:l_code", middleware.verifyToken, task.fetchByLearn);
 router.get("/task/:code", middleware.verifyToken, task.fetchByCodeWithLearn);
+router.post("/task", middleware.verifyToken, task.store);
 module.exports = router;

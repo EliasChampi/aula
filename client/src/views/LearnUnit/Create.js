@@ -1,5 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
-import useForm from "common/useForm";
+import React, { useEffect, useState } from "react";
 import api from "service/learnunit";
 import {
   Card,
@@ -12,57 +11,33 @@ import {
   FormControl,
   Select,
   InputLabel,
-  MenuItem,
   CardActions,
   List,
   ListItem,
   ListItemIcon,
   Checkbox,
   ListItemText,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import cache from "helpers/cache";
-import { Link } from "react-router-dom";
-import { Header } from "views/Course/components";
 import withCourses from "components/hoc/withCourses";
-const useStyles = makeStyles(theme => ({
+import cache from "helpers/cache";
+import { Header } from "views/Course/components";
+import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
+const useStyles = makeStyles((theme) => ({
   margin: {
-    margin: theme.spacing(1)
-  }
+    margin: theme.spacing(1),
+  },
 }));
 
 const CreateLearn = ({ courses, history, match, show }) => {
   const classes = useStyles();
   const [title, setTitle] = useState("Crear");
   const [checked, setChecked] = useState([]);
-  let stateSchema = {
-    name: { value: "", error: "" },
-    description: { value: "", error: "" },
-    trim: { value: "1er", error: "" }
-  };
+  const { register, handleSubmit, errors } = useForm();
 
-  const validationSchema = {
-    name: {
-      required: true,
-      validator: {
-        func: value => value.length < 50,
-        error: "Demasiados caracteres para el titulo"
-      }
-    },
-    description: {
-      required: true,
-      validator: {
-        func: value => value.length > 10,
-        error: "Muy pocos caracteres en la descripción"
-      }
-    },
-    trim: {
-      required: true
-    }
-  };
-
-  const saveData = data => {
+  const saveData = (data) => {
     if (title === "Crear") {
       return api.store(data);
     }
@@ -70,57 +45,27 @@ const CreateLearn = ({ courses, history, match, show }) => {
     return api.update(data, match.params.code);
   };
 
-  const handleToggle = code => {
-    const currentIndex = checked.indexOf(code);
-    const newChecked = [...checked];
-    if (currentIndex === -1) {
-      newChecked.push(code);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-    setChecked(newChecked);
-  };
-
-  const onSubmitForm = state => {
+  const onSubmitForm = (state) => {
     state.ops = checked;
     saveData(state)
-      .then(r => {
+      .then((r) => {
         show(r.message, "success");
         history.push("/dashboard");
       })
-      .catch(err => {
-        show(err.message || err, "error");
+      .catch((error) => {
+        show(error.message || error, "error");
       });
   };
-
-  const {
-    values,
-    errors,
-    dirty,
-    handleOnChange,
-    handleOnSubmit,
-    setStateSchema,
-    disable
-  } = useForm(stateSchema, validationSchema, onSubmitForm);
 
   useEffect(() => {
     const { code } = match.params;
     if (typeof code !== "undefined" && cache.hasThis("learn_" + code)) {
       setTitle("Modificar");
-      const upschema = cache.getItem("learn_" + code);
-      stateSchema = {
-        name: { value: upschema.name, error: "" },
-        description: { value: upschema.description, error: "" },
-        trim: { value: upschema.trim, error: "" }
-      };
     }
-    setStateSchema(stateSchema);
     return () => {
       cache.removeItem("learn_" + code);
     };
   }, []);
-
-  const { name, description, trim } = values;
 
   const RightButton = () => (
     <Button
@@ -132,6 +77,17 @@ const CreateLearn = ({ courses, history, match, show }) => {
       Cancelar
     </Button>
   );
+
+  const handleToggle = (code) => {
+    const currentIndex = checked.indexOf(code);
+    const newChecked = [...checked];
+    if (currentIndex === -1) {
+      newChecked.push(code);
+    } else {
+      newChecked.splice(currentIndex, 1);
+    }
+    setChecked(newChecked);
+  };
 
   return (
     <React.Fragment>
@@ -148,39 +104,57 @@ const CreateLearn = ({ courses, history, match, show }) => {
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                error={errors.name && dirty.name}
-                helperText={errors.name}
+                error={!!errors.name}
+                helperText={errors.name && errors.name.message}
                 label="Nombre de Unidad"
                 margin="dense"
                 name="name"
-                onChange={handleOnChange}
-                value={name}
+                inputRef={register({
+                  required: "Campo requerido",
+                  maxLength: {
+                    value: 50,
+                    message: "Demasiados caracteres",
+                  },
+                })}
               />
               <TextField
                 fullWidth
-                error={errors.description && dirty.description}
-                helperText={errors.description}
+                error={!!errors.description}
+                helperText={errors.description && errors.description.message}
                 label="Descripcion"
                 margin="dense"
                 name="description"
                 multiline
-                rowsMax="3"
-                onChange={handleOnChange}
-                value={description}
+                rows="3"
+                rowsMax="4"
+                inputRef={register({
+                  required: "Campo requerido",
+                  maxLength: {
+                    value: 300,
+                    message: "Demasiados caracteres",
+                  },
+                  minLength: {
+                    value: 10,
+                    message: "Muy pocos caracteres",
+                  },
+                })}
               />
             </Grid>
             <Grid item md={6} xs={12}>
               <FormControl fullWidth className={classes.margin}>
-                <InputLabel id="trim">Trimestre</InputLabel>
+                <InputLabel htmlFor="trim">Trimestre</InputLabel>
                 <Select
-                  labelId="trim"
-                  name="trim"
-                  onChange={handleOnChange}
-                  value={trim}
+                  native
+                  inputRef={register}
+                  inputProps={{
+                    name: "trim",
+                    id: "trim",
+                  }}
+                  defaultValue="1ro"
                 >
-                  <MenuItem value="1er">1er Trimestre</MenuItem>
-                  <MenuItem value="2do">2do Trimestre</MenuItem>
-                  <MenuItem value="3ro">3ro Trimestre</MenuItem>
+                  <option value="1ro">1er Trimestre</option>
+                  <option value="2do">2do Trimestre</option>
+                  <option value="3ro">3ro Trimestre</option>
                 </Select>
               </FormControl>
             </Grid>
@@ -190,7 +164,7 @@ const CreateLearn = ({ courses, history, match, show }) => {
             Seleccione las secciones que utilizarán esta unidad
           </Typography>
           <List>
-            {courses.map(item => {
+            {courses.map((item) => {
               const labelId = `checkbox-list-label-${item.code}`;
               return (
                 <ListItem
@@ -225,8 +199,7 @@ const CreateLearn = ({ courses, history, match, show }) => {
           <Button
             color="primary"
             variant="contained"
-            disabled={disable || !checked.length}
-            onClick={handleOnSubmit}
+            onClick={handleSubmit(onSubmitForm)}
           >
             Guardar Cambios
           </Button>
