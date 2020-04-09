@@ -13,10 +13,10 @@ function signin(req, res) {
   }
   Model.findOne({
     where: {
-      dni: req.body.dni
-    }
+      dni: req.body.dni,
+    },
   })
-    .then(entity => {
+    .then((entity) => {
       if (!entity) {
         return res.status(404).send({ message: "Usuario no encontrado." });
       }
@@ -27,11 +27,11 @@ function signin(req, res) {
       if (!passwordIsValid) {
         return res.status(401).send({
           accessToken: null,
-          message: "Contraseña Incorrecta!"
+          message: "Contraseña Incorrecta!",
         });
       }
       var token = jwt.sign({ dni: entity.dni }, config.secret, {
-        expiresIn: parseInt(process.env.JWTTTL)
+        expiresIn: parseInt(process.env.JWTTTL),
       });
 
       if (req.body.type === "docente") {
@@ -43,14 +43,14 @@ function signin(req, res) {
         surname: entity.surname,
         mode: req.body.type,
         image: image,
-        accessToken: token
+        accessToken: token,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({ message: err.message });
     });
 }
 
 module.exports = {
-  signin
+  signin,
 };

@@ -7,13 +7,12 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Button
+  Button,
 } from "@material-ui/core";
-import moment from "common/moment"
-import { state } from "common/decorator"
-const BySectionTable = props => {
+import moment from "common/moment";
+import { state } from "common/decorator";
+const BySectionTable = (props) => {
   const { data } = props;
-
   return (
     <PerfectScrollbar>
       <Table>
@@ -28,16 +27,18 @@ const BySectionTable = props => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(item => (
+          {data.map((item) => (
             <TableRow hover key={item.code}>
               <TableCell>{item.student_dni}</TableCell>
               <TableCell>{`${item.student.name} ${item.student.surname} ${item.student.second_surname}`}</TableCell>
               <TableCell>{state[item.state]}</TableCell>
               <TableCell>{item.student.telephone}</TableCell>
-              <TableCell>{moment(item.student.birthdate).format("DD [de] MMMM")}</TableCell>
+              <TableCell>
+                {moment(item.student.birthdate).format("DD [de] MMMM")}
+              </TableCell>
               <TableCell>
                 <Button color="primary" size="small" variant="contained">
-                  Notas
+                  Calificaciones
                 </Button>
               </TableCell>
             </TableRow>
@@ -49,7 +50,7 @@ const BySectionTable = props => {
 };
 
 BySectionTable.propTypes = {
-  data: PropTypes.array.isRequired
+  data: PropTypes.array.isRequired,
 };
 
 export default BySectionTable;

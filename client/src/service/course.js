@@ -2,12 +2,12 @@ import request from "./request";
 class CourseSevice {
   fetchByTeacher(dni) {
     return new Promise((resolve, reject) => {
-        request
+      request
         .get("/courses/" + dni)
-        .then(r => {
-            resolve(r.data);
+        .then((r) => {
+          resolve(r.data);
         })
-        .catch(errMessage => {
+        .catch((errMessage) => {
           reject(errMessage);
         });
     });

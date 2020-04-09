@@ -39,6 +39,19 @@ class TaskService {
         });
     });
   }
+
+  update(formData, code) {
+    return new Promise((resolve, reject) => {
+      request
+        .put("/task/" + code, formData)
+        .then((r) => {
+          resolve(r.data);
+        })
+        .catch((errMessage) => {
+          reject(errMessage);
+        });
+    });
+  }
 }
 
 export default new TaskService();

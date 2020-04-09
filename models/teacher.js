@@ -1,29 +1,29 @@
 "use strict";
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   const Teacher = sequelize.define(
     "Teacher",
     {
       dni: {
         type: DataTypes.STRING,
-        primaryKey: true
+        primaryKey: true,
       },
       name: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
       },
       surname: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
       },
       image: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
       },
       password: {
-        type: DataTypes.STRING
-      }
+        type: DataTypes.STRING,
+      },
     },
     {
       tableName: "teachers",
       createdAt: "created_at",
-      updatedAt: "updated_at"
+      updatedAt: "updated_at",
     }
   );
 

@@ -1,24 +1,24 @@
 "use strict";
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   const Branch = sequelize.define(
     "Branch",
     {
       code: {
         type: DataTypes.INTEGER,
-        primaryKey: true
+        primaryKey: true,
       },
-      name: DataTypes.STRING
+      name: DataTypes.STRING,
     },
     {
       tableName: "branches",
-      timestamps: false
+      timestamps: false,
     }
   );
-  Branch.associate = function(models) {
+  Branch.associate = function (models) {
     Branch.hasMany(models.Cycle, {
       as: "cycles",
       foreignKey: "branch_code",
-      sourceKey: "code"
+      sourceKey: "code",
     });
   };
   return Branch;

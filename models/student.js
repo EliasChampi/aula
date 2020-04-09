@@ -1,40 +1,40 @@
 "use strict";
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   const Student = sequelize.define(
     "Student",
     {
       dni: {
         type: DataTypes.STRING,
-        primaryKey: true
+        primaryKey: true,
       },
       name: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
       },
       surname: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
       },
       second_surname: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
       },
       telephone: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
       },
       birthdate: {
-        type: DataTypes.DATE
-      }
+        type: DataTypes.DATE,
+      },
     },
     {
       tableName: "students",
       createdAt: "created_at",
-      updatedAt: "updated_at"
+      updatedAt: "updated_at",
     }
   );
 
-  Student.associate = function(models) {
+  Student.associate = function (models) {
     Student.hasMany(models.Register, {
       as: "registers",
       foreignKey: "student_dni",
-      sourceKey: "dni"
+      sourceKey: "dni",
     });
   };
   return Student;

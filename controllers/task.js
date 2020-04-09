@@ -34,8 +34,26 @@ async function fetchByCodeWithLearn(req, res) {
 async function store(req, res) {
   try {
     const task = req.body;
+    // subir imagen
     await Task.create(task);
-    return res.status(200).json({ message: "Correctamente Actualizado" });
+    return res.status(200).json({ message: "Correctamente Guardado" });
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+}
+
+async function update(req, res) {
+  try {
+    const task = req.body;
+    // cambiar imagen
+    const [updated] = await Task.update(task, {
+      where: {
+        code: req.params.code,
+      },
+    });
+    if (updated) {
+      return res.status(200).json({ message: "Correctamente Actualizado" });
+    }
   } catch (error) {
     return res.status(500).send(error.message);
   }
@@ -45,4 +63,5 @@ module.exports = {
   fetchByLearn,
   fetchByCodeWithLearn,
   store,
+  update,
 };

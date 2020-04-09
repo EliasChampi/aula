@@ -6,7 +6,7 @@ const {
   PASSWORD,
   HOST,
   dialect,
-  pool
+  pool,
 } = require("../config/database.js");
 var fs = require("fs");
 var path = require("path");
@@ -17,28 +17,28 @@ const db = {};
 const operatorsAliases = {
   $like: Op.like,
   $not: Op.not,
-  $and: Op.and
+  $and: Op.and,
 };
 
 const sequelize = new Sequelize(DB, USER, PASSWORD, {
   host: HOST,
   dialect,
   pool,
-  operatorsAliases
+  operatorsAliases,
 });
 
 fs.readdirSync(__dirname)
-  .filter(file => {
+  .filter((file) => {
     return (
       file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
     );
   })
-  .forEach(file => {
+  .forEach((file) => {
     var model = sequelize["import"](path.join(__dirname, file));
     db[model.name] = model;
   });
 
-Object.keys(db).forEach(modelName => {
+Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }

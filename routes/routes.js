@@ -1,12 +1,14 @@
 const { Router } = require("express");
 const router = Router();
 const middleware = require("../middlewares");
+// controllers
 const auth = require("../controllers/auth");
 const op = require("../controllers/operativeTeacher");
 const reg = require("../controllers/register");
 const section = require("../controllers/section");
 const learn = require("../controllers/learnunit");
 const task = require("../controllers/task");
+// routes
 router.post("/auth/signin", auth.signin);
 router.get("/courses/:dni", middleware.verifyToken, op.fetchByTeacher);
 router.get("/regs_by_family/:dni", middleware.verifyToken, reg.fetchByFamily);
@@ -33,4 +35,5 @@ router.get(
 router.get("/tasks_d/:l_code", middleware.verifyToken, task.fetchByLearn);
 router.get("/task/:code", middleware.verifyToken, task.fetchByCodeWithLearn);
 router.post("/task", middleware.verifyToken, task.store);
+router.put("/task/:code", middleware.verifyToken, task.update);
 module.exports = router;

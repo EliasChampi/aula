@@ -4,7 +4,7 @@ const {
   Section,
   Degree,
   Cycle,
-  Branch
+  Branch,
 } = require("../models");
 const { year } = require("../config/utils");
 async function fetchByTeacher(req, res) {
@@ -13,13 +13,13 @@ async function fetchByTeacher(req, res) {
       where: {
         teacher_dni: req.params.dni,
         section_code: {
-          $like: year + "%"
-        }
+          $like: year + "%",
+        },
       },
       include: [
         {
           model: Course,
-          as: "course"
+          as: "course",
         },
         {
           model: Section,
@@ -35,15 +35,15 @@ async function fetchByTeacher(req, res) {
                   include: [
                     {
                       model: Branch,
-                      as: "branch"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
+                      as: "branch",
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
     });
     return res.status(200).json({ values });
   } catch (error) {
@@ -52,5 +52,5 @@ async function fetchByTeacher(req, res) {
 }
 
 module.exports = {
-  fetchByTeacher
+  fetchByTeacher,
 };

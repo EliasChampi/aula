@@ -1,3 +1,3 @@
 module.exports = {
-  year: process.env.YEAR
+  year: process.env.YEAR,
 };

@@ -7,11 +7,11 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Button
+  Button,
 } from "@material-ui/core";
 import { state } from "common/decorator";
 
-const StudentsTable = props => {
+const StudentsTable = (props) => {
   const { students } = props;
   return (
     <PerfectScrollbar>
@@ -28,7 +28,7 @@ const StudentsTable = props => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {students.map(item => (
+          {students.map((item) => (
             <TableRow hover key={item.code}>
               <TableCell>{item.student_dni}</TableCell>
               <TableCell>
@@ -52,7 +52,7 @@ const StudentsTable = props => {
 };
 
 StudentsTable.propTypes = {
-  students: PropTypes.array.isRequired
+  students: PropTypes.array.isRequired,
 };
 
 export default StudentsTable;

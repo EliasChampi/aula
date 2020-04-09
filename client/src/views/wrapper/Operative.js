@@ -5,16 +5,16 @@ import cache from "helpers/cache";
 import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/styles";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   mb: {
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
   },
   ml: {
-    marginLeft: theme.spacing(1)
-  }
+    marginLeft: theme.spacing(1),
+  },
 }));
 
-const Operative = props => {
+const Operative = (props) => {
   const [subtitle, setSubtitle] = useState("");
   const { title, RightButton, children, history, match } = props;
   const classes = useStyles();
@@ -28,11 +28,7 @@ const Operative = props => {
         ${data.section.degree.cycle.branch.name}.
         ${data.course.name}`;
       setSubtitle(title);
-    } else {
     }
-    /* const fetchSection = () => {
-    };
-    fetchSection(); */
     return () => {
       mounted = false;
     };
@@ -68,6 +64,6 @@ const Operative = props => {
 };
 Operative.propTypes = {
   title: PropTypes.string.isRequired,
-  RightButton: PropTypes.any.isRequired
+  RightButton: PropTypes.any.isRequired,
 };
 export default withRouter(Operative);

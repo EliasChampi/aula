@@ -35,7 +35,7 @@ const CreateLearn = ({ courses, history, match, show }) => {
   const classes = useStyles();
   const [title, setTitle] = useState("Crear");
   const [checked, setChecked] = useState([]);
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, setValue } = useForm();
 
   const saveData = (data) => {
     if (title === "Crear") {
@@ -60,6 +60,10 @@ const CreateLearn = ({ courses, history, match, show }) => {
   useEffect(() => {
     const { code } = match.params;
     if (typeof code !== "undefined" && cache.hasThis("learn_" + code)) {
+      const learn = cache.getItem("learn_" + code);
+      setValue("name", learn.name);
+      setValue("trim", learn.trim);
+      setValue("description", learn.description);
       setTitle("Modificar");
     }
     return () => {
@@ -199,6 +203,7 @@ const CreateLearn = ({ courses, history, match, show }) => {
           <Button
             color="primary"
             variant="contained"
+            disabled={!checked.length}
             onClick={handleSubmit(onSubmitForm)}
           >
             Guardar Cambios

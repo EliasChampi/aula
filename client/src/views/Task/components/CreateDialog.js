@@ -40,25 +40,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CreateDialog = ({ open, handleClose, l_code }) => {
+const CreateDialog = ({ open, handleClose, l_code, selected }) => {
   const classes = useStyles();
   const [link, setLink] = useState("");
   const [file, setFile] = useState({});
   const [title, setTitle] = useState("Nueva");
   const { show } = useContext(ToastContext);
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, setValue } = useForm();
 
-  const onSubmitForm = (data) => {
+  const saveData = (data) => {
     data.link = link;
     data.learnunit_code = l_code;
-    api
-      .store(data)
+    if (title === "Nueva") {
+      return api.store(data);
+    }
+    return api.update(data, selected.code);
+  };
+
+  const onSubmitForm = (data) => {
+    saveData(data)
       .then((res) => {
         show(res.message, "success");
-        handleClose();
+        handleClose("saved");
       })
       .catch((error) => {
-        show(error.message, "error");
+        show(error.message || error, "error");
       });
   };
 
@@ -76,10 +82,25 @@ const CreateDialog = ({ open, handleClose, l_code }) => {
     setFile(event.target.files[0]);
   };
 
+  const handleEnter = () => {
+    setValue("title", selected.title);
+    setValue("to_date", selected.to_date);
+    setValue("content", selected.content);
+    if (!!selected.code) {
+      setValue("type", selected.type);
+      setTitle("Modificar");
+      setLink(selected.link);
+    } else {
+      setValue("type", "tr");
+      setTitle("Nueva");
+    }
+  };
+
   return (
     <Dialog
       fullScreen
       open={open}
+      onEnter={() => handleEnter()}
       onClose={handleClose}
       aria-labelledby="form-dialog-title"
       TransitionComponent={Transition}
@@ -225,6 +246,7 @@ const CreateDialog = ({ open, handleClose, l_code }) => {
 
 CreateDialog.propTypes = {
   handleClose: PropTypes.func.isRequired,
+  selected: PropTypes.object,
   open: PropTypes.bool,
 };
 

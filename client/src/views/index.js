@@ -20,5 +20,5 @@ export default {
   LearnUnit,
   CreateLearn,
   Task,
-  Calification
+  Calification,
 };

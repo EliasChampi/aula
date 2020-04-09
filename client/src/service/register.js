@@ -5,23 +5,26 @@ class RegisterService {
     return new Promise((resolve, reject) => {
       request
         .get("/regs_by_family/" + dni)
-        .then(r => {
+        .then((r) => {
           resolve(r.data);
         })
-        .catch(errMessage => {
+        .catch((errMessage) => {
           reject(errMessage);
         });
     });
   }
 
-  fetchBySection (code){
+  fetchBySection(code) {
     return new Promise((resolve, reject) => {
-      request.get("/regs_by_section/" + code).then(r => {
-        resolve(r.data);
-      }).catch(errMessage => {
-        reject(errMessage);
-      })
-    })
+      request
+        .get("/regs_by_section/" + code)
+        .then((r) => {
+          resolve(r.data);
+        })
+        .catch((errMessage) => {
+          reject(errMessage);
+        });
+    });
   }
 }
 

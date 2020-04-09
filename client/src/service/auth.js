@@ -1,5 +1,5 @@
 import cache from "../helpers/cache";
-import request from "./request"
+import request from "./request";
 
 class AuthService {
   // login
@@ -7,11 +7,11 @@ class AuthService {
     return new Promise((resolve, reject) => {
       return request
         .post("/auth/signin", payload)
-        .then(response => {
+        .then((response) => {
           cache.setItem("user", response.data);
           resolve(response.data);
         })
-        .catch(errMessage => {
+        .catch((errMessage) => {
           reject(errMessage);
         });
     });

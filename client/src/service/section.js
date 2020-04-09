@@ -5,7 +5,7 @@ class SectionService {
     return new Promise((resolve, reject) => {
       request
         .get("/section/" + code)
-        .then(r => {
+        .then((r) => {
           const res = r.data.values;
           if (res !== null) {
             const title = `${res.code.substr(-2)} de ${
@@ -16,7 +16,7 @@ class SectionService {
             resolve(false);
           }
         })
-        .catch(errMessage => {
+        .catch((errMessage) => {
           reject(errMessage);
         });
     });

@@ -1,39 +1,39 @@
 "use strict";
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   const Section = sequelize.define(
     "Section",
     {
       code: {
         type: DataTypes.STRING,
-        primaryKey: true
+        primaryKey: true,
       },
       section_name: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
       },
       degree_code: {
-        type: DataTypes.STRING
-      }
+        type: DataTypes.STRING,
+      },
     },
     {
       tableName: "sections",
-      timestamps: false
+      timestamps: false,
     }
   );
-  Section.associate = function(models) {
+  Section.associate = function (models) {
     Section.hasMany(models.OperativeTeacher, {
       as: "teachers",
       foreignKey: "section_code",
-      sourceKey: "code"
+      sourceKey: "code",
     });
     Section.belongsTo(models.Degree, {
       as: "degree",
       foreignKey: "degree_code",
-      targetKey: "code"
+      targetKey: "code",
     });
     Section.hasMany(models.Register, {
       as: "registers",
       foreignKey: "section_code",
-      sourceKey: "code"
+      sourceKey: "code",
     });
   };
   return Section;

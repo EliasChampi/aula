@@ -39,7 +39,7 @@ const Sidebar = props => {
 
   const pages = [
     {
-      title: "Inicio",
+      title: "Dashboard",
       href: "/dashboard",
       icon: <DashboardIcon />
     },

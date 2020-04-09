@@ -5,10 +5,10 @@ class LearnUnitService {
     return new Promise((resolve, reject) => {
       request
         .get("/learns/" + op_code)
-        .then(r => {
+        .then((r) => {
           resolve(r.data);
         })
-        .catch(errMessage => {
+        .catch((errMessage) => {
           reject(errMessage);
         });
     });
@@ -18,10 +18,10 @@ class LearnUnitService {
     return new Promise((resolve, reject) => {
       request
         .get("/learn/" + code)
-        .then(r => {
+        .then((r) => {
           resolve(r.data);
         })
-        .catch(errMessage => {
+        .catch((errMessage) => {
           reject(errMessage);
         });
     });
@@ -31,10 +31,10 @@ class LearnUnitService {
     return new Promise((resolve, reject) => {
       request
         .post("/learns", data)
-        .then(r => {
+        .then((r) => {
           resolve(r.data);
         })
-        .catch(errMessage => {
+        .catch((errMessage) => {
           reject(errMessage);
         });
     });
@@ -44,10 +44,10 @@ class LearnUnitService {
     return new Promise((resolve, reject) => {
       request
         .put("/learns/" + code, data)
-        .then(r => {
+        .then((r) => {
           resolve(r.data);
         })
-        .catch(errMessage => {
+        .catch((errMessage) => {
           reject(errMessage);
         });
     });

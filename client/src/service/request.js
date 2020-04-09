@@ -5,20 +5,20 @@ import cache from "../helpers/cache";
  */
 const request = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
-  timeout: 100000
+  timeout: 100000,
 });
 
 /**
  * this is main configuration for request data
  */
 request.interceptors.request.use(
-  config => {
+  (config) => {
     if (cache.hasThis("user")) {
       config.headers["x-access-token"] = cache.getItem("user").accessToken;
     }
     return config;
   },
-  error => {
+  (error) => {
     return Promise.reject(error);
   }
 );
@@ -27,12 +27,12 @@ request.interceptors.request.use(
  * this is main configuration for given data from api
  */
 request.interceptors.response.use(
-  response => {
+  (response) => {
     return response;
   },
-  error => {
+  (error) => {
     let errData = {
-      message: "No tienes conexion a Internet"
+      message: "No tienes conexion a Internet",
     };
     if (error.response) {
       errData = error.response.data;

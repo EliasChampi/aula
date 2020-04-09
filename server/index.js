@@ -12,7 +12,7 @@ db.sequelize.sync();
 routes(app);
 
 app.use(express.static(join(__dirname, "client/build")));
-app.get("*", function(req, res) {
+app.get("*", function (req, res) {
   res.sendFile(join(__dirname, "client", "build", "index.html"));
 });
 

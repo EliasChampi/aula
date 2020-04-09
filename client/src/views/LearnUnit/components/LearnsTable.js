@@ -6,13 +6,11 @@ import {
   TableCell,
   TableBody,
   TableRow,
-  IconButton
+  Button,
 } from "@material-ui/core";
-import CreateIcon from "@material-ui/icons/Create";
-import AsignIcon from "@material-ui/icons/Assignment";
 import PropTypes from "prop-types";
-import moment from "moment";
-const LearnsTable = props => {
+import moment from "common/moment";
+const LearnsTable = (props) => {
   const { learns, handleEdit, handleTask } = props;
   return (
     <PerfectScrollbar>
@@ -23,12 +21,11 @@ const LearnsTable = props => {
             <TableCell>Trimestre</TableCell>
             <TableCell>Nombre</TableCell>
             <TableCell>Fecha de Creación</TableCell>
-            <TableCell>Ver Tareas</TableCell>
-            <TableCell>Modificar</TableCell>
+            <TableCell>Acciones</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {learns.map(item => (
+          {learns.map((item) => (
             <TableRow hover key={item.code}>
               <TableCell>{item.code}</TableCell>
               <TableCell>{item.trim}</TableCell>
@@ -37,24 +34,21 @@ const LearnsTable = props => {
                 {moment(item.created_at).format("DD [de] MMMM [del] YYYY")}
               </TableCell>
               <TableCell>
-                <IconButton
+                <Button
+                  variant="contained"
                   color="primary"
-                  aria-label="tareas"
-                  component="span"
+                  size="small"
                   onClick={() => handleTask(item)}
                 >
-                  <AsignIcon />
-                </IconButton>
-              </TableCell>
-              <TableCell>
-                <IconButton
-                  color="primary"
-                  aria-label="modificar"
-                  component="span"
+                  Ver Tareas
+                </Button>
+                <Button
+                  variant="contained"
+                  size="small"
                   onClick={() => handleEdit(item)}
                 >
-                  <CreateIcon />
-                </IconButton>
+                  Modificar
+                </Button>
               </TableCell>
             </TableRow>
           ))}
@@ -67,7 +61,7 @@ const LearnsTable = props => {
 LearnsTable.propTypes = {
   learns: PropTypes.array.isRequired,
   handleEdit: PropTypes.func,
-  handleTask: PropTypes.func
+  handleTask: PropTypes.func,
 };
 
 export default LearnsTable;

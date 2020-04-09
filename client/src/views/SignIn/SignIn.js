@@ -95,13 +95,13 @@ const SignIn = (props) => {
               <RadioGroup row name="type" defaultValue="apoderado">
                 <FormControlLabel
                   value="apoderado"
-                  control={<Radio inputRef={register} color="primary" />}
+                  control={<Radio inputRef={register} />}
                   label="Apoderado"
                   labelPlacement="end"
                 />
                 <FormControlLabel
                   value="docente"
-                  control={<Radio inputRef={register} color="primary" />}
+                  control={<Radio inputRef={register} />}
                   label="Docente"
                   labelPlacement="end"
                 />
@@ -116,7 +116,7 @@ const SignIn = (props) => {
               label="Ingrese su DNI"
               inputRef={register({
                 required: "DNI es requerido",
-                validate: value => value.length ===8
+                validate: (value) => value.length === 8,
               })}
               name="dni"
             />

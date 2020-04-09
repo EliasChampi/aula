@@ -3,7 +3,7 @@ async function fetchByCodeWithRelations(req, res) {
   try {
     const values = await Section.findOne({
       where: {
-        code: req.params.code
+        code: req.params.code,
       },
       include: [
         {
@@ -16,13 +16,13 @@ async function fetchByCodeWithRelations(req, res) {
               include: [
                 {
                   model: Branch,
-                  as: "branch"
-                }
-              ]
-            }
-          ]
-        }
-      ]
+                  as: "branch",
+                },
+              ],
+            },
+          ],
+        },
+      ],
     });
     return res.status(200).json({ values });
   } catch (error) {
@@ -31,5 +31,5 @@ async function fetchByCodeWithRelations(req, res) {
 }
 
 module.exports = {
-  fetchByCodeWithRelations
+  fetchByCodeWithRelations,
 };

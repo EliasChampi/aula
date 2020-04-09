@@ -4,7 +4,7 @@ import {
   CardHeader,
   Divider,
   CardContent,
-  Button
+  Button,
 } from "@material-ui/core";
 import api from "service/learnunit";
 import { ToastContext } from "context/toast";
@@ -22,12 +22,12 @@ const LearnUnit = ({ match, history }) => {
     const fetchLearns = () => {
       api
         .fetchByOperative(op_code)
-        .then(r => {
+        .then((r) => {
           if (mounted) {
             setlearns(r.values);
           }
         })
-        .catch(err => {
+        .catch((err) => {
           show(err.message, "error");
         });
     };
@@ -48,12 +48,12 @@ const LearnUnit = ({ match, history }) => {
     </Button>
   );
 
-  const handleEdit = item => {
+  const handleEdit = (item) => {
     cache.setItem("learn_" + item.code, item);
     history.push(`/modificar_unidad/${item.code}`);
   };
 
-  const handleTask = item => {
+  const handleTask = (item) => {
     history.push(`/tareas/${section_code}/${op_code}/${item.code}`);
   };
 

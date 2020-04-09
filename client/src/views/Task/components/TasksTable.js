@@ -6,12 +6,12 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  IconButton
+  IconButton,
+  Button,
 } from "@material-ui/core";
 import moment from "moment";
 import DownloadIcon from "@material-ui/icons/CloudDownload";
-import DescriptionIcon from "@material-ui/icons/DescriptionRounded";
-const TasksTable = props => {
+const TasksTable = (props) => {
   const { tasks } = props;
   return (
     <Table>
@@ -21,11 +21,11 @@ const TasksTable = props => {
           <TableCell>Titulo</TableCell>
           <TableCell>Fecha de Entrega</TableCell>
           <TableCell>Adjunto</TableCell>
-          <TableCell>Calificaciones</TableCell>
+          <TableCell>Acciones</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        {tasks.map(item => (
+        {tasks.map((item) => (
           <TableRow key={item.code}>
             <TableCell>{item.code}</TableCell>
             <TableCell>{item.title}</TableCell>
@@ -36,9 +36,9 @@ const TasksTable = props => {
               </IconButton>
             </TableCell>
             <TableCell>
-              <IconButton color="secondary">
-                <DescriptionIcon />
-              </IconButton>
+              <Button variant="contained" color="primary" size="small">
+                Calificaciones
+              </Button>
             </TableCell>
           </TableRow>
         ))}
@@ -48,6 +48,6 @@ const TasksTable = props => {
 };
 
 TasksTable.propTypes = {
-  tasks: PropTypes.array.isRequired
+  tasks: PropTypes.array.isRequired,
 };
 export default TasksTable;

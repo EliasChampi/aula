@@ -7,25 +7,25 @@ import {
   CardContent,
   CardHeader,
   Divider,
-  Button
+  Button,
 } from "@material-ui/core";
 import Operative from "views/Wrapper/Operative";
 
 const BySection = ({ match }) => {
   const { show } = useContext(ToastContext);
   const [registers, setRegisters] = useState([]);
-  const { op_code, section_code } = match.params;
+  const { section_code } = match.params;
   useEffect(() => {
     let mounted = true;
     const fetchData = () => {
       api
         .fetchBySection(section_code)
-        .then(r => {
+        .then((r) => {
           if (mounted) {
             setRegisters(r.values);
           }
         })
-        .catch(err => {
+        .catch((err) => {
           show(err.message);
         });
     };
