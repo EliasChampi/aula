@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { Switch, Redirect } from "react-router-dom";
 import { AuthContext } from "./context/auth";
 import { ProtectedRoute, PublicRoute } from "./components";
-
 import view from "./views";
 
 const Routes = () => {
@@ -34,6 +33,12 @@ const Routes = () => {
         exact
         isAuthed={isAuthed}
         path="/tareas/:section_code/:op_code/:code"
+      />
+      <ProtectedRoute
+        component={view.Calification}
+        exact
+        isAuthed={isAuthed}
+        path="/calificaciones/:section_code/:code"
       />
       <ProtectedRoute
         component={view.CreateLearn}

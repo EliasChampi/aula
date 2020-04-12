@@ -9,13 +9,11 @@ import {
   List,
   Typography,
 } from "@material-ui/core";
-import { TasksTable } from "./components";
+import { TasksTable, CreateDialog, NewItems } from "./components";
 import learnapi from "service/learnunit";
 import api from "service/task";
 import { ToastContext } from "context/toast";
-import NewItems from "./components/NewItems";
 import moment from "common/moment";
-import CreateDialog from "./components/CreateDialog";
 const Task = (props) => {
   const [prioriTasks, setPrioriTasks] = useState([]);
   const [tasks, setTasks] = useState([]);
@@ -25,8 +23,10 @@ const Task = (props) => {
   const { show } = useContext(ToastContext);
   const {
     match: {
-      params: { code },
+      params: { code, section_code },
     },
+
+    history,
   } = props;
 
   const RightButton = () => (
@@ -44,6 +44,10 @@ const Task = (props) => {
   const handleEdit = (item) => {
     setSelected(item);
     setOpen(true);
+  };
+
+  const handleCaliClick = (code) => {
+    history.push(`/calificaciones/${section_code}/${code}`);
   };
 
   const handleClose = (mode = "canceled") => {
@@ -113,7 +117,7 @@ const Task = (props) => {
           <Typography variant="subtitle2" component="b">
             Tareas ya entregados
           </Typography>
-          <TasksTable tasks={tasks} />
+          <TasksTable tasks={tasks} handleCaliClick={handleCaliClick} />
         </CardContent>
       </Card>
       <CreateDialog

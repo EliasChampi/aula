@@ -64,6 +64,6 @@ const Operative = (props) => {
 };
 Operative.propTypes = {
   title: PropTypes.string.isRequired,
-  RightButton: PropTypes.any.isRequired,
+  RightButton: PropTypes.any,
 };
 export default withRouter(Operative);

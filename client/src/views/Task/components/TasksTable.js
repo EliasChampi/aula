@@ -11,8 +11,7 @@ import {
 } from "@material-ui/core";
 import moment from "moment";
 import DownloadIcon from "@material-ui/icons/CloudDownload";
-const TasksTable = (props) => {
-  const { tasks } = props;
+const TasksTable = ({ tasks, handleCaliClick }) => {
   return (
     <Table>
       <TableHead>
@@ -36,7 +35,12 @@ const TasksTable = (props) => {
               </IconButton>
             </TableCell>
             <TableCell>
-              <Button variant="contained" color="primary" size="small">
+              <Button
+                variant="contained"
+                onClick={() => handleCaliClick(item.code)}
+                color="primary"
+                size="small"
+              >
                 Calificaciones
               </Button>
             </TableCell>
@@ -49,5 +53,6 @@ const TasksTable = (props) => {
 
 TasksTable.propTypes = {
   tasks: PropTypes.array.isRequired,
+  handleCaliClick: PropTypes.func,
 };
 export default TasksTable;

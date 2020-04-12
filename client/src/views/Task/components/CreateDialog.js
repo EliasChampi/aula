@@ -38,6 +38,10 @@ const useStyles = makeStyles((theme) => ({
   mt: {
     marginTop: theme.spacing(1),
   },
+  responsive: {
+    width: "100%",
+    height: "auto",
+  },
 }));
 
 const CreateDialog = ({ open, handleClose, l_code, selected }) => {
@@ -189,11 +193,19 @@ const CreateDialog = ({ open, handleClose, l_code, selected }) => {
                 })}
                 name="content"
               />
+              <Typography variant="h4">
+                Usa un video para esta tarea pegando el ID del video de youtube
+              </Typography>
+              <img
+                src="/images/youtube.png"
+                alt="youtube help"
+                className={classes.responsive}
+              />
               <FormControl fullWidth margin="dense" className={classes.mt}>
                 <Input
                   id="link"
                   type="url"
-                  placeholder="pega tu link de video aqui"
+                  placeholder="pega tu ID de video aqui"
                   readOnly
                   value={link}
                   endAdornment={
@@ -210,6 +222,9 @@ const CreateDialog = ({ open, handleClose, l_code, selected }) => {
                   }
                 />
               </FormControl>
+              <Typography variant="h4">
+                Usa un documento adjunto para detallar
+              </Typography>
               <FormControl fullWidth margin="dense" className={classes.mt}>
                 <Input
                   id="mifyle"

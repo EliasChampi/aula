@@ -8,7 +8,7 @@ import BySection from "./Register/BySection";
 import LearnUnit from "./LearnUnit/LearnUnit";
 import CreateLearn from "./LearnUnit/Create";
 import Task from "./Task/Task";
-import Calification from "./Register/Calification";
+import Calification from "./Task/Calification";
 export default {
   Account,
   NotFound,
