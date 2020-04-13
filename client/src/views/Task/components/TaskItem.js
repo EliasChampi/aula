@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import api from "service/task";
 import { ToastContext } from "context/toast";
-import { Header } from "views/Course/components";
+import { Header } from "components";
 import { taskType, mydate } from "common/decorator";
 import { red } from "@material-ui/core/colors";
 import YouTubeIcon from "@material-ui/icons/YouTube";

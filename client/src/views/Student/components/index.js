@@ -1,1 +1,1 @@
-export { default as StudentsTable } from "./StudentsTable"
+export { default as StudentCard } from "./StudentCard";

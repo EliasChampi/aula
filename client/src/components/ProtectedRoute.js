@@ -3,12 +3,12 @@ import { Route, Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Main } from "layouts";
 
-const ProtectedRoute = props => {
+const ProtectedRoute = (props) => {
   const { isAuthed, component: Component, ...rest } = props;
   return (
     <Route
       {...rest}
-      render={matchProps => {
+      render={(matchProps) => {
         if (isAuthed) {
           return (
             <Main>
@@ -24,7 +24,7 @@ const ProtectedRoute = props => {
 
 ProtectedRoute.propTypes = {
   component: PropTypes.any.isRequired,
-  isAuthed: PropTypes.any.isRequired
+  isAuthed: PropTypes.any.isRequired,
 };
 
 export default ProtectedRoute;

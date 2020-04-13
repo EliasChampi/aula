@@ -8,6 +8,7 @@ import {
   Button,
   List,
   Typography,
+  Grid,
 } from "@material-ui/core";
 import { TasksTable, CreateDialog, NewItems } from "./components";
 import learnapi from "service/learnunit";
@@ -103,16 +104,20 @@ const Task = (props) => {
             Tareas por entregar
           </Typography>
           <List>
-            {prioriTasks.map((item, index) => (
-              <NewItems
-                key={index}
-                primaryText={item.title}
-                handleEdit={() => handleEdit(item)}
-                secondaryText={`Para ${moment(item.to_date).format(
-                  "DD [de] MMMM"
-                )}`}
-              />
-            ))}
+            <Grid container spacing={3}>
+              {prioriTasks.map((item, index) => (
+                <Grid item key={index}>
+                  <NewItems
+                    title={item.title}
+                    to_date={`Para ${moment(item.to_date).format(
+                      "DD [de] MMMM"
+                    )}`}
+                    handleEdit={() => handleEdit(item)}
+                    handleCaliClick={() => handleCaliClick(item.code)}
+                  />
+                </Grid>
+              ))}
+            </Grid>
           </List>
           <Typography variant="subtitle2" component="b">
             Tareas ya entregados

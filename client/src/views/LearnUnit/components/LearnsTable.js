@@ -1,5 +1,4 @@
 import React from "react";
-import PerfectScrollbar from "react-perfect-scrollbar";
 import {
   Table,
   TableHead,
@@ -7,13 +6,15 @@ import {
   TableBody,
   TableRow,
   Button,
+  TableContainer,
+  Paper,
 } from "@material-ui/core";
 import PropTypes from "prop-types";
-import moment from "common/moment";
+import { mydate } from "common/decorator";
 const LearnsTable = (props) => {
   const { learns, handleEdit, handleTask } = props;
   return (
-    <PerfectScrollbar>
+    <TableContainer component={Paper}>
       <Table>
         <TableHead>
           <TableRow>
@@ -30,9 +31,7 @@ const LearnsTable = (props) => {
               <TableCell>{item.code}</TableCell>
               <TableCell>{item.trim}</TableCell>
               <TableCell>{item.name}</TableCell>
-              <TableCell>
-                {moment(item.created_at).format("DD [de] MMMM [del] YYYY")}
-              </TableCell>
+              <TableCell>{mydate(item.created_at)}</TableCell>
               <TableCell>
                 <Button
                   variant="contained"
@@ -40,7 +39,7 @@ const LearnsTable = (props) => {
                   size="small"
                   onClick={() => handleTask(item)}
                 >
-                  Ver Tareas
+                  Tareas
                 </Button>
                 <Button
                   variant="contained"
@@ -54,7 +53,7 @@ const LearnsTable = (props) => {
           ))}
         </TableBody>
       </Table>
-    </PerfectScrollbar>
+    </TableContainer>
   );
 };
 

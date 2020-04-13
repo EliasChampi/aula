@@ -20,11 +20,10 @@ import {
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import withCourses from "components/hoc/withCourses";
-import cache from "helpers/cache";
-import { Header } from "views/Course/components";
+import { Header, withCourses } from "components";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import cache from "helpers/cache";
 const useStyles = makeStyles((theme) => ({
   margin: {
     margin: theme.spacing(1),

@@ -1,21 +1,11 @@
 const { Register, Student, Section, Degree, Cycle } = require("../models");
-const { literal } = require("sequelize");
-async function fetchByFamily(req, res) {
+async function fetchByStudent(req, res) {
   try {
     const values = await Register.findAll({
+      where: {
+        student_dni: req.params.dni,
+      },
       include: [
-        {
-          model: Student,
-          as: "student",
-          where: {
-            $and: [
-              literal(`exists (
-                select * from family_student where student_dni = student.dni and exists (
-                  select * from families where code = family_student.family_code and dni = '${req.params.dni}'
-                ))`),
-            ],
-          },
-        },
         {
           model: Section,
           as: "section",
@@ -60,6 +50,6 @@ async function fetchBySection(req, res) {
 }
 
 module.exports = {
-  fetchByFamily,
+  fetchByStudent,
   fetchBySection,
 };

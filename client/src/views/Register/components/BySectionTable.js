@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PerfectScrollbar from "react-perfect-scrollbar";
 import {
   Table,
   TableBody,
@@ -8,13 +7,15 @@ import {
   TableHead,
   TableRow,
   Button,
+  TableContainer,
+  Paper,
 } from "@material-ui/core";
 import moment from "common/moment";
 import { state } from "common/decorator";
 const BySectionTable = (props) => {
   const { data } = props;
   return (
-    <PerfectScrollbar>
+    <TableContainer component={Paper}>
       <Table>
         <TableHead>
           <TableRow>
@@ -45,7 +46,7 @@ const BySectionTable = (props) => {
           ))}
         </TableBody>
       </Table>
-    </PerfectScrollbar>
+    </TableContainer>
   );
 };
 

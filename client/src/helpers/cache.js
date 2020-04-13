@@ -19,7 +19,7 @@ export default {
    * @param {string} key
    * @returns {Boolean}
    */
-  hasThis: key => {
+  hasThis: (key) => {
     return storage.hasOwnProperty(key);
   },
 
@@ -27,7 +27,7 @@ export default {
    * @param {string} key
    * @returns {Object}
    */
-  getItem: key => {
+  getItem: (key) => {
     return JSON.parse(storage.getItem(key));
   },
 
@@ -49,7 +49,7 @@ export default {
    * @param {string} key
    * @returns  {void}
    */
-  removeItem: key => {
+  removeItem: (key) => {
     return storage.removeItem(key);
-  }
+  },
 };

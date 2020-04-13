@@ -33,7 +33,7 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.STRING(100),
         allowNull: true,
         validate: {
-          len: [10, 100],
+          len: [10, 12],
         },
       },
       to_date: {

@@ -10,19 +10,19 @@ import InputIcon from "@material-ui/icons/Input";
 import { AuthContext } from "context/auth";
 import AuthService from "../../../service/auth";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    boxShadow: "none"
+    boxShadow: "none",
   },
   flexGrow: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   signOutButton: {
-    marginLeft: theme.spacing(1)
-  }
+    marginLeft: theme.spacing(1),
+  },
 }));
 
-const Topbar = props => {
+const Topbar = (props) => {
   const { className, onSidebarOpen, ...rest } = props;
   const { setUser } = useContext(AuthContext);
   const classes = useStyles();
@@ -35,7 +35,7 @@ const Topbar = props => {
     <AppBar {...rest} className={clsx(classes.root, className)}>
       <Toolbar>
         <RouterLink to="/">
-          <img alt="Logo" width="150" src="/images/logos/logo_name.png" />
+          <img alt="Logo" width="150" src="/images/logo.png" />
         </RouterLink>
         <div className={classes.flexGrow} />
         <Hidden mdDown>
@@ -68,7 +68,7 @@ const Topbar = props => {
 
 Topbar.propTypes = {
   className: PropTypes.string,
-  onSidebarOpen: PropTypes.func
+  onSidebarOpen: PropTypes.func,
 };
 
 export default Topbar;

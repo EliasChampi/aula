@@ -1,16 +1,10 @@
 import React from "react";
-import { CoursesTable, Header } from "./components";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  Divider,
-  Button
-} from "@material-ui/core";
-import cache from "helpers/cache";
+import { CourseCard } from "./components";
+import { withCourses, Header } from "components";
+import { Button, Grid } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import WithCourses from "../../components/hoc/withCourses";
-import { dayname } from "common";
+import { dayname } from "common/utils";
+import cache from "helpers/cache";
 
 const Course = ({ courses, history, user }) => {
   const handleAction = (from, item) => {
@@ -39,15 +33,15 @@ const Course = ({ courses, history, user }) => {
         title={dayname(user.name)}
         RightButton={RightButton}
       />
-      <Card>
-        <CardHeader subheader="" title="Cursos y Secciónes" />
-        <Divider />
-        <CardContent>
-          <CoursesTable courses={courses} handleAction={handleAction} />
-        </CardContent>
-      </Card>
+      <Grid container spacing={3}>
+        {courses.map((item) => (
+          <Grid item key={item.code}>
+            <CourseCard course={item} handleAction={handleAction} />
+          </Grid>
+        ))}
+      </Grid>
     </React.Fragment>
   );
 };
 
-export default WithCourses(Course);
+export default withCourses(Course);

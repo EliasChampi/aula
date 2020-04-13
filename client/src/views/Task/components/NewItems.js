@@ -1,51 +1,55 @@
 import React from "react";
 import PropTypes from "prop-types";
-import CreateIcon from "@material-ui/icons/Create";
-import { pink } from "@material-ui/core/colors";
 import {
-  ListItem,
-  ListItemAvatar,
-  Avatar,
-  ListItemText,
-  ListItemSecondaryAction,
-  Divider,
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
   Button,
+  Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-const useStyles = makeStyles((theme) => ({
-  pink: {
-    color: theme.palette.getContrastText(pink[500]),
-    backgroundColor: pink[500],
-    cursor: "pointer",
+import { orange } from "@material-ui/core/colors";
+const useStyles = makeStyles(() => ({
+  card: {
+    borderTop: "5px solid " + orange[500],
+  },
+  CardContent: {
+    textAlign: "center",
   },
 }));
-const NewItems = (props) => {
-  const { primaryText, secondaryText, handleEdit } = props;
+const NewItems = ({ title, to_date, handleEdit, handleCaliClick }) => {
   const classes = useStyles();
   return (
-    <React.Fragment>
-      <ListItem>
-        <ListItemAvatar>
-          <Avatar className={classes.pink} onClick={handleEdit}>
-            <CreateIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary={primaryText} secondary={secondaryText} />
-        <ListItemSecondaryAction>
-          <Button edge="end" variant="contained" color="primary">
-            Calificaciones
-          </Button>
-        </ListItemSecondaryAction>
-      </ListItem>
-      <Divider variant="inset" component="li" />
-    </React.Fragment>
+    <Card className={classes.card}>
+      <CardMedia
+        height={120}
+        component="img"
+        image={`/images/back.png`}
+        title="Tarea"
+        alt="Back de Tarea"
+      />
+      <CardContent className={classes.CardContent}>
+        <Typography variant="h4">{title}</Typography>
+        <Typography variant="subtitle2">{to_date}</Typography>
+      </CardContent>
+      <CardActions>
+        <Button color="primary" onClick={handleEdit}>
+          Modificar
+        </Button>
+        <Button color="primary" onClick={handleCaliClick}>
+          Revisar
+        </Button>
+      </CardActions>
+    </Card>
   );
 };
 
 NewItems.propTypes = {
-  primaryText: PropTypes.string.isRequired,
-  secondaryText: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  to_date: PropTypes.string.isRequired,
   handleEdit: PropTypes.func,
+  handleCaliClick: PropTypes.func,
 };
 
 export default NewItems;

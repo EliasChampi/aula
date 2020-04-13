@@ -1,16 +1,38 @@
 import React, { useState, useEffect, useContext } from "react";
-import StudentTable from "./components/StudentsTable";
 import { AuthContext } from "context/auth";
-import api from "service/register";
+import api from "service/student";
+import regApi from "service/register";
 import { ToastContext } from "context/toast";
-import { Card, CardContent, CardHeader, Divider } from "@material-ui/core";
-import { Header } from "views/Course/components";
-import { dayname } from "common";
+import {
+  Grid,
+  Button,
+} from "@material-ui/core";
+import { Header } from "components";
+import { dayname } from "common/utils";
+import { StudentCard } from "./components";
 const Student = () => {
   const { user } = useContext(AuthContext);
   const { show } = useContext(ToastContext);
   const [students, setStudents] = useState([]);
+  const [regs, setRegs] = useState([]);
+  const [selected, setSelected] = useState("");
 
+  const RightButton = () => (
+    <Button variant="contained" color="primary">
+      My Button
+    </Button>
+  );
+  const handleExpandedClick = (dni) => {
+    regApi
+      .fetchByStudent(dni)
+      .then((r) => {
+        setRegs(r.values);
+        setSelected(dni);
+      })
+      .catch((err) => {
+        show(err.message, "error");
+      });
+  };
   useEffect(() => {
     let mounted = true;
     const fetchStudents = () => {
@@ -33,19 +55,22 @@ const Student = () => {
   return (
     <React.Fragment>
       <Header
-        subtitle="Estudiantes de las cuales soy Apoderado"
-        title={dayname()}
+        subtitle="Aqui estan tus estudiantes registrados"
+        title={dayname(user.name)}
+        RightButton={RightButton}
       />
-      <Card>
-        <CardHeader
-          subheader="Estudiantes de las cuales soy Apoderado"
-          title="Listado de Estudiantes"
-        />
-        <Divider />
-        <CardContent>
-          <StudentTable students={students} />
-        </CardContent>
-      </Card>
+      <Grid container spacing={3}>
+        {students.map((item) => (
+          <Grid item key={item.dni}>
+            <StudentCard
+              student={item}
+              selected={selected}
+              regs={regs}
+              handleExpandedClick={() => handleExpandedClick(item.dni)}
+            />
+          </Grid>
+        ))}
+      </Grid>
     </React.Fragment>
   );
 };

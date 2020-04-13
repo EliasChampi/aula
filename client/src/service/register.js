@@ -1,10 +1,10 @@
 import request from "./request";
 
 class RegisterService {
-  fetchByFamily(dni) {
+  fetchByStudent(dni) {
     return new Promise((resolve, reject) => {
       request
-        .get("/regs_by_family/" + dni)
+        .get("/regs_by_stu/" + dni)
         .then((r) => {
           resolve(r.data);
         })

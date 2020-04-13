@@ -8,10 +8,13 @@ const reg = require("../controllers/register");
 const section = require("../controllers/section");
 const learn = require("../controllers/learnunit");
 const task = require("../controllers/task");
+const stu = require("../controllers/student");
 // routes
 router.post("/auth/signin", auth.signin);
 router.get("/courses/:dni", middleware.verifyToken, op.fetchByTeacher);
-router.get("/regs_by_family/:dni", middleware.verifyToken, reg.fetchByFamily);
+// yup!
+router.get("/stus_by_family/:dni", middleware.verifyToken, stu.fetchByFamily);
+router.get("/regs_by_stu/:dni", middleware.verifyToken, reg.fetchByStudent);
 
 router.get(
   "/regs_by_section/:section_code",
