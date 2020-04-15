@@ -6,6 +6,7 @@ import learnapi from "service/learnunit";
 import api from "service/task";
 import { ToastContext } from "context/toast";
 import moment from "common/moment";
+import { yourdate } from "common/decorator";
 const Task = (props) => {
   const [prioriTasks, setPrioriTasks] = useState([]);
   const [tasks, setTasks] = useState([]);
@@ -108,9 +109,7 @@ const Task = (props) => {
               <Grid item key={index}>
                 <NewItem
                   title={item.title}
-                  to_date={`Para ${moment(item.to_date).format(
-                    "DD [de] MMMM"
-                  )}`}
+                  to_date={`Para ${yourdate(item.to_date)}`}
                   handleEdit={() => handleEdit(item)}
                   handleCaliClick={() => handleCaliClick(item.code)}
                 />

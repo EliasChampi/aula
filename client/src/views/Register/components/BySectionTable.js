@@ -11,7 +11,7 @@ import {
   Paper,
 } from "@material-ui/core";
 import moment from "common/moment";
-import { state } from "common/decorator";
+import { state, yourdate } from "common/decorator";
 const BySectionTable = (props) => {
   const { data } = props;
   return (
@@ -35,7 +35,7 @@ const BySectionTable = (props) => {
               <TableCell>{state[item.state]}</TableCell>
               <TableCell>{item.student.telephone}</TableCell>
               <TableCell>
-                {moment(item.student.birthdate).format("DD [de] MMMM")}
+                {yourdate(item.student.birthdate)}
               </TableCell>
               <TableCell>
                 <Button color="primary" size="small" variant="contained">

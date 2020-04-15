@@ -11,6 +11,7 @@ import {
   Paper,
 } from "@material-ui/core";
 import moment from "moment";
+import { yourdate } from "common/decorator";
 const TasksTable = ({ tasks, handleCaliClick }) => {
   return (
     <TableContainer component={Paper}>
@@ -28,9 +29,7 @@ const TasksTable = ({ tasks, handleCaliClick }) => {
             <TableRow hover key={item.code}>
               <TableCell>{item.code}</TableCell>
               <TableCell>{item.title}</TableCell>
-              <TableCell>
-                {moment(item.to_date).format("DD [de] MMMM")}
-              </TableCell>
+              <TableCell>{yourdate(item.to_date)}</TableCell>
               <TableCell>
                 <Button
                   variant="contained"
