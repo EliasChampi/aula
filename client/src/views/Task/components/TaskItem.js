@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
+import PropTypes from "prop-types";
 import api from "service/task";
-import { ToastContext } from "context/toast";
 import { Header } from "components";
 import { taskType, mydate } from "common/decorator";
 import { red } from "@material-ui/core/colors";
@@ -37,13 +37,9 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(2),
   },
 }));
-const TaskItem = ({ match }) => {
-  const {
-    params: { code },
-  } = match;
+const TaskItem = ({ code, handleBackClick, show }) => {
   const [task, setTask] = useState({});
   const [loading, setLoading] = useState(true);
-  const { show } = useContext(ToastContext);
   const classes = useStyles();
 
   useEffect(() => {
@@ -70,8 +66,8 @@ const TaskItem = ({ match }) => {
   }, []);
 
   const RightButton = () => (
-    <Button variant="contained" color="primary">
-      Ver mis Tareas
+    <Button variant="contained" color="primary" onClick={handleBackClick}>
+      Volver a tareas
     </Button>
   );
 
@@ -138,4 +134,10 @@ const TaskItem = ({ match }) => {
     </React.Fragment>
   );
 };
+TaskItem.propTypes = {
+  code: PropTypes.string.isRequired,
+  handleBackClick: PropTypes.func.isRequired,
+  show: PropTypes.func.isRequired,
+};
+
 export default TaskItem;

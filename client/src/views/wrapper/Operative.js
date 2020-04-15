@@ -14,9 +14,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Operative = (props) => {
+const Operative = ({ title, RightButton, children, history, match }) => {
   const [subtitle, setSubtitle] = useState("");
-  const { title, RightButton, children, history, match } = props;
   const classes = useStyles();
   useEffect(() => {
     let mounted = true;

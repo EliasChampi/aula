@@ -70,7 +70,7 @@ const StudentCard = ({ student, regs, selected, handleExpandedClick }) => {
                 button
                 key={item.code}
                 component={Link}
-                to={`/estudiante/${student.dni}/${item.section.code}`}
+                to={`/estudiante/${student.dni}/${item.section.code}/${item.code}`}
               >
                 <ListItemIcon>
                   <FolderSharedIcon />
