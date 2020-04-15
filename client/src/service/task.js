@@ -14,6 +14,19 @@ class TaskService {
     });
   }
 
+  fetchBySec(section_code) {
+    return new Promise((resolve, reject) => {
+      request
+        .get("/tasks/" + section_code)
+        .then((r) => {
+          resolve(r.data);
+        })
+        .catch((errMessage) => {
+          reject(errMessage);
+        });
+    });
+  }
+
   fetchByCodeWithLearn(code) {
     return new Promise((resolve, reject) => {
       request

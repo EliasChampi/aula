@@ -14,6 +14,7 @@ router.post("/auth/signin", auth.signin);
 router.get("/courses/:dni", middleware.verifyToken, op.fetchByTeacher);
 // yup!
 router.get("/stus_by_family/:dni", middleware.verifyToken, stu.fetchByFamily);
+router.get("/stu_by_code/:dni", middleware.verifyToken, stu.fetchByCode);
 router.get("/regs_by_stu/:dni", middleware.verifyToken, reg.fetchByStudent);
 
 router.get(
@@ -36,6 +37,7 @@ router.get(
   learn.fetchOperatives
 );
 router.get("/tasks_d/:l_code", middleware.verifyToken, task.fetchByLearn);
+router.get("/tasks/:s_code", middleware.verifyToken, task.fetchBySec);
 router.get("/task/:code", middleware.verifyToken, task.fetchByCodeWithLearn);
 router.post("/task", middleware.verifyToken, task.store);
 router.put("/task/:code", middleware.verifyToken, task.update);

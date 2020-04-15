@@ -1,16 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import Operative from "views/Wrapper/Operative";
-import {
-  Card,
-  CardHeader,
-  Divider,
-  CardContent,
-  Button,
-  List,
-  Typography,
-  Grid,
-} from "@material-ui/core";
-import { TasksTable, CreateDialog, NewItems } from "./components";
+import { Divider, Button, Typography, Grid } from "@material-ui/core";
+import { TasksTable, CreateDialog, NewItem } from "./components";
 import learnapi from "service/learnunit";
 import api from "service/task";
 import { ToastContext } from "context/toast";
@@ -26,7 +17,6 @@ const Task = (props) => {
     match: {
       params: { code, section_code },
     },
-
     history,
   } = props;
 
@@ -94,37 +84,44 @@ const Task = (props) => {
     };
   }, []);
 
+  const title = (name) => (
+    <div style={{ margin: "15px" }}>
+      <Typography variant="h5" color="textSecondary">
+        {name}
+      </Typography>
+      <Divider />
+    </div>
+  );
+
   return (
     <Operative title="Listado de tareas de la unidad" RightButton={RightButton}>
-      <Card>
-        <CardHeader title={learn.name} subheader={learn.description} />
-        <Divider />
-        <CardContent>
-          <Typography variant="subtitle2" component="b">
-            Tareas por entregar
-          </Typography>
-          <List>
-            <Grid container spacing={3}>
-              {prioriTasks.map((item, index) => (
-                <Grid item key={index}>
-                  <NewItems
-                    title={item.title}
-                    to_date={`Para ${moment(item.to_date).format(
-                      "DD [de] MMMM"
-                    )}`}
-                    handleEdit={() => handleEdit(item)}
-                    handleCaliClick={() => handleCaliClick(item.code)}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          </List>
-          <Typography variant="subtitle2" component="b">
-            Tareas ya entregados
-          </Typography>
-          <TasksTable tasks={tasks} handleCaliClick={handleCaliClick} />
-        </CardContent>
-      </Card>
+      <Typography variant="h5" color="textSecondary">
+        Unidad: {learn.name}
+      </Typography>
+      <Typography variant="subtitle2">{learn.description}</Typography>
+      <Divider />
+      {prioriTasks.length > 0 && (
+        <React.Fragment>
+          {title("Tareas por Entregar")}
+          <Grid container spacing={3}>
+            {prioriTasks.map((item, index) => (
+              <Grid item key={index}>
+                <NewItem
+                  title={item.title}
+                  to_date={`Para ${moment(item.to_date).format(
+                    "DD [de] MMMM"
+                  )}`}
+                  handleEdit={() => handleEdit(item)}
+                  handleCaliClick={() => handleCaliClick(item.code)}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </React.Fragment>
+      )}
+      {title("Tareas ya entregados")}
+      <TasksTable tasks={tasks} handleCaliClick={handleCaliClick} />
+
       <CreateDialog
         open={open}
         l_code={code}

@@ -39,6 +39,11 @@ module.exports = function (sequelize, DataTypes) {
       foreignKey: "section_code",
       targetKey: "code",
     });
+    OperativeTeacher.belongsTo(models.Teacher, {
+      as: "teacher",
+      foreignKey: "teacher_dni",
+      targetKey: "dni",
+    });
   };
   return OperativeTeacher;
 };

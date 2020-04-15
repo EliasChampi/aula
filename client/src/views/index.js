@@ -9,6 +9,7 @@ import LearnUnit from "./LearnUnit/LearnUnit";
 import CreateLearn from "./LearnUnit/Create";
 import Task from "./Task/Task";
 import Calification from "./Task/Calification";
+import Pending from "./Task/Pending";
 export default {
   Account,
   NotFound,
@@ -21,4 +22,5 @@ export default {
   CreateLearn,
   Task,
   Calification,
+  Pending,
 };

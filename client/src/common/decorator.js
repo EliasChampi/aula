@@ -15,3 +15,7 @@ export const taskType = {
 export const mydate = (date) => {
   return moment(date).format("DD [de] MMMM [del] YYYY");
 };
+
+export const yourdate = (date) => {
+  return moment(date).format("DD [de] MMMM");
+};

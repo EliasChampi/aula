@@ -60,9 +60,8 @@ module.exports = function (sequelize, DataTypes) {
       foreignKey: "learnunit_code",
       targetKey: "code",
     });
-    Task.belongsToMany(models.Register, {
-      as: "registers",
-      through: "register_task",
+    Task.hasMany(models.Response, {
+      as: "responses",
       foreignKey: "task_code",
       sourceKey: "code",
     });

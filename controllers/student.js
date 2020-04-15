@@ -14,6 +14,16 @@ async function fetchByFamily(req, res) {
   }
 }
 
+async function fetchByCode(req, res) {
+  try {
+    const value = await Student.findByPk(req.params.dni);
+    return res.status(200).json({ value });
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+}
+
 module.exports = {
   fetchByFamily,
+  fetchByCode,
 };

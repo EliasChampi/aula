@@ -18,6 +18,7 @@ import { makeStyles } from "@material-ui/styles";
 import { orange } from "@material-ui/core/colors";
 import FolderSharedIcon from "@material-ui/icons/FolderSharedRounded";
 import { state } from "common/decorator";
+import { Link } from "react-router-dom";
 const useStyles = makeStyles(() => ({
   cardMedia: {
     borderRadius: "50%",
@@ -65,7 +66,12 @@ const StudentCard = ({ student, regs, selected, handleExpandedClick }) => {
         <CardContent>
           <List>
             {regs.map((item) => (
-              <ListItem button>
+              <ListItem
+                button
+                key={item.code}
+                component={Link}
+                to={`/estudiante/${student.dni}/${item.section.code}`}
+              >
                 <ListItemIcon>
                   <FolderSharedIcon />
                 </ListItemIcon>

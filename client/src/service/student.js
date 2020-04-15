@@ -13,6 +13,19 @@ class StudentService {
         });
     });
   }
+
+  fetchByCode(dni) {
+    return new Promise((resolve, reject) => {
+      request
+        .get("/stu_by_code/" + dni)
+        .then((r) => {
+          resolve(r.data);
+        })
+        .catch((errMessage) => {
+          reject(errMessage);
+        });
+    });
+  }
 }
 
 export default new StudentService();

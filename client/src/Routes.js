@@ -23,6 +23,12 @@ const Routes = () => {
         path="/estudiantes/:section_code/:op_code"
       />
       <ProtectedRoute
+        component={view.Pending}
+        exact
+        isAuthed={isAuthed}
+        path="/estudiante/:dni/:section_code"
+      />
+      <ProtectedRoute
         component={view.LearnUnit}
         exact
         isAuthed={isAuthed}

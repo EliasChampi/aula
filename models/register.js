@@ -24,9 +24,8 @@ module.exports = function (sequelize, DataTypes) {
     }
   );
   Register.associate = function (models) {
-    Register.belongsToMany(models.Task, {
-      as: "tasks",
-      through: "register_task",
+    Register.hasMany(models.Response, {
+      as: "responses",
       foreignKey: "register_code",
       sourceKey: "code",
     });
