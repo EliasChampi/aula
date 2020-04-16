@@ -23,6 +23,11 @@ router.get(
   reg.fetchBySection
 );
 router.get(
+  "/regs_by_section_with_res/:section_code/:task_code",
+  middleware.verifyToken,
+  reg.fetchBySectionWithResponse
+);
+router.get(
   "/section/:code",
   middleware.verifyToken,
   section.fetchByCodeWithRelations
