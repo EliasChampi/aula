@@ -9,6 +9,8 @@ import {
   Paper,
   TableBody,
   IconButton,
+  Button,
+  Typography,
 } from "@material-ui/core";
 import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 const RegistersTable = ({ registers }) => {
@@ -26,16 +28,39 @@ const RegistersTable = ({ registers }) => {
         </TableHead>
         <TableBody>
           {registers.map((item) => (
-            <TableRow>
+            <TableRow hover key={item.code}>
               <TableCell>{item.student_dni}</TableCell>
               <TableCell>
                 {`${item.student.name} ${item.student.surname} ${item.student.second_surname}`}
               </TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
+              {item.responses.length > 0 ? (
+                <React.Fragment>
+                  <TableCell>
+                    <Button variant="contained" size="small">
+                      Descargar
+                    </Button>
+                  </TableCell>
+                  <TableCell>{item.responses[0].score}</TableCell>
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  <React.Fragment>
+                    <TableCell>
+                      <Typography variant="subtitle2" component="i">
+                        Sin respuesta
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="subtitle2" component="i">
+                        No revisado
+                      </Typography>
+                    </TableCell>
+                  </React.Fragment>
+                </React.Fragment>
+              )}
               <TableCell>
                 <IconButton>
-                  <AssignmentTurnedInIcon />
+                  <AssignmentTurnedInIcon fontSize="small" />
                 </IconButton>
               </TableCell>
             </TableRow>

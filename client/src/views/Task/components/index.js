@@ -3,4 +3,3 @@ export { default as TaskItem } from "./TaskItem";
 export { default as CreateDialog } from "./CreateDialog";
 export { default as NewItem } from "./NewItem";
 export { default as TaskCard } from "./TaskCard";
-export { default as RegistersTable } from "./RegistersTable"

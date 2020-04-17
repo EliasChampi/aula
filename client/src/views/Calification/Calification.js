@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
-import { TaskItem, RegistersTable } from "./components";
+import { TaskItem } from "../Task/components";
+import { RegistersTable, UpdateDialog } from "./components";
 import { ToastContext } from "context/toast";
 import { Title } from "components";
 import register from "service/register";
@@ -39,6 +40,7 @@ const Calification = ({ match, history }) => {
       <TaskItem code={code} show={show} handleBackClick={handleBackClick} />
       <Title title="Estudiantes" />
       <RegistersTable registers={registers} />
+      <UpdateDialog />
     </React.Fragment>
   );
 };

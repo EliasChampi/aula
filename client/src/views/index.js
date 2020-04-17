@@ -8,9 +8,9 @@ import BySection from "./Register/BySection";
 import LearnUnit from "./LearnUnit/LearnUnit";
 import CreateLearn from "./LearnUnit/Create";
 import TasksByUnit from "./Task/TasksByUnit";
-import Calification from "./Task/Calification";
+import Calification from "./Calification/Calification";
 import Pending from "./Task/Pending";
-import Revised from "./Task/Revised";
+import Revised from "./Revised/Revised";
 import Task from "./Task/Task";
 export default {
   Account,
