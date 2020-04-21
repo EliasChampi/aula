@@ -10,7 +10,6 @@ import {
   TableContainer,
   Paper,
 } from "@material-ui/core";
-import moment from "moment";
 import { yourdate } from "common/decorator";
 const TasksTable = ({ tasks, handleCaliClick }) => {
   return (

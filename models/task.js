@@ -31,9 +31,8 @@ module.exports = function (sequelize, DataTypes) {
       },
       link: {
         type: DataTypes.STRING(100),
-        allowNull: true,
         validate: {
-          len: [10, 12],
+          len: [0, 12],
         },
       },
       to_date: {

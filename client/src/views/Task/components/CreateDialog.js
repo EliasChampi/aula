@@ -15,17 +15,19 @@ import {
   FormControl,
   Input,
   Select,
+  Paper,
 } from "@material-ui/core";
+import clsx from "clsx";
 import { makeStyles } from "@material-ui/styles";
 import PropTypes from "prop-types";
 import CloseIcon from "@material-ui/icons/Close";
 import { useForm } from "react-hook-form";
 import api from "service/task";
 import { ToastContext } from "context/toast";
+import { Alert, Uploader } from "components";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-
 const useStyles = makeStyles((theme) => ({
   appBar: {
     position: "relative",
@@ -35,12 +37,16 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     color: "white",
   },
-  mt: {
-    marginTop: theme.spacing(1),
+  marginX: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
   },
   responsive: {
     width: "100%",
     height: "auto",
+  },
+  padding: {
+    padding: theme.spacing(2),
   },
 }));
 
@@ -55,10 +61,16 @@ const CreateDialog = ({ open, handleClose, l_code, selected }) => {
   const saveData = (data) => {
     data.link = link;
     data.learnunit_code = l_code;
-    if (title === "Nueva") {
-      return api.store(data);
+    if (selected.attached !== null && Object.keys(file).length === 0) {
+      data.hbd = true;
     }
-    return api.update(data, selected.code);
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(data));
+    formData.append("file", file);
+    if (title === "Nueva") {
+      return api.store(formData);
+    }
+    return api.update(formData, selected.code);
   };
 
   const onSubmitForm = (data) => {
@@ -82,11 +94,8 @@ const CreateDialog = ({ open, handleClose, l_code, selected }) => {
     }
   }
 
-  const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
-  };
-
   const handleEnter = () => {
+    setFile({});
     setValue("title", selected.title);
     setValue("to_date", selected.to_date);
     setValue("content", selected.content);
@@ -94,6 +103,11 @@ const CreateDialog = ({ open, handleClose, l_code, selected }) => {
       setValue("type", selected.type);
       setTitle("Modificar");
       setLink(selected.link);
+      if (selected.attached) {
+        setFile({
+          name: selected.attached,
+        });
+      }
     } else {
       setValue("type", "tr");
       setTitle("Nueva");
@@ -129,7 +143,7 @@ const CreateDialog = ({ open, handleClose, l_code, selected }) => {
       </AppBar>
       <DialogContent>
         <form>
-          <Grid container>
+          <Grid container spacing={3}>
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
@@ -141,7 +155,7 @@ const CreateDialog = ({ open, handleClose, l_code, selected }) => {
                 name="title"
               />
 
-              <Grid container className={classes.mt}>
+              <Grid container className={classes.marginX}>
                 <Grid item md={6} xs={12}>
                   <FormControl fullWidth margin="dense">
                     <InputLabel htmlFor="typeLabel">Tipo de Tarea</InputLabel>
@@ -193,64 +207,50 @@ const CreateDialog = ({ open, handleClose, l_code, selected }) => {
                 })}
                 name="content"
               />
-              <Typography variant="h4">
-                Usa un video para esta tarea pegando el ID del video de youtube
-              </Typography>
-              <img
-                src="/images/youtube.png"
-                alt="youtube help"
-                className={classes.responsive}
-              />
-              <FormControl fullWidth margin="dense" className={classes.mt}>
-                <Input
-                  id="link"
-                  type="url"
-                  placeholder="pega tu ID de video aqui"
-                  readOnly
-                  value={link}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <Button
-                        variant="contained"
-                        component="label"
-                        size="small"
-                        onClick={paste}
-                      >
-                        {link ? "Limpiar" : "Pegar"}
-                      </Button>
-                    </InputAdornment>
-                  }
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <Paper className={clsx(classes.padding, classes.marginX)}>
+                <Typography variant="h5">
+                  Usa un video para esta tarea pegando el ID del video de
+                  youtube
+                </Typography>
+                <img
+                  src="/images/youtube.png"
+                  alt="youtube help"
+                  className={classes.responsive}
                 />
-              </FormControl>
-              <Typography variant="h4">
-                Usa un documento adjunto para detallar
-              </Typography>
-              <FormControl fullWidth margin="dense" className={classes.mt}>
-                <Input
-                  id="mifyle"
-                  type="url"
-                  placeholder="Subir Adjunto Pdf/Imagen"
-                  readOnly
-                  value={file.name}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <Button
-                        variant="contained"
-                        component="label"
-                        size="small"
-                      >
-                        Subir
-                        <input
-                          type="file"
-                          accept="*/*"
-                          onChange={handleFileChange}
-                          style={{ display: "none" }}
-                        />
-                      </Button>
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
+                <FormControl fullWidth margin="dense">
+                  <Input
+                    id="link"
+                    type="url"
+                    placeholder="ID del video. ejm 7NHm5moJwiQ"
+                    readOnly
+                    value={link}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <Button
+                          variant="contained"
+                          component="label"
+                          size="small"
+                          onClick={paste}
+                        >
+                          {link ? "Limpiar" : "Pegar"}
+                        </Button>
+                      </InputAdornment>
+                    }
+                  />
+                </FormControl>
+              </Paper>
+              <Alert title="Compartir material Adjunto">
+                <Typography variant="subtitle2">
+                  Su documento debe cumplir con los siguientes requerimientos:
+                  Tener un peso mayor a 32kb y menor a 3mb. El tipo de archivo
+                  pdf, word, o imagen.
+                </Typography>
+              </Alert>
+              <div className={classes.marginX}>
+                <Uploader show={show} file={file} setFile={setFile} />
+              </div>
             </Grid>
           </Grid>
         </form>

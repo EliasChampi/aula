@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
     textAlign: "center",
   },
 }));
-const NewItem = ({ title, to_date, handleEdit, handleCaliClick }) => {
+const NewCard = ({ title, to_date, handleEdit, handleCaliClick }) => {
   const classes = useStyles();
   return (
     <Card className={classes.card}>
@@ -45,11 +45,11 @@ const NewItem = ({ title, to_date, handleEdit, handleCaliClick }) => {
   );
 };
 
-NewItem.propTypes = {
+NewCard.propTypes = {
   title: PropTypes.string.isRequired,
   to_date: PropTypes.string.isRequired,
   handleEdit: PropTypes.func,
   handleCaliClick: PropTypes.func,
 };
 
-export default NewItem;
+export default NewCard;

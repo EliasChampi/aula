@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import Operative from "views/Wrapper/Operative";
 import { Divider, Button, Typography, Grid } from "@material-ui/core";
-import { TasksTable, CreateDialog, NewItem } from "./components";
+import { TasksTable, CreateDialog, NewCard } from "./components";
 import learnapi from "service/learnunit";
 import api from "service/task";
 import { ToastContext } from "context/toast";
@@ -99,7 +99,7 @@ const TasksByUnit = (props) => {
           <Grid container spacing={3}>
             {prioriTasks.map((item, index) => (
               <Grid item key={index}>
-                <NewItem
+                <NewCard
                   title={item.title}
                   to_date={`Para ${yourdate(item.to_date)}`}
                   handleEdit={() => handleEdit(item)}

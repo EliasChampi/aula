@@ -10,7 +10,6 @@ import {
   TableContainer,
   Paper,
 } from "@material-ui/core";
-import moment from "common/moment";
 import { state, yourdate } from "common/decorator";
 const BySectionTable = (props) => {
   const { data } = props;
@@ -34,9 +33,7 @@ const BySectionTable = (props) => {
               <TableCell>{`${item.student.name} ${item.student.surname} ${item.student.second_surname}`}</TableCell>
               <TableCell>{state[item.state]}</TableCell>
               <TableCell>{item.student.telephone}</TableCell>
-              <TableCell>
-                {yourdate(item.student.birthdate)}
-              </TableCell>
+              <TableCell>{yourdate(item.student.birthdate)}</TableCell>
               <TableCell>
                 <Button color="primary" size="small" variant="contained">
                   Calificaciones

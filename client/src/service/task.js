@@ -43,7 +43,9 @@ class TaskService {
   store(formData) {
     return new Promise((resolve, reject) => {
       request
-        .post("/task", formData)
+        .post("/task", formData, {
+          "content-type": "multipart/form-data",
+        })
         .then((r) => {
           resolve(r.data);
         })
@@ -56,7 +58,9 @@ class TaskService {
   update(formData, code) {
     return new Promise((resolve, reject) => {
       request
-        .put("/task/" + code, formData)
+        .put("/task/" + code, formData, {
+          "content-type": "multipart/form-data",
+        })
         .then((r) => {
           resolve(r.data);
         })
