@@ -21,6 +21,7 @@ import {
   Tooltip,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
+import { downloadFile } from "common/utils";
 const useStyles = makeStyles((theme) => ({
   mt: {
     marginTop: theme.spacing(2),
@@ -71,6 +72,17 @@ const TaskItem = ({ code, handleBackClick, show }) => {
     </Button>
   );
 
+  const handleDownloadClick = () => {
+    api
+      .downloadAttached(task.code)
+      .then((r) => {
+        downloadFile(r, task.attached);
+      })
+      .catch((error) => {
+        show(error, "error");
+      });
+  };
+
   return (
     <React.Fragment>
       <Header
@@ -88,7 +100,11 @@ const TaskItem = ({ code, handleBackClick, show }) => {
             }
             action={
               <Tooltip title="Descargar Adjunto">
-                <IconButton aria-label="Descargar Adjunto">
+                <IconButton
+                  aria-label="Descargar Adjunto"
+                  onClick={handleDownloadClick}
+                  disabled={!task.attached}
+                >
                   <DownloadIcon />
                 </IconButton>
               </Tooltip>

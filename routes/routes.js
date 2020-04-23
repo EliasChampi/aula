@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const middleware = require("../middlewares");
+const { verifyToken } = require("../middlewares");
 // controllers
 const auth = require("../controllers/auth");
 const op = require("../controllers/operativeTeacher");
@@ -12,39 +12,28 @@ const stu = require("../controllers/student");
 
 // routes
 router.post("/auth/signin", auth.signin);
-router.get("/courses/:dni", middleware.verifyToken, op.fetchByTeacher);
+router.get("/courses/:dni", verifyToken, op.fetchByTeacher);
 // yup!
-router.get("/stus_by_family/:dni", middleware.verifyToken, stu.fetchByFamily);
-router.get("/stu_by_code/:dni", middleware.verifyToken, stu.fetchByCode);
-router.get("/regs_by_stu/:dni", middleware.verifyToken, reg.fetchByStudent);
+router.get("/stus_by_family/:dni", verifyToken, stu.fetchByFamily);
+router.get("/stu_by_code/:dni", verifyToken, stu.fetchByCode);
+router.get("/regs_by_stu/:dni", verifyToken, reg.fetchByStudent);
 
+router.get("/regs_by_section/:section_code", verifyToken, reg.fetchBySection);
 router.get(
-  "/regs_by_section/:section_code",
-  middleware.verifyToken,
-  reg.fetchBySection
-);
-router.get(
-  "/regs_by_section_with_res/:section_code/:task_code",
-  middleware.verifyToken,
+  "/regs_response/:section_code/:task_code",
+  verifyToken,
   reg.fetchBySectionWithResponse
 );
-router.get(
-  "/section/:code",
-  middleware.verifyToken,
-  section.fetchByCodeWithRelations
-);
-router.get("/learns/:op_code", middleware.verifyToken, learn.fetchByOperative);
-router.get("/learn/:code", middleware.verifyToken, learn.fetchByCode);
-router.post("/learns", middleware.verifyToken, learn.store);
-router.put("/learns/:code", middleware.verifyToken, learn.update);
-router.get(
-  "/operatives/:l_code",
-  middleware.verifyToken,
-  learn.fetchOperatives
-);
-router.get("/tasks_d/:l_code", middleware.verifyToken, task.fetchByLearn);
-router.get("/tasks/:s_code", middleware.verifyToken, task.fetchBySec);
-router.get("/task/:code", middleware.verifyToken, task.fetchByCodeWithLearn);
-router.post("/task", middleware.verifyToken, task.store);
-router.put("/task/:code", middleware.verifyToken, task.update);
+router.get("/section/:code", verifyToken, section.fetchByCodeWithRelations);
+router.get("/learns/:op_code", verifyToken, learn.fetchByOperative);
+router.get("/learn/:code", verifyToken, learn.fetchByCode);
+router.post("/learns", verifyToken, learn.store);
+router.put("/learns/:code", verifyToken, learn.update);
+router.get("/operatives/:l_code", verifyToken, learn.fetchOperatives);
+router.get("/tasks_d/:l_code", verifyToken, task.fetchByLearn);
+router.get("/tasks/:s_code", verifyToken, task.fetchBySec);
+router.get("/task/:code", verifyToken, task.fetchByCodeWithLearn);
+router.get("/task_download/:code", verifyToken, task.downloadAttached);
+router.post("/task", verifyToken, task.store);
+router.put("/task/:code", verifyToken, task.update);
 module.exports = router;

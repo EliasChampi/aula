@@ -69,6 +69,21 @@ class TaskService {
         });
     });
   }
+
+  downloadAttached(code) {
+    return new Promise((resolve, reject) => {
+      request
+        .get("/task_download/" + code, { responseType: "blob" })
+        .then((r) => {
+          resolve(r.data);
+        })
+        .catch((errMessage) => {
+          errMessage.text().then((text) => {
+            reject(text);
+          });
+        });
+    });
+  }
 }
 
 export default new TaskService();

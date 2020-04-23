@@ -164,9 +164,25 @@ function update(req, res) {
         });
     })
     .catch((error) => {
-      console.log(error);
       return res.status(500).json({ message: error.message });
     });
+}
+
+async function downloadAttached(req, res) {
+  try {
+    const task = await Task.findByPk(req.params.code);
+    if (!!task.attached) {
+      const date = new Date(task.to_date);
+      const newPath = `storage/teacher/${date.getFullYear()}/${
+        date.getMonth() + 1
+      }`;
+      res.download(path.join(newPath, task.attached));
+    } else {
+      throw new Error("no hay adjunto");
+    }
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
 }
 
 function fileName(file, title, l_code) {
@@ -199,6 +215,7 @@ module.exports = {
   fetchByLearn,
   fetchBySec,
   fetchByCodeWithLearn,
+  downloadAttached,
   store,
   update,
 };
