@@ -35,7 +35,7 @@ const BySectionTable = (props) => {
               <TableCell>{item.student.telephone}</TableCell>
               <TableCell>{yourdate(item.student.birthdate)}</TableCell>
               <TableCell>
-                <Button color="primary" size="small" variant="contained">
+                <Button color="secondary" size="small" variant="contained">
                   Calificaciones
                 </Button>
               </TableCell>

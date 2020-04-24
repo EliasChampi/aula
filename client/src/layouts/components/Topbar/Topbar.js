@@ -1,14 +1,21 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/styles";
-import { AppBar, Toolbar, Badge, Hidden, IconButton } from "@material-ui/core";
+import {
+  AppBar,
+  Toolbar,
+  Badge,
+  Hidden,
+  IconButton,
+  Menu,
+  MenuItem,
+  Button,
+} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-import NotificationsIcon from "@material-ui/icons/NotificationsOutlined";
-import InputIcon from "@material-ui/icons/Input";
-import { AuthContext } from "context/auth";
-import AuthService from "../../../service/auth";
+import NotificationsIcon from "@material-ui/icons/NotificationsActive";
+import AccountIcon from "@material-ui/icons/AccountCircle";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,14 +30,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Topbar = (props) => {
-  const { className, onSidebarOpen, ...rest } = props;
-  const { setUser } = useContext(AuthContext);
+  const { className, onSidebarOpen, handleSignOut, user, ...rest } = props;
   const classes = useStyles();
   const [notifications] = useState([]);
-  const handleSignOut = () => {
-    AuthService.logout();
-    setUser({});
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
   };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <AppBar {...rest} className={clsx(classes.root, className)}>
       <Toolbar>
@@ -48,13 +61,31 @@ const Topbar = (props) => {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <IconButton
-            className={classes.signOutButton}
+          <Button
+            variant="text"
             color="inherit"
-            onClick={handleSignOut}
+            aria-controls="simple-menu"
+            aria-haspopup="true"
+            onClick={handleMenuClick}
+            startIcon={<AccountIcon />}
           >
-            <InputIcon />
-          </IconButton>
+            {`${user.name} ${user.surname}`}
+          </Button>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleMenuClose}
+          >
+            <MenuItem component={RouterLink} to="/mis-datos">
+              Mis Datos
+            </MenuItem>
+            <MenuItem component={RouterLink} to="/acerca-de">
+              Acerca de
+            </MenuItem>
+            <MenuItem onClick={handleSignOut}>Cerrar Session</MenuItem>
+          </Menu>
         </Hidden>
         <Hidden lgUp>
           <IconButton color="inherit" onClick={onSidebarOpen}>
@@ -69,6 +100,8 @@ const Topbar = (props) => {
 Topbar.propTypes = {
   className: PropTypes.string,
   onSidebarOpen: PropTypes.func,
+  handleSignOut: PropTypes.func,
+  user: PropTypes.object,
 };
 
 export default Topbar;

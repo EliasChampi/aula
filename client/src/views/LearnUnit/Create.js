@@ -45,6 +45,7 @@ const CreateLearn = ({ courses, history, match, show }) => {
   };
 
   const onSubmitForm = (state) => {
+    if(!checked.length) return;
     state.ops = checked;
     saveData(state)
       .then((r) => {
@@ -200,9 +201,8 @@ const CreateLearn = ({ courses, history, match, show }) => {
         </CardContent>
         <CardActions>
           <Button
-            color="primary"
+            color="secondary"
             variant="contained"
-            disabled={!checked.length}
             onClick={handleSubmit(onSubmitForm)}
           >
             Guardar Cambios

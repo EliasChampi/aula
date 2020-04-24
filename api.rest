@@ -1,0 +1,14 @@
+POST http://localhost:5000/api/auth/signin HTTP/1.1
+content-type: application/json
+
+{
+    "dni": "77245403",
+    "password": "adminer"
+}
+
+###
+GET http://localhost:5000/api/response/M20S116667/2
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkbmkiOiI3NzI0NTQwMyIsImlhdCI6MTU4NzY4MzY5NSwiZXhwIjoxNTg3Njg5Njk1fQ.mgb0a-wRxlU1sRuZTliykGRPx1onZMZOzilMvwGRHXs
+
+###
+

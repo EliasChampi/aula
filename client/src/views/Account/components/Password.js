@@ -50,7 +50,7 @@ const Password = props => {
         </CardContent>
         <Divider />
         <CardActions>
-          <Button color="primary" variant="contained">
+          <Button color="secondary" variant="contained">
             Actualizar
           </Button>
         </CardActions>

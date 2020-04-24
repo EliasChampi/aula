@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/styles";
 import { useMediaQuery } from "@material-ui/core";
-
+import AuthService from "service/auth";
 import { Sidebar, Topbar, Footer } from "./components";
+import { AuthContext } from "context/auth";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,6 +29,8 @@ const Main = (props) => {
 
   const classes = useStyles();
   const theme = useTheme();
+  const { user, setUser } = useContext(AuthContext);
+
   const isDesktop = useMediaQuery(theme.breakpoints.up("lg"), {
     defaultMatches: true,
   });
@@ -42,6 +45,11 @@ const Main = (props) => {
     setOpenSidebar(false);
   };
 
+  const handleSignOut = () => {
+    AuthService.logout();
+    setUser({});
+  };
+
   const shouldOpenSidebar = isDesktop ? true : openSidebar;
 
   return (
@@ -51,12 +59,13 @@ const Main = (props) => {
         [classes.shiftContent]: isDesktop,
       })}
     >
-      <Topbar onSidebarOpen={handleSidebarOpen} />
+      <Topbar onSidebarOpen={handleSidebarOpen} handleSignOut={handleSignOut} user={user} />
       {
         <Sidebar
           onClose={handleSidebarClose}
           open={shouldOpenSidebar}
           variant={isDesktop ? "persistent" : "temporary"}
+          handleSignOut={handleSignOut}
         />
       }
       <main className={classes.content}>

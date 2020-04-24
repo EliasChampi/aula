@@ -31,9 +31,9 @@ const TasksTable = ({ tasks, handleCaliClick }) => {
               <TableCell>{yourdate(item.to_date)}</TableCell>
               <TableCell>
                 <Button
+                  color="secondary"
                   variant="contained"
                   onClick={() => handleCaliClick(item.code)}
-                  color="primary"
                   size="small"
                 >
                   Calificaciones

@@ -36,7 +36,7 @@ const BySection = ({ match }) => {
   }, []);
 
   const RightButton = () => (
-    <Button variant="contained" color="primary">
+    <Button color="secondary" variant="contained">
       Imprimir
     </Button>
   );

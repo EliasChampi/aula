@@ -5,7 +5,7 @@ import { Button } from "@material-ui/core";
 
 const Revised = ({ match, history }) => {
   const {
-    params: { dni, register_code },
+    params: { dni },
   } = match;
 
   const RightButton = () => (

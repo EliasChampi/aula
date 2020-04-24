@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/styles";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import {
   Button,
   TextField,
@@ -9,7 +8,6 @@ import {
   CardContent,
   CardActions,
   Divider,
-  Avatar,
   RadioGroup,
   FormControlLabel,
   Radio,
@@ -40,18 +38,20 @@ const useStyles = makeStyles((theme) => ({
       paddingRight: theme.spacing(2),
     },
   },
-  avatar: {
-    margin: "auto",
-    backgroundColor: theme.palette.error.main,
-  },
-  title: {
-    marginTop: theme.spacing(3),
+  head: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   textField: {
     marginTop: theme.spacing(2),
   },
   signInButton: {
     margin: theme.spacing(2, 0),
+  },
+  image: {
+    width: "50%",
+    marginBottom: theme.spacing(1)
   },
 }));
 
@@ -82,11 +82,13 @@ const SignIn = (props) => {
             onSubmit={handleSubmit(onSubmitForm)}
             autoComplete="off"
           >
-            <div style={{ textAlign: "center" }}>
-              <Avatar className={classes.avatar}>
-                <LockOutlinedIcon />
-              </Avatar>
-              <Typography className={classes.title} variant="h2">
+            <div className={classes.head}>
+              <img
+                src="/images/mini.png"
+                alt="logo"
+                className={classes.image}
+              />
+              <Typography variant="h2">
                 Bienvenido al Aula virtual
               </Typography>
               <Typography color="textSecondary" gutterBottom>

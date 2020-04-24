@@ -77,10 +77,10 @@ const Routes = () => {
         path="/mis-datos"
       />
       <ProtectedRoute
-        component={view.Settings}
+        component={view.About}
         exact
         isAuthed={isAuthed}
-        path="/configuracion"
+        path="/acerca-de"
       />
       <PublicRoute
         component={view.SignIn}

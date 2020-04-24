@@ -34,8 +34,8 @@ const LearnsTable = (props) => {
               <TableCell>{mydate(item.created_at)}</TableCell>
               <TableCell>
                 <Button
+                  color="secondary"
                   variant="contained"
-                  color="primary"
                   size="small"
                   onClick={() => handleTask(item)}
                 >

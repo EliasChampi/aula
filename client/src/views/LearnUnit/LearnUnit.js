@@ -41,7 +41,7 @@ const LearnUnit = ({ match, history }) => {
     <Button
       component={Link}
       variant="contained"
-      color="primary"
+      color="secondary"
       to={`/crear_unidad`}
     >
       Agregar

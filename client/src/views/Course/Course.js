@@ -18,7 +18,7 @@ const Course = ({ courses, history, user }) => {
   const RightButton = () => (
     <Button
       variant="contained"
-      color="primary"
+      color="secondary"
       component={Link}
       to="/crear_unidad"
     >

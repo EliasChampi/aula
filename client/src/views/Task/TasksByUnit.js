@@ -24,8 +24,8 @@ const TasksByUnit = (props) => {
 
   const RightButton = () => (
     <Button
+      color="secondary"
       variant="contained"
-      color="primary"
       onClick={() => {
         setOpen(true);
       }}

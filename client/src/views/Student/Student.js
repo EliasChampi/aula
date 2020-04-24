@@ -18,7 +18,7 @@ const Student = () => {
   const [selected, setSelected] = useState("");
 
   const RightButton = () => (
-    <Button variant="contained" color="primary">
+    <Button color="secondary" variant="contained">
       My Button
     </Button>
   );
