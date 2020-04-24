@@ -1,37 +1,14 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { TaskItem } from "../Task/components";
-import { RegistersTable, UpdateDialog } from "./components";
+import { TeacherCard } from "./components";
 import { ToastContext } from "context/toast";
 import { Title } from "components";
-import register from "service/register";
 
 const Calification = ({ match, history }) => {
   const {
     params: { section_code, code },
   } = match;
   const { show } = useContext(ToastContext);
-  const [registers, setRegisters] = useState([]);
-
-  useEffect(() => {
-    let mounted = true;
-    const fetchRegisters = () => {
-      register
-        .fetchBySectionWithResponse(section_code, code)
-        .then((r) => {
-          if (mounted) {
-            setRegisters(r.values);
-          }
-        })
-        .catch((error) => {
-          show(error.message || error, "error");
-        });
-    };
-    fetchRegisters();
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
   const handleBackClick = () => {
     history.goBack();
   };
@@ -39,8 +16,7 @@ const Calification = ({ match, history }) => {
     <React.Fragment>
       <TaskItem code={code} show={show} handleBackClick={handleBackClick} />
       <Title title="Estudiantes" />
-      <RegistersTable registers={registers} />
-      <UpdateDialog />
+      <TeacherCard show={show} section_code={section_code} code={code} />
     </React.Fragment>
   );
 };

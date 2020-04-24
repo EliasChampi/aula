@@ -130,7 +130,6 @@ const TaskItem = ({ code, handleBackClick, show }) => {
                   <Typography component="h5" variant="h5">
                     Instrucciones
                   </Typography>
-                  <Divider />
                   <Typography variant="subtitle2">{task.content}</Typography>
                 </div>
               </Grid>
