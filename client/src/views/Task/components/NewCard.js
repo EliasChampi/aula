@@ -25,7 +25,7 @@ const NewCard = ({ title, to_date, handleEdit, handleCaliClick }) => {
       <CardMedia
         height={120}
         component="img"
-        image={`/images/back.png`}
+        image="/images/cardbg2.svg"
         title="Tarea"
         alt="Back de Tarea"
       />

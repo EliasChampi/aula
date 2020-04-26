@@ -6,10 +6,11 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Button,
   TableContainer,
   Paper,
+  IconButton,
 } from "@material-ui/core";
+import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
 import { state, yourdate } from "common/decorator";
 const BySectionTable = (props) => {
   const { data } = props;
@@ -23,7 +24,7 @@ const BySectionTable = (props) => {
             <TableCell>Estado</TableCell>
             <TableCell>Celular</TableCell>
             <TableCell>Cumpleaños</TableCell>
-            <TableCell>Acciones</TableCell>
+            <TableCell>Calificaciones</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -35,9 +36,9 @@ const BySectionTable = (props) => {
               <TableCell>{item.student.telephone}</TableCell>
               <TableCell>{yourdate(item.student.birthdate)}</TableCell>
               <TableCell>
-                <Button color="secondary" size="small" variant="contained">
-                  Calificaciones
-                </Button>
+                <IconButton color="secondary" size="small">
+                  <PlaylistAddCheckIcon />
+                </IconButton>
               </TableCell>
             </TableRow>
           ))}

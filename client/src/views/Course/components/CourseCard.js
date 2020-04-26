@@ -26,7 +26,7 @@ const CourseCard = ({ course, handleAction }) => {
       <CardMedia
         height={120}
         component="img"
-        image={`/images/back.png`}
+        image={`/images/cardbg1.svg`}
         title="Curso"
         alt="Foto de Curso"
       />

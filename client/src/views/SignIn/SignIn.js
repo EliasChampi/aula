@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    backgroundImage: "url(images/auth.png)",
+    backgroundImage: "url(images/loginbg.svg)",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
   },
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
   image: {
     width: "50%",
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
   },
 }));
 
@@ -75,7 +75,7 @@ const SignIn = (props) => {
 
   return (
     <div className={classes.root}>
-      <Card className={classes.mycard}>
+      <Card className={classes.mycard} elevation={4}>
         <CardContent>
           <form
             className={classes.form}
@@ -88,9 +88,7 @@ const SignIn = (props) => {
                 alt="logo"
                 className={classes.image}
               />
-              <Typography variant="h2">
-                Bienvenido al Aula virtual
-              </Typography>
+              <Typography variant="h2">Bienvenido al Aula virtual</Typography>
               <Typography color="textSecondary" gutterBottom>
                 Ingrese sus credenciales de autenticación para acceder
               </Typography>

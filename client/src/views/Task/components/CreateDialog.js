@@ -243,9 +243,9 @@ const CreateDialog = ({ open, handleClose, l_code, selected }) => {
               </Paper>
               <Alert title="Compartir material Adjunto">
                 <Typography variant="subtitle2">
-                  Su documento debe cumplir con los siguientes requerimientos:
-                  Tener un peso mayor a 32kb y menor a 3mb. El tipo de archivo
-                  pdf, word, o imagen.
+                  Sube un documento pdf, word o una imagen simple para compartir
+                  con tus estudiantes, tu archivo debe pesar como minimo 32kb y
+                  maximo 3mb.
                 </Typography>
               </Alert>
               <div className={classes.marginX}>

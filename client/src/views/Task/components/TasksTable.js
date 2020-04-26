@@ -6,11 +6,12 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  Button,
   TableContainer,
   Paper,
+  IconButton,
 } from "@material-ui/core";
 import { yourdate } from "common/decorator";
+import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
 const TasksTable = ({ tasks, handleCaliClick }) => {
   return (
     <TableContainer component={Paper}>
@@ -20,7 +21,7 @@ const TasksTable = ({ tasks, handleCaliClick }) => {
             <TableCell>Codigo</TableCell>
             <TableCell>Titulo</TableCell>
             <TableCell>Fecha de Entrega</TableCell>
-            <TableCell>Acciones</TableCell>
+            <TableCell>Calificaciones</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -30,14 +31,13 @@ const TasksTable = ({ tasks, handleCaliClick }) => {
               <TableCell>{item.title}</TableCell>
               <TableCell>{yourdate(item.to_date)}</TableCell>
               <TableCell>
-                <Button
-                  color="secondary"
-                  variant="contained"
+                <IconButton
                   onClick={() => handleCaliClick(item.code)}
+                  color="secondary"
                   size="small"
                 >
-                  Calificaciones
-                </Button>
+                  <PlaylistAddCheckIcon />
+                </IconButton>
               </TableCell>
             </TableRow>
           ))}

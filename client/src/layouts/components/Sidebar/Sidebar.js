@@ -74,7 +74,6 @@ const Sidebar = (props) => {
         <SidebarNav
           className={classes.nav}
           pages={pages}
-          handleSignOut={handleSignOut}
         />
         <div className={classes.actions}>
           <Button

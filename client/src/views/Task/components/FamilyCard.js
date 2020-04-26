@@ -26,7 +26,7 @@ const FamilyCard = ({ show, register_code, code }) => {
   return (
     <Card>
       <CardContent>
-        <Grid container spacing={3}>
+        <Grid container spacing={3} alignItems="center">
           <Grid item md={6} xs={12}>
             <Alert title="Subir el documento de Respuesta">
               <Typography variant="subtitle2">

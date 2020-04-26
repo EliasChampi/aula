@@ -14,6 +14,14 @@ async function fetchByKeys(req, res) {
   }
 }
 
+async function store(req, res){
+  try {
+    const value = await Response.create(req.body)
+  } catch (error) {
+    
+  }
+}
+
 module.exports = {
   fetchByKeys,
 };

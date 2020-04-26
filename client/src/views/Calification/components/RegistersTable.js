@@ -59,8 +59,8 @@ const RegistersTable = ({ registers }) => {
                 </React.Fragment>
               )}
               <TableCell>
-                <IconButton>
-                  <AssignmentTurnedInIcon fontSize="small" />
+                <IconButton color="secondary" size="small">
+                  <AssignmentTurnedInIcon />
                 </IconButton>
               </TableCell>
             </TableRow>

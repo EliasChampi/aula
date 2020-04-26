@@ -1,14 +1,22 @@
 import React from "react";
-import { Card, CardHeader, CardContent, Typography } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
+
+const useStyles = makeStyles((theme) => ({
+  box: {
+    background: theme.palette.background.default,
+  },
+  img: {
+    width: "100%",
+  },
+}));
 
 const About = () => {
+  const classes = useStyles();
   return (
-    <Card>
-      <CardHeader title="Area Virtual"/>
-      <CardContent>
-        <Typography>descripcion</Typography>
-      </CardContent>
-    </Card>
+    <Paper className={classes.box}>
+      <img className={classes.img} src="/images/about.svg" />
+    </Paper>
   );
 };
 
