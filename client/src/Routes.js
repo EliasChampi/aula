@@ -29,16 +29,22 @@ const Routes = () => {
         path="/estudiante/:dni/:section_code/:register_code"
       />
       <ProtectedRoute
-        component={view.LearnUnit}
+        component={view.Unit}
         exact
         isAuthed={isAuthed}
         path="/unidades/:section_code/:op_code"
       />
       <ProtectedRoute
-        component={view.TasksByUnit}
+        component={view.CreateUnit}
         exact
         isAuthed={isAuthed}
-        path="/tareas/:section_code/:op_code/:code"
+        path="/crear_unidad"
+      />
+      <ProtectedRoute
+        component={view.ByUnit}
+        exact
+        isAuthed={isAuthed}
+        path="/actividades/:section_code/:op_code/:code"
       />
       <ProtectedRoute
         component={view.Revised}
@@ -53,19 +59,13 @@ const Routes = () => {
         path="/calificaciones/:section_code/:code"
       />
       <ProtectedRoute
-        component={view.Task}
+        component={view.Activity}
         exact
         isAuthed={isAuthed}
-        path="/tarea/:dni/:register_code/:code"
+        path="/actividad/:dni/:register_code/:code"
       />
       <ProtectedRoute
-        component={view.CreateLearn}
-        exact
-        isAuthed={isAuthed}
-        path="/crear_unidad"
-      />
-      <ProtectedRoute
-        component={view.CreateLearn}
+        component={view.CreateUnit}
         exact
         isAuthed={isAuthed}
         path="/modificar_unidad/:code"

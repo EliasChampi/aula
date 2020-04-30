@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import { yourdate } from "common/decorator";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
-const TasksTable = ({ tasks, handleCaliClick }) => {
+const ActivitiesTable = ({ activities, handleCaliClick }) => {
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -25,7 +25,7 @@ const TasksTable = ({ tasks, handleCaliClick }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {tasks.map((item) => (
+          {activities.map((item) => (
             <TableRow hover key={item.code}>
               <TableCell>{item.code}</TableCell>
               <TableCell>{item.title}</TableCell>
@@ -47,8 +47,8 @@ const TasksTable = ({ tasks, handleCaliClick }) => {
   );
 };
 
-TasksTable.propTypes = {
-  tasks: PropTypes.array.isRequired,
+ActivitiesTable.propTypes = {
+  activities: PropTypes.array.isRequired,
   handleCaliClick: PropTypes.func,
 };
-export default TasksTable;
+export default ActivitiesTable;

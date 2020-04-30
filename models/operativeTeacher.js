@@ -24,10 +24,11 @@ module.exports = function (sequelize, DataTypes) {
     }
   );
   OperativeTeacher.associate = function (models) {
-    OperativeTeacher.belongsToMany(models.LearnUnit, {
-      through: "learnunit_operative_teacher",
+    OperativeTeacher.belongsToMany(models.Unit, {
+      through: "unit_operative_teacher",
       foreignKey: "operative_teacher_code",
       sourceKey: "code",
+      timestamps: false
     });
     OperativeTeacher.belongsTo(models.Course, {
       as: "course",

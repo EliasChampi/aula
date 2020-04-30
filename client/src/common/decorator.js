@@ -7,9 +7,9 @@ export const state = {
   f: "Finalizó",
 };
 
-export const taskType = {
-  tr: "Tarea",
-  ta: "Tarea con Adjunto",
+export const activityType = {
+  ac: "Actividad",
+  ct: "Cuestionario",
 };
 
 export const mydate = (date) => {

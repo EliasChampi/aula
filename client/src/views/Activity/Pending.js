@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Button, Grid } from "@material-ui/core";
-import taskApi from "service/task";
-import { TaskCard } from "./components";
+import activityApi from "service/activity";
+import { ActivityCard } from "./components";
 import { ToastContext } from "context/toast";
 import Student from "views/Wrapper/Student";
 import { Link } from "react-router-dom";
@@ -9,7 +9,7 @@ const Pending = ({ match, history }) => {
   const {
     params: { dni, section_code, register_code },
   } = match;
-  const [tasks, setTasks] = useState([]);
+  const [activities, setActivities] = useState([]);
   const { show } = useContext(ToastContext);
   const RightButton = () => (
     <Button
@@ -23,40 +23,40 @@ const Pending = ({ match, history }) => {
   );
   useEffect(() => {
     let mounted = true;
-    const fetchTasks = () => {
-      taskApi
+    const fetchActivities = () => {
+      activityApi
         .fetchBySec(section_code)
         .then((r) => {
           if (mounted) {
-            setTasks(r.values);
+            setActivities(r.values);
           }
         })
         .catch((error) => {
           show(error.message || error, "error");
         });
     };
-    fetchTasks();
+    fetchActivities();
     return () => {
       mounted = false;
     };
   }, []);
 
   const handleCaliClick = (code) => {
-    history.push(`/tarea/${dni}/${register_code}/${code}`);
+    history.push(`/actividad/${dni}/${register_code}/${code}`);
   };
 
   return (
     <Student
-      title="Tareas pendientes del Estudiante"
+      title="Actividades pendientes del Estudiante"
       dni={dni}
       show={show}
       RightButton={RightButton}
     >
-      <Grid container spacing={3}>
-        {tasks.map((item) => (
+      <Grid container spacing={2}>
+        {activities.map((item) => (
           <Grid item key={item.code}>
-            <TaskCard
-              task={item}
+            <ActivityCard
+              activity={item}
               handleCaliClick={() => handleCaliClick(item.code)}
             />
           </Grid>

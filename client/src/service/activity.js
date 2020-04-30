@@ -1,10 +1,10 @@
 import request from "./request";
 
-class TaskService {
-  fetchByLearn(l_code) {
+class ActivityService {
+  fetchByUnit(u_code) {
     return new Promise((resolve, reject) => {
       request
-        .get("/tasks_d/" + l_code)
+        .get("/activities/d/" + u_code)
         .then((r) => {
           resolve(r.data);
         })
@@ -17,7 +17,7 @@ class TaskService {
   fetchBySec(section_code) {
     return new Promise((resolve, reject) => {
       request
-        .get("/tasks/" + section_code)
+        .get("/activities/" + section_code)
         .then((r) => {
           resolve(r.data);
         })
@@ -27,10 +27,10 @@ class TaskService {
     });
   }
 
-  fetchByCodeWithLearn(code) {
+  fetchByCodeWithUnit(code) {
     return new Promise((resolve, reject) => {
       request
-        .get("/task/" + code)
+        .get("/activity/" + code)
         .then((r) => {
           resolve(r.data);
         })
@@ -43,7 +43,7 @@ class TaskService {
   store(formData) {
     return new Promise((resolve, reject) => {
       request
-        .post("/task", formData, {
+        .post("/activity", formData, {
           "content-type": "multipart/form-data",
         })
         .then((r) => {
@@ -58,7 +58,7 @@ class TaskService {
   update(formData, code) {
     return new Promise((resolve, reject) => {
       request
-        .put("/task/" + code, formData, {
+        .put("/activity/" + code, formData, {
           "content-type": "multipart/form-data",
         })
         .then((r) => {
@@ -73,7 +73,7 @@ class TaskService {
   downloadAttached(code) {
     return new Promise((resolve, reject) => {
       request
-        .get("/task_download/" + code, { responseType: "blob" })
+        .get("/activity_download/" + code, { responseType: "blob" })
         .then((r) => {
           resolve(r.data);
         })
@@ -86,4 +86,4 @@ class TaskService {
   }
 }
 
-export default new TaskService();
+export default new ActivityService();

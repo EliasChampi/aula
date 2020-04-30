@@ -6,32 +6,32 @@ import {
   CardContent,
   Button,
 } from "@material-ui/core";
-import api from "service/learnunit";
-import { ToastContext } from "context/toast";
-import { LearnsTable } from "./components";
-import Operative from "views/Wrapper/Operative";
 import { Link } from "react-router-dom";
+import api from "service/unit";
+import { ToastContext } from "context/toast";
+import { UnitsTable } from "./components";
+import Operative from "views/Wrapper/Operative";
 import cache from "helpers/cache";
 
-const LearnUnit = ({ match, history }) => {
-  const [learns, setlearns] = useState([]);
+const Unit = ({ match, history }) => {
+  const [units, setUnits] = useState([]);
   const { show } = useContext(ToastContext);
   const { section_code, op_code } = match.params;
   useEffect(() => {
     let mounted = true;
-    const fetchLearns = () => {
+    const fetchUnits = () => {
       api
         .fetchByOperative(op_code)
         .then((r) => {
           if (mounted) {
-            setlearns(r.values);
+            setUnits(r.values);
           }
         })
         .catch((err) => {
           show(err.message, "error");
         });
     };
-    fetchLearns();
+    fetchUnits();
     return () => {
       mounted = false;
     };
@@ -49,12 +49,12 @@ const LearnUnit = ({ match, history }) => {
   );
 
   const handleEdit = (item) => {
-    cache.setItem("learn_" + item.code, item);
+    cache.setItem("unit_" + item.code, item);
     history.push(`/modificar_unidad/${item.code}`);
   };
 
-  const handleTask = (item) => {
-    history.push(`/tareas/${section_code}/${op_code}/${item.code}`);
+  const handleActivity = (item) => {
+    history.push(`/actividades/${section_code}/${op_code}/${item.code}`);
   };
 
   return (
@@ -63,14 +63,14 @@ const LearnUnit = ({ match, history }) => {
         <CardHeader subheader="Unidades de Aprendizaje" title="Unidades" />
         <Divider />
         <CardContent>
-          <LearnsTable
-            learns={learns}
+          <UnitsTable
+            units={units}
             handleEdit={handleEdit}
-            handleTask={handleTask}
+            handleActivity={handleActivity}
           />
         </CardContent>
       </Card>
     </Operative>
   );
 };
-export default LearnUnit;
+export default Unit;

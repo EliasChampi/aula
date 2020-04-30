@@ -7,7 +7,7 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.STRING,
         primaryKey: true,
       },
-      task_code: {
+      activity_code: {
         type: DataTypes.INTEGER,
         primaryKey: true,
       },
@@ -22,15 +22,16 @@ module.exports = function (sequelize, DataTypes) {
       },
     },
     {
-      tableName: "register_task",
-      timestamps: false,
+      tableName: "activity_register",
+      createdAt: "created_at",
+      updatedAt: "updated_at",
     }
   );
 
   Response.associate = function (models) {
-    Response.belongsTo(models.Task, {
-      as: "task",
-      foreignKey: "task_code",
+    Response.belongsTo(models.Activity, {
+      as: "activity",
+      foreignKey: "activity_code",
       targetKey: "code",
     });
     Response.belongsTo(models.Register, {

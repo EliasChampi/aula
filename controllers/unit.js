@@ -1,12 +1,9 @@
-const { LearnUnit, OperativeTeacher } = require("../models");
-const { literal } = require("sequelize");
+const { Unit, OperativeTeacher, Sequelize } = require("../models");
 async function fetchByOperative(req, res) {
   try {
-    const values = await LearnUnit.findAll({
-      where: literal(`exists (
-        select * from learnunit_operative_teacher 
-        where learnunit_code = "LearnUnit".code
-        and operative_teacher_code = ${req.params.op_code}
+    const values = await Unit.findAll({
+      where: Sequelize.literal(`exists ( select * from unit_operative_teacher 
+        where unit_code = "Unit".code and operative_teacher_code = ${req.params.op_code}
       )`),
     });
     return res.status(200).json({ values });
@@ -17,7 +14,7 @@ async function fetchByOperative(req, res) {
 
 async function fetchByCode(req, res) {
   try {
-    const value = await LearnUnit.findByPk(req.params.code);
+    const value = await Unit.findByPk(req.params.code);
     return res.status(200).json({ value });
   } catch (error) {
     return res.status(500).send(error.message);
@@ -25,34 +22,34 @@ async function fetchByCode(req, res) {
 }
 
 function store(req, res) {
-  try {
-    LearnUnit.create(req.body).then((learn) => {
+  Unit.create(req.body)
+    .then((unit) => {
       req.body.ops.forEach((code) => {
         OperativeTeacher.findByPk(code).then((opItem) => {
-          learn.addOperative(opItem).then(() => {
+          unit.addOperative(opItem).then(() => {
             return res.status(200).json({ message: "Correctamente Guardado" });
           });
         });
       });
+    })
+    .catch((error) => {
+      return res.status(500).send(error.message);
     });
-  } catch (error) {
-    return res.status(500).send(error.message);
-  }
 }
 
 async function update(req, res) {
   try {
-    const [updated] = await LearnUnit.update(req.body, {
+    const [updated] = await Unit.update(req.body, {
       where: {
         code: req.params.code,
       },
     });
     if (updated) {
-      const learn = await LearnUnit.findByPk(req.params.code);
-      learn.removeOperatives([]).then(() => {
+      const unit = await Unit.findByPk(req.params.code);
+      unit.removeOperatives([]).then(() => {
         req.body.ops.forEach((code) => {
           OperativeTeacher.findByPk(code).then((opItem) => {
-            learn.addOperative(opItem).then(() => {
+            unit.addOperative(opItem).then(() => {
               return res
                 .status(200)
                 .json({ message: "Correctamente Actualizado" });
@@ -68,8 +65,8 @@ async function update(req, res) {
 
 async function fetchOperatives(req, res) {
   try {
-    const learn = await LearnUnit.findByPk(req.params.l_code);
-    const values = await learn.getOperatives({
+    const unit = await Unit.findByPk(req.params.code);
+    const values = await unit.getOperatives({
       attributes: ["code"],
     });
     return res.status(200).json({ values });

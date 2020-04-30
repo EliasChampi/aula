@@ -17,7 +17,7 @@ import {
 import { makeStyles } from "@material-ui/styles";
 import { orange } from "@material-ui/core/colors";
 import FolderIcon from "@material-ui/icons/FolderRounded";
-import { yourdate, taskType } from "common/decorator";
+import { yourdate, activityType } from "common/decorator";
 const useStyles = makeStyles(() => ({
   card: {
     borderTop: "5px solid " + orange[500],
@@ -26,7 +26,7 @@ const useStyles = makeStyles(() => ({
     textAlign: "center",
   },
 }));
-const TaskCard = ({ task, handleCaliClick }) => {
+const ActivityCard = ({ activity, handleCaliClick }) => {
   const classes = useStyles();
   const Item = (label, title) => (
     <ListItem>
@@ -40,37 +40,37 @@ const TaskCard = ({ task, handleCaliClick }) => {
   return (
     <Card className={classes.card}>
       <CardHeader
-        title={taskType[task.type]}
-        subheader={`Para ${yourdate(task.to_date)}`}
+        title={activityType[activity.type]}
+        subheader={`Para ${yourdate(activity.to_date)}`}
       />
       <CardMedia
         height={120}
         component="img"
         image="/images/cardbg2.svg"
-        title="Tarea"
-        alt="Back de Tarea"
+        title="Actividad"
+        alt="Back"
       />
       <CardContent className={classes.CardContent}>
-        <Typography variant="h4">{task.title}</Typography>
+        <Typography variant="h4">{activity.title}</Typography>
         <List dense>
-          {Item("Curso", task.learn.Operatives[0].course.name)}
-          {Item("Docente", task.learn.Operatives[0].teacher.name)}
-          {Item("Unidad", task.learn.name)}
+          {Item("Curso", activity.unit.Operatives[0].course.name)}
+          {Item("Docente", activity.unit.Operatives[0].teacher.name)}
+          {Item("Unidad", activity.unit.name)}
         </List>
       </CardContent>
       <Divider />
       <CardActions>
         <Button color="primary" onClick={handleCaliClick}>
-          Desarrollar Tarea
+          Desarrollar Actividad
         </Button>
       </CardActions>
     </Card>
   );
 };
 
-TaskCard.propTypes = {
-  task: PropTypes.object.isRequired,
+ActivityCard.propTypes = {
+  activity: PropTypes.object.isRequired,
   handleCaliClick: PropTypes.func,
 };
 
-export default TaskCard;
+export default ActivityCard;

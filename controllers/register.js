@@ -6,6 +6,7 @@ const {
   Cycle,
   Response,
 } = require("../models");
+
 async function fetchByStudent(req, res) {
   try {
     const values = await Register.findAll({
@@ -41,7 +42,7 @@ async function fetchBySection(req, res) {
   try {
     const values = await Register.findAll({
       where: {
-        section_code: req.params.section_code,
+        section_code: req.params.s_code,
       },
       include: [
         {
@@ -56,11 +57,11 @@ async function fetchBySection(req, res) {
   }
 }
 
-async function fetchBySectionWithResponse(req, res) {
+async function fetchBySecWithRes(req, res) {
   try {
     const values = await Register.findAll({
       where: {
-        section_code: req.params.section_code,
+        section_code: req.params.s_code,
       },
       attributes: ["code", "student_dni"],
       include: [
@@ -74,7 +75,7 @@ async function fetchBySectionWithResponse(req, res) {
           model: Response,
           as: "responses",
           where: {
-            task_code: req.params.task_code,
+            activity_code: req.params.a_code,
           },
           required: false,
         },
@@ -89,5 +90,5 @@ async function fetchBySectionWithResponse(req, res) {
 module.exports = {
   fetchByStudent,
   fetchBySection,
-  fetchBySectionWithResponse,
+  fetchBySecWithRes,
 };

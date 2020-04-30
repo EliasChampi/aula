@@ -59,7 +59,11 @@ const Main = (props) => {
         [classes.shiftContent]: isDesktop,
       })}
     >
-      <Topbar onSidebarOpen={handleSidebarOpen} handleSignOut={handleSignOut} user={user} />
+      <Topbar
+        onSidebarOpen={handleSidebarOpen}
+        handleSignOut={handleSignOut}
+        user={user}
+      />
       {
         <Sidebar
           onClose={handleSidebarClose}

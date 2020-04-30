@@ -26,8 +26,8 @@ const NewCard = ({ title, to_date, handleEdit, handleCaliClick }) => {
         height={120}
         component="img"
         image="/images/cardbg2.svg"
-        title="Tarea"
-        alt="Back de Tarea"
+        title="Actividad"
+        alt="Back"
       />
       <CardContent className={classes.CardContent}>
         <Typography variant="h4">{title}</Typography>

@@ -13,8 +13,8 @@ import {
 import CreateIcon from "@material-ui/icons/Create";
 import PropTypes from "prop-types";
 import { mydate } from "common/decorator";
-const LearnsTable = (props) => {
-  const { learns, handleEdit, handleTask } = props;
+const Units = (props) => {
+  const { units, handleEdit, handleActivity } = props;
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -25,11 +25,11 @@ const LearnsTable = (props) => {
             <TableCell>Trimestre</TableCell>
             <TableCell>Nombre</TableCell>
             <TableCell>Fecha de Creación</TableCell>
-            <TableCell>Tareas</TableCell>
+            <TableCell>Actividades</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {learns.map((item) => (
+          {units.map((item) => (
             <TableRow hover key={item.code}>
               <TableCell>
                 <IconButton
@@ -49,9 +49,9 @@ const LearnsTable = (props) => {
                   color="secondary"
                   variant="contained"
                   size="small"
-                  onClick={() => handleTask(item)}
+                  onClick={() => handleActivity(item)}
                 >
-                  Tareas
+                  Actividades
                 </Button>
               </TableCell>
             </TableRow>
@@ -62,10 +62,10 @@ const LearnsTable = (props) => {
   );
 };
 
-LearnsTable.propTypes = {
-  learns: PropTypes.array.isRequired,
+Units.propTypes = {
+  units: PropTypes.array.isRequired,
   handleEdit: PropTypes.func,
-  handleTask: PropTypes.func,
+  handleActivity: PropTypes.func,
 };
 
-export default LearnsTable;
+export default Units;

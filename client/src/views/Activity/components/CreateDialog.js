@@ -22,7 +22,7 @@ import { makeStyles } from "@material-ui/styles";
 import PropTypes from "prop-types";
 import CloseIcon from "@material-ui/icons/Close";
 import { useForm } from "react-hook-form";
-import api from "service/task";
+import api from "service/activity";
 import { ToastContext } from "context/toast";
 import { Alert, Uploader } from "components";
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -50,17 +50,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CreateDialog = ({ open, handleClose, l_code, selected }) => {
+const CreateDialog = ({ open, handleClose, u_code, selected }) => {
   const classes = useStyles();
-  const [link, setLink] = useState("");
+  const [videoid, setVideoId] = useState("");
   const [file, setFile] = useState({});
   const [title, setTitle] = useState("Nueva");
   const { show } = useContext(ToastContext);
   const { register, handleSubmit, errors, setValue } = useForm();
 
   const saveData = (data) => {
-    data.link = link;
-    data.learnunit_code = l_code;
+    data.videoid = videoid;
+    data.unit_code = u_code;
     if (selected.attached !== null && Object.keys(file).length === 0) {
       data.hbd = true;
     }
@@ -85,11 +85,11 @@ const CreateDialog = ({ open, handleClose, l_code, selected }) => {
   };
 
   function paste() {
-    if (link) {
-      setLink("");
+    if (videoid) {
+      setVideoId("");
     } else {
       navigator.clipboard.readText().then((text) => {
-        setLink(text);
+        setVideoId(text);
       });
     }
   }
@@ -102,14 +102,14 @@ const CreateDialog = ({ open, handleClose, l_code, selected }) => {
     if (!!selected.code) {
       setValue("type", selected.type);
       setTitle("Modificar");
-      setLink(selected.link);
+      setVideoId(selected.videoid);
       if (selected.attached) {
         setFile({
           name: selected.attached,
         });
       }
     } else {
-      setValue("type", "tr");
+      setValue("type", "ac");
       setTitle("Nueva");
     }
   };
@@ -134,7 +134,7 @@ const CreateDialog = ({ open, handleClose, l_code, selected }) => {
             <CloseIcon />
           </IconButton>
           <Typography variant="h3" className={classes.title}>
-            {title} Tarea
+            {title} Actividad
           </Typography>
           <Button color="inherit" onClick={handleSubmit(onSubmitForm)}>
             Guardar
@@ -147,7 +147,7 @@ const CreateDialog = ({ open, handleClose, l_code, selected }) => {
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                label="Titulo de la tarea"
+                label="Titulo de la Actividad"
                 margin="dense"
                 error={!!errors.title}
                 helperText={errors.title && errors.title.message}
@@ -158,14 +158,14 @@ const CreateDialog = ({ open, handleClose, l_code, selected }) => {
               <Grid container className={classes.marginX}>
                 <Grid item md={6} xs={12}>
                   <FormControl fullWidth margin="dense">
-                    <InputLabel htmlFor="typeLabel">Tipo de Tarea</InputLabel>
+                    <InputLabel htmlFor="typeLabel">Tipo de Actividad</InputLabel>
                     <Select
                       native
                       inputProps={{ name: "type", id: "typeLabel" }}
                       inputRef={register}
                     >
-                      <option value="tr">Tarea</option>
-                      <option value="ta">Tarea con Adjunto</option>
+                      <option value="ac">Actividad</option>
+                      <option value="ct">Cuestionario</option>
                     </Select>
                   </FormControl>
                 </Grid>
@@ -211,7 +211,7 @@ const CreateDialog = ({ open, handleClose, l_code, selected }) => {
             <Grid item md={6} xs={12}>
               <Paper className={clsx(classes.padding, classes.marginX)}>
                 <Typography variant="h5">
-                  Usa un video para esta tarea pegando el ID del video de
+                  Usa un video para esta actividad pegando el ID del video de
                   youtube
                 </Typography>
                 <img
@@ -221,11 +221,11 @@ const CreateDialog = ({ open, handleClose, l_code, selected }) => {
                 />
                 <FormControl fullWidth margin="dense">
                   <Input
-                    id="link"
+                    id="videoid"
                     type="url"
                     placeholder="ID del video. ejm 7NHm5moJwiQ"
                     readOnly
-                    value={link}
+                    value={videoid}
                     endAdornment={
                       <InputAdornment position="end">
                         <Button
@@ -234,7 +234,7 @@ const CreateDialog = ({ open, handleClose, l_code, selected }) => {
                           size="small"
                           onClick={paste}
                         >
-                          {link ? "Limpiar" : "Pegar"}
+                          {videoid ? "Limpiar" : "Pegar"}
                         </Button>
                       </InputAdornment>
                     }
@@ -262,6 +262,7 @@ const CreateDialog = ({ open, handleClose, l_code, selected }) => {
 CreateDialog.propTypes = {
   handleClose: PropTypes.func.isRequired,
   selected: PropTypes.object,
+  u_code: PropTypes.any,
   open: PropTypes.bool,
 };
 

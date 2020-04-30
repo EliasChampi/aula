@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
-import { TaskItem, FamilyCard } from "./components";
+import { ActivityItem, FamilyCard } from "./components";
 import { ToastContext } from "context/toast";
 import { Title } from "components";
 
-const Task = ({ match, history }) => {
+const Activity = ({ match, history }) => {
   const {
     params: { register_code, code },
   } = match;
@@ -14,11 +14,11 @@ const Task = ({ match, history }) => {
   };
   return (
     <React.Fragment>
-      <TaskItem code={code} show={show} handleBackClick={handleBackClick} />
-      <Title title="Desarrollo del tarea" />
+      <ActivityItem code={code} show={show} handleBackClick={handleBackClick} />
+      <Title title="Desarrollo del Actividad" />
       <FamilyCard show={show} register_code={register_code} code={code} />
     </React.Fragment>
   );
 };
 
-export default Task;
+export default Activity;

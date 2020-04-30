@@ -18,7 +18,7 @@ const Revised = ({ match, history }) => {
     <Student
       dni={dni}
       show={show}
-      title="Tareas revisados del estudiante"
+      title="Actividades revisados del estudiante"
       RightButton={RightButton}
     >
       hello world

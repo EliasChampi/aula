@@ -1,7 +1,7 @@
 "use strict";
 module.exports = function (sequelize, DataTypes) {
-  const Task = sequelize.define(
-    "Task",
+  const Activity = sequelize.define(
+    "Activity",
     {
       code: {
         type: DataTypes.INTEGER,
@@ -29,7 +29,7 @@ module.exports = function (sequelize, DataTypes) {
           len: [10, 300],
         },
       },
-      link: {
+      videoid: {
         type: DataTypes.STRING(100),
         validate: {
           len: [0, 12],
@@ -39,7 +39,7 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.DATE,
         allowNull: false,
       },
-      learnunit_code: {
+      unit_code: {
         type: DataTypes.INTEGER,
       },
       attached: {
@@ -47,23 +47,23 @@ module.exports = function (sequelize, DataTypes) {
       },
     },
     {
-      tableName: "tasks",
+      tableName: "activities",
       createdAt: "created_at",
       updatedAt: false,
     }
   );
 
-  Task.associate = function (models) {
-    Task.belongsTo(models.LearnUnit, {
-      as: "learn",
-      foreignKey: "learnunit_code",
+  Activity.associate = function (models) {
+    Activity.belongsTo(models.Unit, {
+      as: "unit",
+      foreignKey: "unit_code",
       targetKey: "code",
     });
-    Task.hasMany(models.Response, {
+    Activity.hasMany(models.Response, {
       as: "responses",
-      foreignKey: "task_code",
+      foreignKey: "activity_code",
       sourceKey: "code",
     });
   };
-  return Task;
+  return Activity;
 };

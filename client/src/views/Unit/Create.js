@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import api from "service/learnunit";
+import api from "service/unit";
 import {
   Card,
   CardHeader,
@@ -20,9 +20,9 @@ import {
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import { Header, withCourses } from "components";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { Header, withCourses } from "components";
 import cache from "helpers/cache";
 const useStyles = makeStyles((theme) => ({
   margin: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CreateLearn = ({ courses, history, match, show }) => {
+const CreateUnit = ({ courses, history, match, show }) => {
   const classes = useStyles();
   const [title, setTitle] = useState("Crear");
   const [checked, setChecked] = useState([]);
@@ -59,15 +59,15 @@ const CreateLearn = ({ courses, history, match, show }) => {
 
   useEffect(() => {
     const { code } = match.params;
-    if (typeof code !== "undefined" && cache.hasThis("learn_" + code)) {
-      const learn = cache.getItem("learn_" + code);
-      setValue("name", learn.name);
-      setValue("trim", learn.trim);
-      setValue("description", learn.description);
+    if (typeof code !== "undefined" && cache.hasThis("unit_" + code)) {
+      const unit = cache.getItem("unit_" + code);
+      setValue("name", unit.name);
+      setValue("trim", unit.trim);
+      setValue("description", unit.description);
       setTitle("Modificar");
     }
     return () => {
-      cache.removeItem("learn_" + code);
+      cache.removeItem("unit_" + code);
     };
   }, []);
 
@@ -96,7 +96,7 @@ const CreateLearn = ({ courses, history, match, show }) => {
   return (
     <React.Fragment>
       <Header
-        subtitle="Las unidades sirven para agrupar tareas segun el tema"
+        subtitle="Las unidades sirven para agrupar actividades segun el tema"
         title="Unidades de Aprendizaje"
         RightButton={RightButton}
       />
@@ -213,4 +213,4 @@ const CreateLearn = ({ courses, history, match, show }) => {
   );
 };
 
-export default withCourses(CreateLearn);
+export default withCourses(CreateUnit);

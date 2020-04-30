@@ -1,7 +1,7 @@
 "use strict";
 module.exports = function (sequelize, DataTypes) {
-  const LearnUnit = sequelize.define(
-    "LearnUnit",
+  const Unit = sequelize.define(
+    "Unit",
     {
       code: {
         type: DataTypes.INTEGER,
@@ -31,24 +31,24 @@ module.exports = function (sequelize, DataTypes) {
       },
     },
     {
-      tableName: "learnunits",
+      tableName: "units",
       createdAt: "created_at",
       updatedAt: false,
     }
   );
-  LearnUnit.associate = function (models) {
-    LearnUnit.belongsToMany(models.OperativeTeacher, {
+  Unit.associate = function (models) {
+    Unit.belongsToMany(models.OperativeTeacher, {
       as: { singular: "Operative", plural: "Operatives" },
-      through: "learnunit_operative_teacher",
-      foreignKey: "learnunit_code",
+      through: "unit_operative_teacher",
+      foreignKey: "unit_code",
       sourceKey: "code",
       timestamps: false,
     });
-    LearnUnit.hasMany(models.Task, {
-      as: "tasks",
-      foreignKey: "learnunit_code",
+    Unit.hasMany(models.Activity, {
+      as: "activities",
+      foreignKey: "unit_code",
       sourceKey: "code",
     });
   };
-  return LearnUnit;
+  return Unit;
 };

@@ -5,13 +5,13 @@ import SignIn from "./SignIn/SignIn";
 import Course from "./Course/Course";
 import Student from "./Student/Student";
 import BySection from "./Register/BySection";
-import LearnUnit from "./LearnUnit/LearnUnit";
-import CreateLearn from "./LearnUnit/Create";
-import TasksByUnit from "./Task/TasksByUnit";
+import Unit from "./Unit/Unit";
+import CreateUnit from "./Unit/Create";
+import ByUnit from "./Activity/ByUnit";
 import Calification from "./Calification/Calification";
-import Pending from "./Task/Pending";
+import Pending from "./Activity/Pending";
 import Revised from "./Revised/Revised";
-import Task from "./Task/Task";
+import Activity from "./Activity/Activity";
 export default {
   Account,
   NotFound,
@@ -20,11 +20,11 @@ export default {
   Course,
   Student,
   BySection,
-  LearnUnit,
-  CreateLearn,
-  TasksByUnit,
+  Unit,
+  CreateUnit,
+  ByUnit,
   Calification,
   Pending,
-  Task,
+  Activity,
   Revised
 };

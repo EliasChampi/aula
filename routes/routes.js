@@ -6,33 +6,36 @@ const auth = require("../controllers/auth");
 const op = require("../controllers/operativeTeacher");
 const reg = require("../controllers/register");
 const section = require("../controllers/section");
-const learn = require("../controllers/learnunit");
-const task = require("../controllers/task");
+const unit = require("../controllers/unit");
+const activity = require("../controllers/activity");
 const stu = require("../controllers/student");
-const Res = require("../controllers/response");
+const res = require("../controllers/response");
 // routes
 router.post("/auth/signin", auth.signin);
 router.get("/courses/:dni", verifyToken, op.fetchByTeacher);
 router.get("/stus_by_family/:dni", verifyToken, stu.fetchByFamily);
 router.get("/stu_by_code/:dni", verifyToken, stu.fetchByCode);
+//register
 router.get("/regs_by_stu/:dni", verifyToken, reg.fetchByStudent);
-router.get("/regs_by_section/:section_code", verifyToken, reg.fetchBySection);
-router.get(
-  "/regs_response/:section_code/:task_code",
-  verifyToken,
-  reg.fetchBySectionWithResponse
-);
+router.get("/regs_by_section/:s_code", verifyToken, reg.fetchBySection);
+router.get("/regs_res/:s_code/:a_code", verifyToken, reg.fetchBySecWithRes);
+// section
 router.get("/section/:code", verifyToken, section.fetchByCodeWithRelations);
-router.get("/learns/:op_code", verifyToken, learn.fetchByOperative);
-router.get("/learn/:code", verifyToken, learn.fetchByCode);
-router.post("/learns", verifyToken, learn.store);
-router.put("/learns/:code", verifyToken, learn.update);
-router.get("/operatives/:l_code", verifyToken, learn.fetchOperatives);
-router.get("/tasks_d/:l_code", verifyToken, task.fetchByLearn);
-router.get("/tasks/:s_code", verifyToken, task.fetchBySec);
-router.get("/task/:code", verifyToken, task.fetchByCodeWithLearn);
-router.get("/task_download/:code", verifyToken, task.downloadAttached);
-router.post("/task", verifyToken, task.store);
-router.put("/task/:code", verifyToken, task.update);
-router.get("/response/:register_code/:task_code", verifyToken, Res.fetchByKeys);
+// unit
+router.get("/units/:op_code", verifyToken, unit.fetchByOperative);
+router.get("/unit/:code", verifyToken, unit.fetchByCode);
+router.post("/unit", verifyToken, unit.store);
+router.put("/unit/:code", verifyToken, unit.update);
+// operatives
+router.get("/operatives/:code", verifyToken, unit.fetchOperatives);
+// activity
+router.get("/activities/d/:u_code", verifyToken, activity.fetchByUnit);
+router.get("/activities/:s_code", verifyToken, activity.fetchBySec);
+router.get("/activity/:code", verifyToken, activity.fetchByCodeWithUnit);
+router.get("/activity_download/:code", verifyToken, activity.downloadAttached);
+router.post("/activity", verifyToken, activity.store);
+router.put("/activity/:code", verifyToken, activity.update);
+// relation
+router.get("/response/:r_code/:a_code", verifyToken, res.fetchByKeys);
+router.post("/response", verifyToken, res.store);
 module.exports = router;

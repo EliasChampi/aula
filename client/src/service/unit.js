@@ -1,10 +1,10 @@
 import request from "./request";
 
-class LearnUnitService {
+class UnitService {
   fetchByOperative(op_code) {
     return new Promise((resolve, reject) => {
       request
-        .get("/learns/" + op_code)
+        .get("/units/" + op_code)
         .then((r) => {
           resolve(r.data);
         })
@@ -17,7 +17,7 @@ class LearnUnitService {
   fetchByCode(code) {
     return new Promise((resolve, reject) => {
       request
-        .get("/learn/" + code)
+        .get("/unit/" + code)
         .then((r) => {
           resolve(r.data);
         })
@@ -30,7 +30,7 @@ class LearnUnitService {
   store(data) {
     return new Promise((resolve, reject) => {
       request
-        .post("/learns", data)
+        .post("/unit", data)
         .then((r) => {
           resolve(r.data);
         })
@@ -43,7 +43,7 @@ class LearnUnitService {
   update(data, code) {
     return new Promise((resolve, reject) => {
       request
-        .put("/learns/" + code, data)
+        .put("/unit/" + code, data)
         .then((r) => {
           resolve(r.data);
         })
@@ -54,4 +54,4 @@ class LearnUnitService {
   }
 }
 
-export default new LearnUnitService();
+export default new UnitService();

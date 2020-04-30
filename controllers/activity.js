@@ -1,6 +1,6 @@
 const {
-  Task,
-  LearnUnit,
+  Activity,
+  Unit,
   Response,
   OperativeTeacher,
   Course,
@@ -9,11 +9,12 @@ const {
 const { STORAGE_TEACHER } = require("../config/storage");
 const fs = require("fs");
 const path = require("path");
-async function fetchByLearn(req, res) {
+
+async function fetchByUnit(req, res) {
   try {
-    const values = await Task.findAll({
+    const values = await Activity.findAll({
       where: {
-        learnunit_code: req.params.l_code,
+        unit_code: req.params.u_code,
       },
       include: [
         {
@@ -31,7 +32,7 @@ async function fetchByLearn(req, res) {
 async function fetchBySec(req, res) {
   const { s_code } = req.params;
   try {
-    const values = await Task.findAll({
+    const values = await Activity.findAll({
       where: {
         to_date: {
           $gte: today(),
@@ -40,9 +41,9 @@ async function fetchBySec(req, res) {
       attributes: ["code", "type", "title", "to_date"],
       include: [
         {
-          model: LearnUnit,
+          model: Unit,
           attributes: ["name"],
-          as: "learn",
+          as: "unit",
           include: [
             {
               model: OperativeTeacher,
@@ -74,16 +75,16 @@ async function fetchBySec(req, res) {
   }
 }
 
-async function fetchByCodeWithLearn(req, res) {
+async function fetchByCodeWithUnit(req, res) {
   try {
-    const value = await Task.findOne({
+    const value = await Activity.findOne({
       where: {
         code: req.params.code,
       },
       include: [
         {
-          model: LearnUnit,
-          as: "learn",
+          model: Unit,
+          as: "unit",
         },
       ],
     });
@@ -95,14 +96,18 @@ async function fetchByCodeWithLearn(req, res) {
 
 async function store(req, res) {
   try {
-    let task = JSON.parse(req.body.data);
+    let activity = JSON.parse(req.body.data);
     const files = req.files;
     if (files !== null) {
-      task.attached = fileName(files.file, task.title, task.learnunit_code);
+      activity.attached = fileName(
+        files.file,
+        activity.title,
+        activity.unit_code
+      );
     }
-    task = await Task.create(task);
+    activity = await Activity.create(activity);
     if (files !== null) {
-      saveFile(task.attached, files.file, (data) => {
+      saveFile(activity.attached, files.file, (data) => {
         res.status(data.status).json({ message: data.message });
       });
     } else {
@@ -114,27 +119,31 @@ async function store(req, res) {
 }
 
 function update(req, res) {
-  let reqtask = JSON.parse(req.body.data);
+  let reqActivity = JSON.parse(req.body.data);
 
-  Task.findByPk(req.params.code)
-    .then((task) => {
-      const previousAttached = task.attached;
+  Activity.findByPk(req.params.code)
+    .then((activity) => {
+      const previousAttached = activity.attached;
       let newAttached = previousAttached;
       const files = req.files;
       if (files !== null) {
-        newAttached = fileName(files.file, reqtask.title, task.learnunit_code);
+        newAttached = fileName(
+          files.file,
+          reqActivity.title,
+          activity.unit_code
+        );
       } else {
-        if (typeof reqtask.hbd !== "undefined") {
+        if (typeof reqActivity.hbd !== "undefined") {
           newAttached = null;
         }
       }
-      task.type = reqtask.type;
-      task.title = reqtask.title;
-      task.content = reqtask.content;
-      task.link = reqtask.link;
-      task.to_date = reqtask.to_date;
-      task.attached = newAttached;
-      task
+      activity.type = reqActivity.type;
+      activity.title = reqActivity.title;
+      activity.content = reqActivity.content;
+      activity.videoid = reqActivity.videoid;
+      activity.to_date = reqActivity.to_date;
+      activity.attached = newAttached;
+      activity
         .save({
           fields: ["type", "title", "content", "link", "to_date", "attached"],
         })
@@ -151,7 +160,7 @@ function update(req, res) {
               });
             }
           } else {
-            if (typeof reqtask.hbd !== "undefined") {
+            if (typeof reqActivity.hbd !== "undefined") {
               removeFile(previousAttached);
             }
             return res
@@ -170,13 +179,13 @@ function update(req, res) {
 
 async function downloadAttached(req, res) {
   try {
-    const task = await Task.findByPk(req.params.code);
-    if (!!task.attached) {
-      const date = new Date(task.to_date);
+    const activity = await Activity.findByPk(req.params.code);
+    if (!!activity.attached) {
+      const date = new Date(activity.to_date);
       const newPath = `storage/teacher/${date.getFullYear()}/${
         date.getMonth() + 1
       }`;
-      res.download(path.join(newPath, task.attached));
+      res.download(path.join(newPath, activity.attached));
     } else {
       throw new Error("no hay adjunto");
     }
@@ -185,8 +194,8 @@ async function downloadAttached(req, res) {
   }
 }
 
-function fileName(file, title, l_code) {
-  return title.split(" ").join("") + l_code + path.extname(file.name);
+function fileName(file, title, u_code) {
+  return title.split(" ").join("") + u_code + path.extname(file.name);
 }
 
 function today() {
@@ -212,9 +221,9 @@ function saveFile(newAttached, myfile, callback) {
 }
 
 module.exports = {
-  fetchByLearn,
+  fetchByUnit,
   fetchBySec,
-  fetchByCodeWithLearn,
+  fetchByCodeWithUnit,
   downloadAttached,
   store,
   update,

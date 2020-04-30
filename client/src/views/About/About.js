@@ -5,9 +5,10 @@ import { makeStyles } from "@material-ui/styles";
 const useStyles = makeStyles((theme) => ({
   box: {
     background: theme.palette.background.default,
+    width: "80%",
   },
   img: {
-    width: "100%",
+    width: "100%"
   },
 }));
 

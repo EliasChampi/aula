@@ -27,10 +27,10 @@ class RegisterService {
     });
   }
 
-  fetchBySectionWithResponse(section_code, task_code) {
+  fetchBySectionWithResponse(section_code, activity_code) {
     return new Promise((resolve, reject) => {
       request
-        .get(`/regs_response/${section_code}/${task_code}`)
+        .get(`/regs_res/${section_code}/${activity_code}`)
         .then((r) => {
           resolve(r.data);
         })
