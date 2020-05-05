@@ -1,8 +1,9 @@
 import React from "react";
-import { CourseCard } from "./components";
-import { withCourses, Header } from "components";
 import { Button, Grid } from "@material-ui/core";
 import { Link } from "react-router-dom";
+
+import { CourseCard } from "./components";
+import { withCourses, Header } from "components";
 import { dayname } from "common/utils";
 import cache from "helpers/cache";
 

@@ -10,11 +10,12 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import DownloadIcon from "@material-ui/icons/CloudDownload";
+import clsx from "clsx";
+
 import api from "service/response";
 import { Uploader, Modal, Alert } from "components";
-import { yourdate } from "common/decorator";
+import { yourdate } from "common/decorator.js";
 import { downloadFile } from "common/utils";
-import clsx from "clsx";
 const useStyles = makeStyles((theme) => ({
   img: {
     width: "40%",

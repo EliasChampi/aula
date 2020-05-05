@@ -12,7 +12,8 @@ import {
 } from "@material-ui/core";
 import CreateIcon from "@material-ui/icons/Create";
 import PropTypes from "prop-types";
-import { yourdate } from "common/decorator";
+
+import { yourdate } from "common/decorator.js";
 import { Empty } from "components";
 const Units = (props) => {
   const { units, handleEdit, handleActivity } = props;

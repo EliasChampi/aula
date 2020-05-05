@@ -7,9 +7,10 @@ import {
   Button,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import api from "service/unit";
-import { ToastContext } from "context/toast";
+
 import { UnitsTable } from "./components";
+import { ToastContext } from "context/toast";
+import api from "service/unit";
 import Operative from "views/Wrapper/Operative";
 import cache from "helpers/cache";
 

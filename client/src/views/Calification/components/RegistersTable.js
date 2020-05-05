@@ -13,6 +13,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
+
 const RegistersTable = ({ registers, handleDownload, handleRev }) => {
   return (
     <TableContainer component={Paper}>

@@ -11,7 +11,8 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { orange } from "@material-ui/core/colors";
-import { yourdate, activityType } from "common/decorator";
+
+import { yourdate, activityType } from "common/decorator.js";
 const useStyles = makeStyles(() => ({
   card: {
     borderTop: "5px solid " + orange[500],

@@ -10,9 +10,10 @@ import {
   Paper,
   Button,
 } from "@material-ui/core";
-import { yourdate, activityType } from "common/decorator";
-import api from "service/activity";
 import { withRouter } from "react-router-dom";
+
+import { yourdate, activityType } from "common/decorator.js";
+import api from "service/activity";
 import { Empty } from "components";
 
 const RevisedTable = ({ match, history, show }) => {

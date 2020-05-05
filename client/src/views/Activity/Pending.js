@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Button, Grid } from "@material-ui/core";
+
 import activityApi from "service/activity";
 import { Mytab, NewCard } from "./components";
 import { ToastContext } from "context/toast";
 import Student from "views/Wrapper/Student";
 import { RevisedTable } from "views/Revised/components";
 import { Empty } from "components";
-import { cycleTypes } from "common/decorator";
+import { cycleTypes } from "common/decorator.js";
 const Pending = ({ match, history }) => {
   const {
     params: { section_code, register_code },

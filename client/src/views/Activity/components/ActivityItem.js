@@ -17,10 +17,11 @@ import {
 import { makeStyles } from "@material-ui/styles";
 import clsx from "clsx";
 import { withRouter } from "react-router-dom";
+
 import { downloadFile } from "common/utils";
 import api from "service/activity";
 import { Header, Title } from "components";
-import { activityType, yourdate, cycleTypes } from "common/decorator";
+import { activityType, yourdate, cycleTypes } from "common/decorator.js";
 const useStyles = makeStyles((theme) => ({
   mt: {
     marginTop: theme.spacing(2),

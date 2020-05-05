@@ -21,10 +21,7 @@ const useStyles = makeStyles((theme) => ({
 const Details = ({ user }) => {
   const classes = useStyles();
   const handleChange = (event) => {
-    /*  setValues({
-      ...values,
-      [event.target.name]: event.target.value
-    }); */
+    console.log(event);
   };
 
   return (

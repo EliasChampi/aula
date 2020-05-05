@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
+import { Grid } from "@material-ui/core";
+
+import { StudentCard } from "./components";
 import { AuthContext } from "context/auth";
 import api from "service/student";
 import regApi from "service/register";
 import { ToastContext } from "context/toast";
-import { Grid } from "@material-ui/core";
 import { Header } from "components";
 import { dayname } from "common/utils";
-import { StudentCard } from "./components";
 import cache from "helpers/cache";
 const Student = ({ history }) => {
   const { user } = useContext(AuthContext);

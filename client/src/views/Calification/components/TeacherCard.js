@@ -1,10 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
-import RegistersTable from "./RegistersTable";
-import api from "service/register";
-import resApi from "service/response";
-import { downloadFile } from "common/utils";
-import { Modal } from "components";
 import {
   TextField,
   Select,
@@ -13,6 +8,12 @@ import {
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
+
+import RegistersTable from "./RegistersTable";
+import api from "service/register";
+import resApi from "service/response";
+import { downloadFile } from "common/utils";
+import { Modal } from "components";
 
 const useStyles = makeStyles((theme) => ({
   margin: {

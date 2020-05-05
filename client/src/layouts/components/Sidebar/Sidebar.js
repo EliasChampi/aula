@@ -6,6 +6,7 @@ import { Divider, Drawer, Button, colors } from "@material-ui/core";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import PeopleIcon from "@material-ui/icons/People";
 import SettingsIcon from "@material-ui/icons/Settings";
+
 import { Profile, SidebarNav } from "./components";
 
 const useStyles = makeStyles((theme) => ({

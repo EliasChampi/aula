@@ -10,8 +10,8 @@ import {
   Paper,
   IconButton,
 } from "@material-ui/core";
-import { yourdate } from "common/decorator";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
+import { yourdate } from "common/decorator.js";
 import { Empty } from "components";
 const ActivitiesTable = ({ activities, handleCaliClick }) => {
   return (

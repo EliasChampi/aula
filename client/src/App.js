@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Router as BrowseRouter } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { ThemeProvider } from "@material-ui/styles";
+
 import theme from "./theme";
 import "./assets/scss/index.scss";
 import Routes from "./Routes";

@@ -1,7 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import { BySectionTable } from "./components";
-import api from "service/register";
-import { ToastContext } from "context/toast";
 import {
   Card,
   CardContent,
@@ -9,6 +6,9 @@ import {
   Divider,
   Button,
 } from "@material-ui/core";
+import { BySectionTable } from "./components";
+import api from "service/register";
+import { ToastContext } from "context/toast";
 import Operative from "views/Wrapper/Operative";
 import cache from "helpers/cache";
 

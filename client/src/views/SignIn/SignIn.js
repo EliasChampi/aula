@@ -12,9 +12,10 @@ import {
   FormControlLabel,
   Radio,
 } from "@material-ui/core";
+import { useForm } from "react-hook-form";
+
 import AuthService from "service/auth";
 import { AuthContext, ToastContext } from "context/consumer";
-import { useForm } from "react-hook-form";
 
 const useStyles = makeStyles((theme) => ({
   root: {

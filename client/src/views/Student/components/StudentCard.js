@@ -17,7 +17,8 @@ import {
 import { makeStyles } from "@material-ui/styles";
 import { orange } from "@material-ui/core/colors";
 import FolderSharedIcon from "@material-ui/icons/FolderSharedRounded";
-import { state, cycleTypes } from "common/decorator";
+
+import { state, cycleTypes } from "common/decorator.js";
 import { IMAGE } from "constants/global";
 const useStyles = makeStyles(() => ({
   cardMedia: {

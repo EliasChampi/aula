@@ -1,4 +1,5 @@
-storage
-node_modules
+/storage
+/node_modules
+.editorconfig
 package-lock.json
 .env

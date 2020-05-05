@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext, useCallback } from "react";
-import Operative from "views/Wrapper/Operative";
 import { Button, Grid } from "@material-ui/core";
 import {
   ActivitiesTable,
@@ -7,6 +6,8 @@ import {
   Mytab,
   ActivityCard,
 } from "./components";
+
+import Operative from "views/Wrapper/Operative";
 import unitApi from "service/unit";
 import api from "service/activity";
 import { ToastContext } from "context/toast";

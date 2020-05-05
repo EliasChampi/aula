@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
+import { Button } from "@material-ui/core";
+
+import { RevisedTable } from "./components";
 import Student from "views/Wrapper/Student";
 import { ToastContext } from "context/toast";
-import { Button } from "@material-ui/core";
-import { RevisedTable } from "./components";
 
 const Revised = ({ match, history }) => {
   const {

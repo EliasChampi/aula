@@ -11,7 +11,7 @@ import {
   IconButton,
 } from "@material-ui/core";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
-import { state, yourdate } from "common/decorator";
+import { state, yourdate } from "common/decorator.js";
 const BySectionTable = ({ data, handleGo }) => {
 
   return (
