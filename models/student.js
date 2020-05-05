@@ -25,6 +25,12 @@ module.exports = function (sequelize, DataTypes) {
       image: {
         type: DataTypes.STRING,
       },
+      fullname: {
+        type: DataTypes.VIRTUAL,
+        get() {
+          return [this.surname, this.second_surname, this.name].join(" ");
+        },
+      },
     },
     {
       tableName: "students",

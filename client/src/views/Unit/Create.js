@@ -35,17 +35,18 @@ const CreateUnit = ({ courses, history, match, show }) => {
   const [title, setTitle] = useState("Crear");
   const [checked, setChecked] = useState([]);
   const { register, handleSubmit, errors, setValue } = useForm();
-
+  const { code } = match.params;
+  
   const saveData = (data) => {
     if (title === "Crear") {
       return api.store(data);
     }
-    data.code = match.params.code;
-    return api.update(data, match.params.code);
+    data.code = code;
+    return api.update(data, code);
   };
 
   const onSubmitForm = (state) => {
-    if(!checked.length) return;
+    if (!checked.length) return;
     state.ops = checked;
     saveData(state)
       .then((r) => {
@@ -58,7 +59,6 @@ const CreateUnit = ({ courses, history, match, show }) => {
   };
 
   useEffect(() => {
-    const { code } = match.params;
     if (typeof code !== "undefined" && cache.hasThis("unit_" + code)) {
       const unit = cache.getItem("unit_" + code);
       setValue("name", unit.name);
@@ -69,18 +69,7 @@ const CreateUnit = ({ courses, history, match, show }) => {
     return () => {
       cache.removeItem("unit_" + code);
     };
-  }, []);
-
-  const RightButton = () => (
-    <Button
-      variant="contained"
-      color="default"
-      component={Link}
-      to="/dashboard"
-    >
-      Cancelar
-    </Button>
-  );
+  }, [code, setValue]);
 
   const handleToggle = (code) => {
     const currentIndex = checked.indexOf(code);
@@ -98,7 +87,16 @@ const CreateUnit = ({ courses, history, match, show }) => {
       <Header
         subtitle="Las unidades sirven para agrupar actividades segun el tema"
         title="Unidades de Aprendizaje"
-        RightButton={RightButton}
+        RightButton={
+          <Button
+            variant="contained"
+            color="default"
+            component={Link}
+            to="/dashboard"
+          >
+            Cancelar
+          </Button>
+        }
       />
       <Card>
         <CardHeader title={`${title} una unidad`} />

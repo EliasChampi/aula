@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const { verifyToken } = require("../middlewares");
+const { verifyToken, year } = require("../middlewares");
 // controllers
 const auth = require("../controllers/auth");
 const op = require("../controllers/operativeTeacher");
@@ -14,7 +14,7 @@ const res = require("../controllers/response");
 router.post("/auth/signin", auth.signin);
 router.get("/courses/:dni", verifyToken, op.fetchByTeacher);
 router.get("/stus_by_family/:dni", verifyToken, stu.fetchByFamily);
-router.get("/stu_by_code/:dni", verifyToken, stu.fetchByCode);
+router.get("/stu_by_code/:r_code", verifyToken, stu.fetchByCode);
 //register
 router.get("/regs_by_stu/:dni", verifyToken, reg.fetchByStudent);
 router.get("/regs_by_section/:s_code", verifyToken, reg.fetchBySection);
@@ -29,13 +29,20 @@ router.put("/unit/:code", verifyToken, unit.update);
 // operatives
 router.get("/operatives/:code", verifyToken, unit.fetchOperatives);
 // activity
-router.get("/activities/d/:u_code", verifyToken, activity.fetchByUnit);
-router.get("/activities/:s_code", verifyToken, activity.fetchBySec);
-router.get("/activity/:code", verifyToken, activity.fetchByCodeWithUnit);
-router.get("/activity_download/:code", verifyToken, activity.downloadAttached);
+router.get("/activities/t/:u_code", verifyToken, activity.fetchByUnit);
+router.get("/activities/:s_code", verifyToken, year, activity.fetchBySec);
+router.get(
+  "/activities/f/:r_code/:s_code",
+  verifyToken,
+  activity.fetchByRegWithRes
+);
+router.get("/activity/:s_code/:code", verifyToken, activity.fetchByCode);
+router.get("/activity/d/:code", verifyToken, activity.downloadAttached);
 router.post("/activity", verifyToken, activity.store);
 router.put("/activity/:code", verifyToken, activity.update);
-// relation
+// response
 router.get("/response/:r_code/:a_code", verifyToken, res.fetchByKeys);
+router.get("/response/d/:r_code/:a_code", verifyToken, res.downloadAttached);
 router.post("/response", verifyToken, res.store);
+router.put("/response/:r_code/:a_code", verifyToken, res.update);
 module.exports = router;

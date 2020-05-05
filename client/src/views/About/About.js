@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     width: "80%",
   },
   img: {
-    width: "100%"
+    width: "100%",
   },
 }));
 
@@ -16,7 +16,7 @@ const About = () => {
   const classes = useStyles();
   return (
     <Paper className={classes.box}>
-      <img className={classes.img} src="/images/about.svg" />
+      <img className={classes.img} src="/images/about.svg" alt="Acerca de" />
     </Paper>
   );
 };

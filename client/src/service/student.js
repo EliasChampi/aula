@@ -14,10 +14,10 @@ class StudentService {
     });
   }
 
-  fetchByCode(dni) {
+  fetchByCode(register_code) {
     return new Promise((resolve, reject) => {
       request
-        .get("/stu_by_code/" + dni)
+        .get("/stu_by_code/" + register_code)
         .then((r) => {
           resolve(r.data);
         })

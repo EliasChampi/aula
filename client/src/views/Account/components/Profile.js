@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/styles';
+import React from "react";
+import PropTypes from "prop-types";
+import clsx from "clsx";
+import { makeStyles } from "@material-ui/styles";
 import {
   Card,
   CardActions,
@@ -10,49 +10,40 @@ import {
   Typography,
   Divider,
   Button,
-  LinearProgress
-} from '@material-ui/core';
-import { AuthContext } from '../../../context/auth';
+  LinearProgress,
+} from "@material-ui/core";
+import { IMAGE } from "constants/global";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {},
   details: {
-    display: 'flex'
+    display: "flex",
   },
   avatar: {
-    marginLeft: 'auto',
+    marginLeft: "auto",
     height: 110,
     width: 100,
     flexShrink: 0,
-    flexGrow: 0
+    flexGrow: 0,
   },
   progress: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
   },
   uploadButton: {
-    marginRight: theme.spacing(2)
-  }
+    marginRight: theme.spacing(2),
+  },
 }));
 
-const Profile = props => {
-  const { className, ...rest } = props;
-
+const Profile = ({ className, user, ...rest }) => {
   const classes = useStyles();
-  const { user } = useContext(AuthContext);
 
   return (
-    <Card
-      {...rest}
-      className={clsx(classes.root, className)}
-    >
+    <Card {...rest} className={clsx(classes.root, className)}>
       <CardContent>
         <div className={classes.details}>
           <div>
-            <Typography
-              gutterBottom
-              variant="h3"
-            >
-              {user.name + ' ' + user.surname}
+            <Typography gutterBottom variant="h3">
+              {user.name + " " + user.surname}
             </Typography>
             <Typography
               className={classes.locationText}
@@ -71,24 +62,17 @@ const Profile = props => {
           </div>
           <Avatar
             className={classes.avatar}
-            src={'/images/'+user.image}
+            src={IMAGE("default", user.image)}
           />
         </div>
         <div className={classes.progress}>
           <Typography variant="body1">Perfil completado: 70%</Typography>
-          <LinearProgress
-            value={70}
-            variant="determinate"
-          />
+          <LinearProgress value={70} variant="determinate" />
         </div>
       </CardContent>
       <Divider />
       <CardActions>
-        <Button
-          className={classes.uploadButton}
-          color="primary"
-          variant="text"
-        >
+        <Button className={classes.uploadButton} disabled>
           Cambiar Foto
         </Button>
       </CardActions>
@@ -97,7 +81,7 @@ const Profile = props => {
 };
 
 Profile.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 export default Profile;

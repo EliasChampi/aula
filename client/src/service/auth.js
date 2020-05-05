@@ -18,7 +18,7 @@ class AuthService {
   }
   // logout
   logout() {
-    cache.removeItem("user");
+    cache.cleanAll();
   }
   // getCurrentUser
   getCurrentUser() {

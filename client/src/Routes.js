@@ -26,7 +26,7 @@ const Routes = () => {
         component={view.Pending}
         exact
         isAuthed={isAuthed}
-        path="/estudiante/:dni/:section_code/:register_code"
+        path="/estudiante/:section_code/:register_code"
       />
       <ProtectedRoute
         component={view.Unit}
@@ -50,7 +50,7 @@ const Routes = () => {
         component={view.Revised}
         exact
         isAuthed={isAuthed}
-        path="/revisados/:dni/:register_code"
+        path="/revisados/:section_code/:register_code"
       />
       <ProtectedRoute
         component={view.Calification}
@@ -62,7 +62,7 @@ const Routes = () => {
         component={view.Activity}
         exact
         isAuthed={isAuthed}
-        path="/actividad/:dni/:register_code/:code"
+        path="/actividad/:section_code/:register_code/:code"
       />
       <ProtectedRoute
         component={view.CreateUnit}

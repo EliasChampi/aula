@@ -5,21 +5,25 @@ import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/styles";
 import { Avatar, Typography } from "@material-ui/core";
 import { AuthContext } from "context/auth";
+import { IMAGE } from "constants/global";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    minHeight: "fit-content"
+    minHeight: "fit-content",
   },
   avatar: {
     width: 60,
-    height: 60
-  }
+    height: 60,
+  },
+  upper: {
+    textTransform: "uppercase",
+  },
 }));
 
-const Profile = props => {
+const Profile = (props) => {
   const { className, ...rest } = props;
 
   const classes = useStyles();
@@ -31,18 +35,20 @@ const Profile = props => {
         alt="Person"
         className={classes.avatar}
         component={RouterLink}
-        src={"/images/" + user.image}
+        src={IMAGE("default", user.image)}
         to="/mis-datos"
       />
       <Typography variant="h4">{user.name}</Typography>
       <Typography variant="h5">{user.surname}</Typography>
-      <Typography variant="subtitle2">{user.mode}</Typography>
+      <Typography variant="subtitle2" className={classes.upper}>
+        {user.mode}
+      </Typography>
     </div>
   );
 };
 
 Profile.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 export default Profile;

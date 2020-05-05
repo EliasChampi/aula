@@ -4,17 +4,15 @@ import { TeacherCard } from "./components";
 import { ToastContext } from "context/toast";
 import { Title } from "components";
 
-const Calification = ({ match, history }) => {
+const Calification = ({ match }) => {
   const {
     params: { section_code, code },
   } = match;
   const { show } = useContext(ToastContext);
-  const handleBackClick = () => {
-    history.goBack();
-  };
+
   return (
     <React.Fragment>
-      <ActivityItem code={code} show={show} handleBackClick={handleBackClick} />
+      <ActivityItem show={show} />
       <Title title="Estudiantes" />
       <TeacherCard show={show} section_code={section_code} code={code} />
     </React.Fragment>

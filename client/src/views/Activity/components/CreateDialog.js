@@ -158,7 +158,9 @@ const CreateDialog = ({ open, handleClose, u_code, selected }) => {
               <Grid container className={classes.marginX}>
                 <Grid item md={6} xs={12}>
                   <FormControl fullWidth margin="dense">
-                    <InputLabel htmlFor="typeLabel">Tipo de Actividad</InputLabel>
+                    <InputLabel htmlFor="typeLabel">
+                      Tipo de Actividad
+                    </InputLabel>
                     <Select
                       native
                       inputProps={{ name: "type", id: "typeLabel" }}

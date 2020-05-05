@@ -15,23 +15,21 @@ const Course = ({ courses, history, user }) => {
     history.push(`${from}/${item.section_code}/${item.code}`);
   };
 
-  const RightButton = () => (
-    <Button
-      variant="contained"
-      color="secondary"
-      component={Link}
-      to="/crear_unidad"
-    >
-      Crear una unidad
-    </Button>
-  );
-
   return (
     <React.Fragment>
       <Header
         subtitle="Aqui estan las secciones que estas dictando este año"
         title={dayname(user.name)}
-        RightButton={RightButton}
+        RightButton={
+          <Button
+            variant="contained"
+            color="secondary"
+            component={Link}
+            to="/crear_unidad"
+          >
+            Crear una unidad
+          </Button>
+        }
       />
       <Grid container spacing={3}>
         {courses.map((item) => (

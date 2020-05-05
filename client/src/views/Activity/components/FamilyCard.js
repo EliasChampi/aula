@@ -3,30 +3,71 @@ import PropTypes from "prop-types";
 import {
   Card,
   CardContent,
-  Grid,
   Typography,
   Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
   DialogContentText,
-  DialogActions,
+  CardHeader,
 } from "@material-ui/core";
-import { Alert, Uploader } from "components";
-import api from "service/response";
 import { makeStyles } from "@material-ui/styles";
-
-const useStyles = makeStyles(() => ({
+import DownloadIcon from "@material-ui/icons/CloudDownload";
+import api from "service/response";
+import { Uploader, Modal, Alert } from "components";
+import { yourdate } from "common/decorator";
+import { downloadFile } from "common/utils";
+import clsx from "clsx";
+const useStyles = makeStyles((theme) => ({
   img: {
-    width: "50%",
+    width: "40%",
+  },
+  dflex: {
+    display: "flex",
+  },
+  center: {
+    margin: "auto",
+  },
+  score: {
+    background: "cornsilk",
+    border: `2px dotted ${theme.palette.secondary.main}`,
+    padding: theme.spacing(2),
+    width: "10em",
+    textAlign: "center",
+  },
+  mw: {
+    maxWidth: "50%",
   },
 }));
+
+const CardItem = ({ title, subheader, children, action, handleClick }) => {
+  return (
+    <Card>
+      <CardHeader
+        title={title}
+        subheader={subheader}
+        action={
+          action ? (
+            <Button
+              color="secondary"
+              variant="outlined"
+              size="small"
+              onClick={handleClick}
+              startIcon={<DownloadIcon />}
+            >
+              Respuesta
+            </Button>
+          ) : null
+        }
+      />
+      <CardContent>{children}</CardContent>
+    </Card>
+  );
+};
 
 const FamilyCard = ({ show, register_code, code }) => {
   const [file, setFile] = useState({});
   const [response, setResponse] = useState({});
   const [open, setOpen] = useState(false);
   const classes = useStyles();
+
   useEffect(() => {
     let mounted = true;
     api
@@ -42,7 +83,7 @@ const FamilyCard = ({ show, register_code, code }) => {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [register_code, code]);
 
   const handleUpload = () => {
     const formData = new FormData();
@@ -70,67 +111,83 @@ const FamilyCard = ({ show, register_code, code }) => {
     setOpen(open);
   };
 
+  const handleDownload = () => {
+    api
+      .downloadAttached(register_code, code)
+      .then((r) => {
+        downloadFile(r, response.attached);
+      })
+      .catch((error) => {
+        show(error, "error");
+      });
+  };
+
   return (
     <React.Fragment>
-      <Card>
-        <CardContent>
-          {!response ? (
-            <Grid container spacing={3} alignItems="center">
-              <Grid item md={6} xs={12}>
-                <Alert title="Subir el documento de Respuesta">
-                  <Typography variant="subtitle2">
-                    Sube tu respuesta como un documento pdf, word o una imagen
-                    simple, tu archivo debe pesar como minimo 32kb y maximo 3mb.
-                  </Typography>
-                </Alert>
-              </Grid>
-              <Grid item md={6} xs={12}>
-                <Uploader file={file} setFile={handleSetFile} show={show} />
-              </Grid>
-            </Grid>
-          ) : (
-            <Grid container spacing={3} alignItems="center">
-              <Grid item md={6} xs={12}>
-                <img
-                  src="/images/respuesta.svg"
-                  className={classes.img}
-                  alt="respuesta"
-                />
-              </Grid>
-              <Grid item md={6} xs={12}>
-                <Typography variant="subtitle2">
-                  Ya subiste una respuesta a esta actividad, pronto recibirás la
-                  calificación
-                </Typography>
-                <Button variant="outlined" color="secondary">
-                  Descargar
-                </Button>
-              </Grid>
-            </Grid>
-          )}
-        </CardContent>
-      </Card>
-      <Dialog
+      {!response ? (
+        <CardItem
+          title="Subir Documento de Respuesta"
+          subheader="Sube tu respuesta como un documento pdf, word o una imagen
+            simple, tu archivo debe pesar como minimo 32kb y maximo 3mb"
+          action={false}
+        >
+          <Uploader
+            className={clsx(classes.mw, classes.center)}
+            file={file}
+            setFile={handleSetFile}
+            show={show}
+          />
+        </CardItem>
+      ) : !response.score ? (
+        <CardItem
+          title="Ya subiste una respuesta a esta actividad"
+          subheader={`Fecha de respuesta: ${yourdate(
+            response.created_at,
+            "[a las] hh:mm a"
+          )}`}
+          action={true}
+          handleClick={handleDownload}
+        >
+          <img
+            className={clsx(classes.dflex, classes.img, classes.center)}
+            src="/images/respuesta.svg"
+            title="respuesta"
+            alt="respuesta img"
+          />
+        </CardItem>
+      ) : (
+        <CardItem
+          title="Su respuesta ha sido calificado:"
+          subheader={`Fecha de calificación: ${yourdate(
+            response.updated_at,
+            "[a las] hh:mm a"
+          )}`}
+          action={true}
+          handleClick={handleDownload}
+        >
+          <Typography
+            variant="h4"
+            color="textSecondary"
+            className={clsx(classes.score, classes.center)}
+          >
+            <b>Nota:</b> {response.score}
+          </Typography>
+          <br />
+          <Alert title="Observaciones:">
+            <Typography variant="subtitle2">{response.obs}</Typography>
+          </Alert>
+        </CardItem>
+      )}
+      <Modal
         open={open}
-        onClose={() => handleSetFile({}, false)}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        close={() => handleSetFile({}, false)}
+        title="Confirmar"
+        handleConfirm={handleUpload}
       >
-        <DialogTitle id="alert-dialog-title">Confirmar</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            El documento <b>{file.name}</b> será enviado al docente
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => handleSetFile({}, false)} color="secondary">
-            Cancelar
-          </Button>
-          <Button onClick={handleUpload} color="secondary" autoFocus>
-            Aceptar
-          </Button>
-        </DialogActions>
-      </Dialog>
+        <DialogContentText id="alert-dialog-description">
+          El documento <b>{file.name}</b> será enviado al docente
+        </DialogContentText>
+      </Modal>
     </React.Fragment>
   );
 };

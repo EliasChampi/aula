@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
-const RegistersTable = ({ registers }) => {
+const RegistersTable = ({ registers, handleDownload, handleRev }) => {
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -31,12 +31,18 @@ const RegistersTable = ({ registers }) => {
             <TableRow hover key={item.code}>
               <TableCell>{item.student_dni}</TableCell>
               <TableCell>
-                {`${item.student.name} ${item.student.surname} ${item.student.second_surname}`}
+                <b>{item.student.fullname}</b>
               </TableCell>
-              {item.responses.length > 0 ? (
+              {item.responses.length ? (
                 <React.Fragment>
                   <TableCell>
-                    <Button variant="contained" size="small">
+                    <Button
+                      size="small"
+                      color="secondary"
+                      onClick={() =>
+                        handleDownload(item.code, item.responses[0].attached)
+                      }
+                    >
                       Descargar
                     </Button>
                   </TableCell>
@@ -59,7 +65,11 @@ const RegistersTable = ({ registers }) => {
                 </React.Fragment>
               )}
               <TableCell>
-                <IconButton color="secondary" size="small">
+                <IconButton
+                  style={{ color: "#2bb900" }}
+                  size="small"
+                  onClick={() => handleRev(item)}
+                >
                   <AssignmentTurnedInIcon />
                 </IconButton>
               </TableCell>
@@ -72,5 +82,7 @@ const RegistersTable = ({ registers }) => {
 };
 RegistersTable.propTypes = {
   registers: PropTypes.array.isRequired,
+  handleDownload: PropTypes.func,
+  handleRev: PropTypes.func,
 };
 export default RegistersTable;

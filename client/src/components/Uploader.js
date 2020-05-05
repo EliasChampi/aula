@@ -2,39 +2,44 @@ import React from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Typography, IconButton } from "@material-ui/core";
-import { grey, red } from "@material-ui/core/colors";
 import BackupRoundedIcon from "@material-ui/icons/BackupRounded";
 import DeleteForeverRoundedIcon from "@material-ui/icons/DeleteForeverRounded";
 import { MIN_SIZE, MAX_SIZE, NAME_AND_TYPE } from "constants/file";
+import clsx from "clsx";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(1),
-    border: `5px dotted ${grey[500]}`,
+    border: `5px dotted ${theme.palette.secondary.dark}`,
     borderRadius: theme.spacing(1),
-    backgroundColor: grey[50],
     textAlign: "center",
   },
+  iconFontSize: {
+    fontSize: "50px",
+  },
 }));
-const Uploader = ({ show, file, setFile }) => {
+const Uploader = ({ show, file, setFile, className }) => {
   const classes = useStyles();
   const handleFileChange = (event) => {
     event.persist();
     const myfile = event.target.files[0];
     if (myfile.size < MIN_SIZE || myfile.size > MAX_SIZE) {
-      show("Su documento no cumple con el requerimiento del peso establecido");
+      show("Su archivo no cumple con el peso establecido");
     } else if (!NAME_AND_TYPE.exec(myfile.name)) {
-      show("Su documento posee una extension diferente");
+      show("Su archivo posee una extension desconocida");
     } else {
       setFile(myfile);
     }
   };
 
   return (
-    <Box className={classes.root}>
+    <Box className={clsx(classes.root, className)}>
       {!file.name ? (
         <IconButton component="label">
-          <BackupRoundedIcon color="primary" style={{ fontSize: 50 }} />
+          <BackupRoundedIcon
+            color="secondary"
+            className={classes.iconFontSize}
+          />
           <input
             type="file"
             accept=".docx, application/msword, application/pdf, image/*"
@@ -44,10 +49,10 @@ const Uploader = ({ show, file, setFile }) => {
         </IconButton>
       ) : (
         <IconButton onClick={() => setFile({})}>
-          <DeleteForeverRoundedIcon style={{ fontSize: 50, color: red[500] }} />
+          <DeleteForeverRoundedIcon className={classes.iconFontSize} />
         </IconButton>
       )}
-      <Typography>
+      <Typography component="i" variant="subtitle2">
         {file.name || "Seleccione un documento para subir"}
       </Typography>
     </Box>

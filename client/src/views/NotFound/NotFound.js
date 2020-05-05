@@ -2,16 +2,16 @@ import React from "react";
 import { makeStyles } from "@material-ui/styles";
 import { Grid, Typography } from "@material-ui/core";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   content: {
-    textAlign: "center"
+    textAlign: "center",
   },
   image: {
     marginTop: 50,
     display: "inline-block",
     maxWidth: "100%",
-    width: 600
-  }
+    width: 600,
+  },
 }));
 
 const NotFound = () => {

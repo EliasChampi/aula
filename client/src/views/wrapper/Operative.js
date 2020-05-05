@@ -17,9 +17,12 @@ const useStyles = makeStyles((theme) => ({
 const Operative = ({ title, RightButton, children, history, match }) => {
   const [subtitle, setSubtitle] = useState("");
   const classes = useStyles();
+  const {
+    params: { op_code, section_code },
+  } = match;
   useEffect(() => {
     let mounted = true;
-    const key = `op_${match.params.op_code}_sec_${match.params.section_code}`;
+    const key = `op_${op_code}_sec_${section_code}`;
     if (cache.hasThis(key) && mounted) {
       const data = cache.getItem(key);
       const title = `${data.section_code.substr(-2)} de 
@@ -31,7 +34,7 @@ const Operative = ({ title, RightButton, children, history, match }) => {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [op_code, section_code]);
 
   return (
     <React.Fragment>
@@ -53,7 +56,7 @@ const Operative = ({ title, RightButton, children, history, match }) => {
             Atras
           </Button>
           <span className={classes.ml}>
-            <RightButton />
+            {RightButton}
           </span>
         </Grid>
       </Grid>

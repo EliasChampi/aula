@@ -6,3 +6,5 @@ export { default as withCourses } from "./hoc/withCourses";
 export { default as Title } from "./Title";
 export { default as Alert } from "./Alert";
 export { default as Uploader } from "./Uploader";
+export { default as Modal } from "./Modal";
+export { default as Empty } from "./Empty";

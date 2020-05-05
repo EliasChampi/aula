@@ -24,7 +24,7 @@ const Header = ({ title, subtitle, RightButton }) => {
         <Typography variant="h4">{subtitle}</Typography>
       </Grid>
       <Grid item>
-        <RightButton />
+        {RightButton}
       </Grid>
     </Grid>
   );

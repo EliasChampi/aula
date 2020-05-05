@@ -12,10 +12,12 @@ export const activityType = {
   ct: "Cuestionario",
 };
 
-export const mydate = (date) => {
-  return moment(date).format("DD [de] MMMM [del] YYYY");
+export const cycleTypes = {
+  PRI: "Primaria",
+  SEC: "Secundaria",
+  undefined: "Secundaria",
 };
 
-export const yourdate = (date) => {
-  return moment(date).format("DD [de] MMMM");
+export const yourdate = (date, addFormat = "") => {
+  return moment(date).format("dddd DD [de] MMMM " + addFormat);
 };

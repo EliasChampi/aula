@@ -52,4 +52,11 @@ export default {
   removeItem: (key) => {
     return storage.removeItem(key);
   },
+
+  /**
+   * @returns {void}
+   */
+  cleanAll: () => {
+    return storage.clear();
+  },
 };

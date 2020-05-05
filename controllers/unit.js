@@ -5,6 +5,7 @@ async function fetchByOperative(req, res) {
       where: Sequelize.literal(`exists ( select * from unit_operative_teacher 
         where unit_code = "Unit".code and operative_teacher_code = ${req.params.op_code}
       )`),
+      order: [["created_at", "ASC"]],
     });
     return res.status(200).json({ values });
   } catch (error) {

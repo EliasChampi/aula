@@ -1,9 +1,6 @@
 const {
   Register,
   Student,
-  Section,
-  Degree,
-  Cycle,
   Response,
 } = require("../models");
 
@@ -12,25 +9,7 @@ async function fetchByStudent(req, res) {
     const values = await Register.findAll({
       where: {
         student_dni: req.params.dni,
-      },
-      include: [
-        {
-          model: Section,
-          as: "section",
-          include: [
-            {
-              model: Degree,
-              as: "degree",
-              include: [
-                {
-                  model: Cycle,
-                  as: "cycle",
-                },
-              ],
-            },
-          ],
-        },
-      ],
+      }
     });
     return res.status(200).json({ values });
   } catch (error) {
@@ -66,7 +45,7 @@ async function fetchBySecWithRes(req, res) {
       attributes: ["code", "student_dni"],
       include: [
         {
-          attributes: ["name", "surname", "second_surname"],
+          attributes: ["name", "surname", "second_surname", "fullname"],
           model: Student,
           as: "student",
         },

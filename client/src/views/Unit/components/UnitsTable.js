@@ -12,7 +12,8 @@ import {
 } from "@material-ui/core";
 import CreateIcon from "@material-ui/icons/Create";
 import PropTypes from "prop-types";
-import { mydate } from "common/decorator";
+import { yourdate } from "common/decorator";
+import { Empty } from "components";
 const Units = (props) => {
   const { units, handleEdit, handleActivity } = props;
   return (
@@ -43,7 +44,7 @@ const Units = (props) => {
               <TableCell>{item.code}</TableCell>
               <TableCell>{item.trim}</TableCell>
               <TableCell>{item.name}</TableCell>
-              <TableCell>{mydate(item.created_at)}</TableCell>
+              <TableCell>{yourdate(item.created_at, "[del] YYYY")}</TableCell>
               <TableCell>
                 <Button
                   color="secondary"
@@ -58,6 +59,7 @@ const Units = (props) => {
           ))}
         </TableBody>
       </Table>
+      {!units.length && <Empty title="Sin Unidades" />}
     </TableContainer>
   );
 };

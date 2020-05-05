@@ -12,8 +12,8 @@ import {
 } from "@material-ui/core";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
 import { state, yourdate } from "common/decorator";
-const BySectionTable = (props) => {
-  const { data } = props;
+const BySectionTable = ({ data, handleGo }) => {
+
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -31,12 +31,16 @@ const BySectionTable = (props) => {
           {data.map((item) => (
             <TableRow hover key={item.code}>
               <TableCell>{item.student_dni}</TableCell>
-              <TableCell>{`${item.student.name} ${item.student.surname} ${item.student.second_surname}`}</TableCell>
+              <TableCell>{item.student.fullname}</TableCell>
               <TableCell>{state[item.state]}</TableCell>
               <TableCell>{item.student.telephone}</TableCell>
               <TableCell>{yourdate(item.student.birthdate)}</TableCell>
               <TableCell>
-                <IconButton color="secondary" size="small">
+                <IconButton
+                  color="secondary"
+                  size="small"
+                  onClick={() => handleGo(item)}
+                >
                   <PlaylistAddCheckIcon />
                 </IconButton>
               </TableCell>
@@ -50,6 +54,7 @@ const BySectionTable = (props) => {
 
 BySectionTable.propTypes = {
   data: PropTypes.array.isRequired,
+  handleGo: PropTypes.func.isRequired
 };
 
 export default BySectionTable;

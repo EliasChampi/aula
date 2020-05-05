@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import api from "service/activity";
-import { Header } from "components";
-import { activityType, yourdate } from "common/decorator";
-import { orange } from "@material-ui/core/colors";
 import YouTubeIcon from "@material-ui/icons/YouTube";
-import LockOutlinedIcon from "@material-ui/icons/Description";
 import DownloadIcon from "@material-ui/icons/CloudDownload";
 import {
   Button,
@@ -17,16 +12,21 @@ import {
   Avatar,
   CardMedia,
   CardActions,
+  Paper,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import { downloadFile } from "common/utils";
 import clsx from "clsx";
+import { withRouter } from "react-router-dom";
+import { downloadFile } from "common/utils";
+import api from "service/activity";
+import { Header, Title } from "components";
+import { activityType, yourdate, cycleTypes } from "common/decorator";
 const useStyles = makeStyles((theme) => ({
   mt: {
     marginTop: theme.spacing(2),
   },
   avatar: {
-    backgroundColor: orange[500],
+    backgroundColor: theme.palette.primary.main,
   },
   dflex: {
     display: "flex",
@@ -37,20 +37,17 @@ const useStyles = makeStyles((theme) => ({
   padding: {
     padding: theme.spacing(2),
   },
-  ml: {
-    marginLeft: theme.spacing(2),
-  },
 }));
-const ActivityItem = ({ code, handleBackClick, show }) => {
+const ActivityItem = ({ show, match, history }) => {
   const [activity, setActivity] = useState({});
   const [loading, setLoading] = useState(true);
   const classes = useStyles();
-
+  const { section_code, code } = match.params;
   useEffect(() => {
     let mounted = true;
     const fetchActivity = () => {
       api
-        .fetchByCodeWithUnit(code)
+        .fetchByCode(section_code, code)
         .then((r) => {
           if (mounted) {
             setActivity(r.value);
@@ -67,13 +64,7 @@ const ActivityItem = ({ code, handleBackClick, show }) => {
     return () => {
       mounted = false;
     };
-  }, []);
-
-  const RightButton = () => (
-    <Button color="secondary" variant="contained" onClick={handleBackClick}>
-      Volver a Actividades
-    </Button>
-  );
+  }, [code]);
 
   const handleDownloadClick = () => {
     api
@@ -91,7 +82,11 @@ const ActivityItem = ({ code, handleBackClick, show }) => {
       <Header
         title={activityType[activity.type]}
         subtitle={activity.title}
-        RightButton={RightButton}
+        RightButton={
+          <Button variant="contained" onClick={() => history.goBack()}>
+            Volver a Actividades
+          </Button>
+        }
       />
       {!loading && (
         <Card>
@@ -101,48 +96,55 @@ const ActivityItem = ({ code, handleBackClick, show }) => {
                 <YouTubeIcon />
               </Avatar>
             }
-            action={
-              <Button
-                onClick={handleDownloadClick}
-                disabled={!activity.attached}
-                variant="contained"
-                color="secondary"
-                startIcon={<DownloadIcon />}
-              >
-                Adjunto
-              </Button>
-            }
-            title={`Unidad: ${activity.unit.name}`}
-            subheader={activity.unit.description}
+            title="Contenido de la Actividad"
           />
           <CardMedia
-            component={activity.attached ? "iframe" : "img"}
+            component={activity.videoid ? "iframe" : "img"}
             height={480}
             src={
-              activity.attached
+              activity.videoid
                 ? `https://www.youtube.com/embed/${activity.videoid}`
                 : "/images/mibg.svg"
             }
             title={activity.title}
           />
-          <CardContent className={clsx(classes.dflex, classes.mt)}>
-            <Avatar className={classes.avatar}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <div className={classes.ml}>
-              <Typography component="h5" variant="h5">
-                Instrucciones
+          <CardContent>
+            <Paper className={classes.padding}>
+              <Title title="Descripción:" />
+              <Typography variant="subtitle2">
+                <b>Aula: </b>
+                {`${section_code.substr(-2)} de ${
+                  cycleTypes[section_code.substr(4, 3)]
+                }`}
               </Typography>
-              <Typography variant="subtitle2">{activity.content}</Typography>
-            </div>
+              <Typography variant="subtitle2">
+                <b>Curso:</b> {activity.unit.Operatives[0].course.name}
+              </Typography>
+              <Typography variant="subtitle2">
+                <b>Unidad de Aprendizaje:</b> {activity.unit.name}
+              </Typography>
+              <Typography variant="subtitle2">
+                <b>Instrucciones:</b> {activity.content}
+              </Typography>
+              <Button
+                onClick={handleDownloadClick}
+                className={classes.mt}
+                disabled={!activity.attached}
+                variant="outlined"
+                color="secondary"
+                startIcon={<DownloadIcon />}
+              >
+                Material
+              </Button>
+            </Paper>
           </CardContent>
-          <Divider/>
+          <Divider />
           <CardActions
             className={clsx(classes.padding, classes.dflex, classes.jusAr)}
           >
             <Typography variant="subtitle2">
               <b>Creado el: </b>
-              {yourdate(activity.created_at)}
+              {yourdate(activity.created_at, "[a las] hh:mm a")}
             </Typography>
             <Typography variant="subtitle2">
               <b>Fecha de Entrega: </b>
@@ -155,9 +157,7 @@ const ActivityItem = ({ code, handleBackClick, show }) => {
   );
 };
 ActivityItem.propTypes = {
-  code: PropTypes.string.isRequired,
   show: PropTypes.func.isRequired,
-  handleBackClick: PropTypes.func.isRequired,
 };
 
-export default ActivityItem;
+export default withRouter(ActivityItem);

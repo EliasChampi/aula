@@ -17,8 +17,8 @@ import {
 import { makeStyles } from "@material-ui/styles";
 import { orange } from "@material-ui/core/colors";
 import FolderSharedIcon from "@material-ui/icons/FolderSharedRounded";
-import { state } from "common/decorator";
-import { Link } from "react-router-dom";
+import { state, cycleTypes } from "common/decorator";
+import { IMAGE } from "constants/global";
 const useStyles = makeStyles(() => ({
   cardMedia: {
     borderRadius: "50%",
@@ -32,30 +32,33 @@ const useStyles = makeStyles(() => ({
     textAlign: "center",
   },
 }));
-const StudentCard = ({ student, regs, selected, handleExpandedClick }) => {
+const StudentCard = ({
+  student,
+  regs,
+  selected,
+  handleExpandedClick,
+  handleGo,
+}) => {
   const classes = useStyles();
   return (
     <Card className={classes.card}>
       <CardMedia
         className={classes.cardMedia}
         component="img"
-        image={`/images/${student.image}`}
+        image={IMAGE("student", student.image)}
         title="Foto del estudiante"
         alt="Foto del estudiante"
       />
       <CardContent className={classes.CardContent}>
-        <Typography variant="h4">
-          {`${student.name} ${student.surname} ${student.second_surname}`}
-        </Typography>
-        <Typography variant="subtitle2">{student.dni}</Typography>
+        <Typography variant="h4">{student.fullname}</Typography>
+        <Typography variant="subtitle2">DNI: {student.dni}</Typography>
       </CardContent>
       <Divider />
       <CardActions>
-        <Button color="primary">Ver Perfil</Button>
+        <Button disabled>Ver Perfil</Button>
         <Button
-          color="primary"
+          color="secondary"
           aria-expanded={selected === student.dni}
-          aria-label="show more"
           onClick={handleExpandedClick}
         >
           Matriculas
@@ -64,21 +67,23 @@ const StudentCard = ({ student, regs, selected, handleExpandedClick }) => {
       <Collapse in={selected === student.dni} timeout="auto" unmountOnExit>
         <Divider />
         <CardContent>
+          <Typography variant="subtitle2" component="i">
+            Seleccione para ver sus actividades
+          </Typography>
           <List>
             {regs.map((item) => (
               <ListItem
                 button
                 key={item.code}
-                component={Link}
-                to={`/estudiante/${student.dni}/${item.section.code}/${item.code}`}
+                onClick={() => handleGo(item, student)}
               >
                 <ListItemIcon>
                   <FolderSharedIcon />
                 </ListItemIcon>
                 <ListItemText
-                  primary={`${item.section.code.substr(-2)} de ${
-                    item.section.degree.cycle.title
-                  } ${item.section.code.substr(0, 4)}`}
+                  primary={`${item.section_code.substr(-2)} de 
+                  ${cycleTypes[item.section_code.substr(4, 3)]} 
+                  ${item.section_code.substr(0, 4)}`}
                   secondary={state[item.state]}
                 />
               </ListItem>
@@ -94,6 +99,7 @@ StudentCard.propTypes = {
   student: PropTypes.object.isRequired,
   selected: PropTypes.string.isRequired,
   handleExpandedClick: PropTypes.func.isRequired,
+  handleGo: PropTypes.func.isRequired,
   regs: PropTypes.array,
 };
 

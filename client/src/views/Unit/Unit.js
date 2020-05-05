@@ -35,30 +35,27 @@ const Unit = ({ match, history }) => {
     return () => {
       mounted = false;
     };
-  }, []);
-
-  const RightButton = () => (
-    <Button
-      component={Link}
-      variant="contained"
-      color="secondary"
-      to={`/crear_unidad`}
-    >
-      Agregar
-    </Button>
-  );
+  }, [op_code]);
 
   const handleEdit = (item) => {
     cache.setItem("unit_" + item.code, item);
     history.push(`/modificar_unidad/${item.code}`);
   };
 
-  const handleActivity = (item) => {
-    history.push(`/actividades/${section_code}/${op_code}/${item.code}`);
-  };
-
   return (
-    <Operative title="Unidades de Aprendizaje" RightButton={RightButton}>
+    <Operative
+      title="Unidades de Aprendizaje"
+      RightButton={
+        <Button
+          component={Link}
+          variant="contained"
+          color="secondary"
+          to={`/crear_unidad`}
+        >
+          Agregar
+        </Button>
+      }
+    >
       <Card>
         <CardHeader subheader="Unidades de Aprendizaje" title="Unidades" />
         <Divider />
@@ -66,7 +63,11 @@ const Unit = ({ match, history }) => {
           <UnitsTable
             units={units}
             handleEdit={handleEdit}
-            handleActivity={handleActivity}
+            handleActivity={(item) => {
+              history.push(
+                `/actividades/${section_code}/${op_code}/${item.code}`
+              );
+            }}
           />
         </CardContent>
       </Card>

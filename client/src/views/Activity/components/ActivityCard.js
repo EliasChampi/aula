@@ -5,18 +5,12 @@ import {
   CardMedia,
   CardContent,
   CardActions,
-  Button,
   Typography,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   Divider,
   CardHeader,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { orange } from "@material-ui/core/colors";
-import FolderIcon from "@material-ui/icons/FolderRounded";
 import { yourdate, activityType } from "common/decorator";
 const useStyles = makeStyles(() => ({
   card: {
@@ -26,16 +20,8 @@ const useStyles = makeStyles(() => ({
     textAlign: "center",
   },
 }));
-const ActivityCard = ({ activity, handleCaliClick }) => {
+const ActivityCard = ({ activity, foot, children }) => {
   const classes = useStyles();
-  const Item = (label, title) => (
-    <ListItem>
-      <ListItemIcon>
-        <FolderIcon />
-      </ListItemIcon>
-      <ListItemText primary={label} secondary={title} />
-    </ListItem>
-  );
 
   return (
     <Card className={classes.card}>
@@ -52,25 +38,22 @@ const ActivityCard = ({ activity, handleCaliClick }) => {
       />
       <CardContent className={classes.CardContent}>
         <Typography variant="h4">{activity.title}</Typography>
-        <List dense>
-          {Item("Curso", activity.unit.Operatives[0].course.name)}
-          {Item("Docente", activity.unit.Operatives[0].teacher.name)}
-          {Item("Unidad", activity.unit.name)}
-        </List>
+        <Typography variant="subtitle2">{`Creado el: ${yourdate(
+          activity.created_at,
+          "[a las] hh:mm a"
+        )}`}</Typography>
+        {children}
       </CardContent>
       <Divider />
-      <CardActions>
-        <Button color="primary" onClick={handleCaliClick}>
-          Desarrollar Actividad
-        </Button>
-      </CardActions>
+      <CardActions>{foot}</CardActions>
     </Card>
   );
 };
 
 ActivityCard.propTypes = {
   activity: PropTypes.object.isRequired,
-  handleCaliClick: PropTypes.func,
+  foot: PropTypes.any.isRequired,
+  children: PropTypes.any,
 };
 
 export default ActivityCard;

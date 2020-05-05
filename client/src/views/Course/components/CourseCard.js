@@ -32,11 +32,9 @@ const CourseCard = ({ course, handleAction }) => {
       />
       <CardContent className={classes.CardContent}>
         <Typography variant="h4">
-          {`${
-            course.section.degree.cycle.branch.name
-          } - ${course.section.code.substr(-2)} de ${
-            course.section.degree.cycle.title
-          }`}
+          {`${course.section.degree.cycle.branch.name} 
+          - ${course.section.code.substr(-2)} de 
+          ${course.section.degree.cycle.title}`}
         </Typography>
         <Typography variant="subtitle2">{course.course.name}</Typography>
       </CardContent>

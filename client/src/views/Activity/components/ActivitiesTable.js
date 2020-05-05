@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import { yourdate } from "common/decorator";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
+import { Empty } from "components";
 const ActivitiesTable = ({ activities, handleCaliClick }) => {
   return (
     <TableContainer component={Paper}>
@@ -43,6 +44,7 @@ const ActivitiesTable = ({ activities, handleCaliClick }) => {
           ))}
         </TableBody>
       </Table>
+      {!activities.length && <Empty title="Sin Actividades" />}
     </TableContainer>
   );
 };

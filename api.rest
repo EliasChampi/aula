@@ -11,4 +11,6 @@ GET http://localhost:5000/api/response/M20S116667/2
 x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkbmkiOiI3NzI0NTQwMyIsImlhdCI6MTU4NzY4MzY5NSwiZXhwIjoxNTg3Njg5Njk1fQ.mgb0a-wRxlU1sRuZTliykGRPx1onZMZOzilMvwGRHXs
 
 ###
+GET http://localhost:5000/api/activities/f/M20S119154/2020PRI12A
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkbmkiOiI3NzI0NTQwMyIsImlhdCI6MTU4ODYxMjEzNywiZXhwIjoxNTg4NjE4MTM3fQ.mWaGZWrrivMf_kbkdXyJk9qWMn3jn0jV4zVEpA5wzNc
 

@@ -16,12 +16,7 @@ async function fetchByUnit(req, res) {
       where: {
         unit_code: req.params.u_code,
       },
-      include: [
-        {
-          model: Response,
-          as: "responses",
-        },
-      ],
+      order: [["created_at", "DESC"]],
     });
     return res.status(200).json({ values });
   } catch (error) {
@@ -75,16 +70,83 @@ async function fetchBySec(req, res) {
   }
 }
 
-async function fetchByCodeWithUnit(req, res) {
+async function fetchByRegWithRes(req, res) {
+  const { r_code, s_code } = req.params;
+  try {
+    const values = await Activity.findAll({
+      where: {
+        to_date: {
+          $lt: today(),
+        },
+      },
+      attributes: ["code", "type", "title", "to_date"],
+      include: [
+        {
+          model: Unit,
+          attributes: ["name"],
+          as: "unit",
+          include: [
+            {
+              model: OperativeTeacher,
+              attributes: ["section_code"],
+              as: "Operatives",
+              include: [
+                {
+                  model: Course,
+                  attributes: ["name"],
+                  as: "course",
+                },
+              ],
+              where: {
+                section_code: s_code,
+              },
+            },
+          ],
+        },
+        {
+          model: Response,
+          attributes: ["score"],
+          as: "responses",
+          where: {
+            register_code: r_code,
+          },
+        },
+      ],
+    });
+    return res.status(200).json({ values });
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+}
+
+async function fetchByCode(req, res) {
+  const { s_code, code } = req.params;
   try {
     const value = await Activity.findOne({
       where: {
-        code: req.params.code,
+        code: code,
       },
       include: [
         {
           model: Unit,
           as: "unit",
+          include: [
+            {
+              model: OperativeTeacher,
+              attributes: ["section_code"],
+              as: "Operatives",
+              include: [
+                {
+                  model: Course,
+                  attributes: ["name"],
+                  as: "course",
+                },
+              ],
+              where: {
+                section_code: s_code,
+              },
+            },
+          ],
         },
       ],
     });
@@ -181,7 +243,7 @@ async function downloadAttached(req, res) {
   try {
     const activity = await Activity.findByPk(req.params.code);
     if (!!activity.attached) {
-      const date = new Date(activity.to_date);
+      const date = new Date(activity.created_at);
       const newPath = `storage/teacher/${date.getFullYear()}/${
         date.getMonth() + 1
       }`;
@@ -223,7 +285,8 @@ function saveFile(newAttached, myfile, callback) {
 module.exports = {
   fetchByUnit,
   fetchBySec,
-  fetchByCodeWithUnit,
+  fetchByRegWithRes,
+  fetchByCode,
   downloadAttached,
   store,
   update,

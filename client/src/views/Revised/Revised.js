@@ -2,26 +2,26 @@ import React, { useContext } from "react";
 import Student from "views/Wrapper/Student";
 import { ToastContext } from "context/toast";
 import { Button } from "@material-ui/core";
+import { RevisedTable } from "./components";
 
 const Revised = ({ match, history }) => {
   const {
-    params: { dni },
+    params: { register_code },
   } = match;
 
-  const RightButton = () => (
-    <Button variant="contained" onClick={() => history.goBack()}>
-      Atras
-    </Button>
-  );
   const { show } = useContext(ToastContext);
+
   return (
     <Student
-      dni={dni}
-      show={show}
-      title="Actividades revisados del estudiante"
-      RightButton={RightButton}
+      register_code={register_code}
+      title="Actividades calificados del estudiante"
+      RightButton={
+        <Button variant="contained" onClick={() => history.goBack()}>
+          Volver
+        </Button>
+      }
     >
-      hello world
+      <RevisedTable show={show} />
     </Student>
   );
 };

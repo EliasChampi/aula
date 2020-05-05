@@ -15,7 +15,11 @@ async function fetchByFamily(req, res) {
 
 async function fetchByCode(req, res) {
   try {
-    const value = await Student.findByPk(req.params.dni);
+    const value = await Student.findOne({
+      where: Sequelize.literal(
+        `exists (select * from registers where student_dni = "Student".dni and code = '${req.params.r_code}')`
+      ),
+    });
     return res.status(200).json({ value });
   } catch (error) {
     return res.status(500).send(error.message);

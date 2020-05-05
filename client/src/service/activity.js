@@ -4,7 +4,7 @@ class ActivityService {
   fetchByUnit(u_code) {
     return new Promise((resolve, reject) => {
       request
-        .get("/activities/d/" + u_code)
+        .get("/activities/t/" + u_code)
         .then((r) => {
           resolve(r.data);
         })
@@ -27,10 +27,23 @@ class ActivityService {
     });
   }
 
-  fetchByCodeWithUnit(code) {
+  fetchByRegWithRes(r_code, s_code) {
     return new Promise((resolve, reject) => {
       request
-        .get("/activity/" + code)
+        .get(`/activities/f/${r_code}/${s_code}`)
+        .then((r) => {
+          resolve(r.data);
+        })
+        .catch((errMessage) => {
+          reject(errMessage);
+        });
+    });
+  }
+
+  fetchByCode(s_code, code) {
+    return new Promise((resolve, reject) => {
+      request
+        .get(`/activity/${s_code}/${code}`)
         .then((r) => {
           resolve(r.data);
         })
@@ -73,7 +86,7 @@ class ActivityService {
   downloadAttached(code) {
     return new Promise((resolve, reject) => {
       request
-        .get("/activity_download/" + code, { responseType: "blob" })
+        .get("/activity/d/" + code, { responseType: "blob" })
         .then((r) => {
           resolve(r.data);
         })

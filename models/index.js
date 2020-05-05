@@ -19,6 +19,7 @@ const operatorsAliases = {
   $not: Op.not,
   $and: Op.and,
   $gte: Op.gte,
+  $lt: Op.lt
 };
 
 const sequelize = new Sequelize(DB, USER, PASSWORD, {

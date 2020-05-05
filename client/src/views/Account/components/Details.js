@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   Card,
   CardHeader,
@@ -7,13 +7,20 @@ import {
   Divider,
   Grid,
   Button,
-  TextField
+  TextField,
+  Typography,
 } from "@material-ui/core";
-import { AuthContext } from "context/auth";
+import { makeStyles } from "@material-ui/styles";
 
-const Details = props => {
-  const { user } = useContext(AuthContext);
-  const handleChange = event => {
+const useStyles = makeStyles((theme) => ({
+  margin: {
+    margin: theme.spacing(2),
+  },
+}));
+
+const Details = ({ user }) => {
+  const classes = useStyles();
+  const handleChange = (event) => {
     /*  setValues({
       ...values,
       [event.target.name]: event.target.value
@@ -30,12 +37,10 @@ const Details = props => {
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                helperText="Por favor especifique su nombre"
                 label="Nombre"
                 margin="dense"
                 name="name"
-                onChange={handleChange}
-                required
+                disabled
                 value={user.name}
               />
             </Grid>
@@ -45,18 +50,40 @@ const Details = props => {
                 label="Apellidos"
                 margin="dense"
                 name="surname"
-                onChange={handleChange}
-                required
+                disabled
                 value={user.surname}
+              />
+            </Grid>
+          </Grid>
+          <Typography className={classes.margin} variant="subtitle2">
+            Actualizar Contraseña
+          </Typography>
+          <Grid container spacing={3}>
+            <Grid item md={6} xs={12}>
+              <TextField
+                fullWidth
+                label="Contraseña Actual"
+                name="currentpass"
+                onChange={handleChange}
+                type="password"
+                value={user.currentPass}
+              />
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <TextField
+                fullWidth
+                label="Contraseña Nueva"
+                name="newpass"
+                onChange={handleChange}
+                type="password"
+                value={user.newPass}
               />
             </Grid>
           </Grid>
         </CardContent>
         <Divider />
         <CardActions>
-          <Button color="secondary" variant="contained">
-            Guardar Cambios
-          </Button>
+          <Button color="secondary">Guardar Cambios</Button>
         </CardActions>
       </form>
     </Card>

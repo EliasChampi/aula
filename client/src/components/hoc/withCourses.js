@@ -23,7 +23,7 @@ export default function withCourses(WrapedComponent) {
       return () => {
         mounted = false;
       };
-    }, []);
+    }, [user]);
 
     return (
       <WrapedComponent show={show} user={user} courses={courses} {...props} />

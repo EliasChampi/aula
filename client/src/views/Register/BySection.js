@@ -10,8 +10,9 @@ import {
   Button,
 } from "@material-ui/core";
 import Operative from "views/Wrapper/Operative";
+import cache from "helpers/cache";
 
-const BySection = ({ match }) => {
+const BySection = ({ match, history }) => {
   const { show } = useContext(ToastContext);
   const [registers, setRegisters] = useState([]);
   const { section_code } = match.params;
@@ -33,21 +34,27 @@ const BySection = ({ match }) => {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [section_code]);
 
-  const RightButton = () => (
-    <Button color="secondary" variant="contained">
-      Imprimir
-    </Button>
-  );
+  const handleGo = (reg) => {
+    cache.setItem(reg.code, reg.student);
+    history.push(`/estudiante/${section_code}/${reg.code}`);
+  };
 
   return (
-    <Operative title="Estudiantes" RightButton={RightButton}>
+    <Operative
+      title="Estudiantes"
+      RightButton={
+        <Button color="secondary" variant="contained">
+          Imprimir
+        </Button>
+      }
+    >
       <Card>
         <CardHeader subheader="Listado de Estudiantes" title="Estudiantes" />
         <Divider />
         <CardContent>
-          <BySectionTable data={registers} />
+          <BySectionTable data={registers} handleGo={handleGo} />
         </CardContent>
       </Card>
     </Operative>
