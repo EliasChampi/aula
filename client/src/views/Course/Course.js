@@ -3,7 +3,7 @@ import { Button, Grid } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
 import { CourseCard } from "./components";
-import { withCourses, Header } from "components";
+import { withCourses, Header, Empty } from "components";
 import { dayname } from "common/utils";
 import cache from "helpers/cache";
 
@@ -32,13 +32,17 @@ const Course = ({ courses, history, user }) => {
           </Button>
         }
       />
-      <Grid container spacing={3}>
-        {courses.map((item) => (
-          <Grid item key={item.code}>
-            <CourseCard course={item} handleAction={handleAction} />
-          </Grid>
-        ))}
-      </Grid>
+      {courses.length ? (
+        <Grid container spacing={3}>
+          {courses.map((item) => (
+            <Grid item key={item.code}>
+              <CourseCard course={item} handleAction={handleAction} />
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <Empty title="Aún no tienes un horario establecido" />
+      )}
     </React.Fragment>
   );
 };

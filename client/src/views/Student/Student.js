@@ -6,7 +6,7 @@ import { AuthContext } from "context/auth";
 import api from "service/student";
 import regApi from "service/register";
 import { ToastContext } from "context/toast";
-import { Header } from "components";
+import { Header, Empty } from "components";
 import { dayname } from "common/utils";
 import cache from "helpers/cache";
 const Student = ({ history }) => {
@@ -60,19 +60,23 @@ const Student = ({ history }) => {
         title={dayname(user.name)}
         RightButton={null}
       />
-      <Grid container spacing={3}>
-        {students.map((item) => (
-          <Grid item key={item.dni}>
-            <StudentCard
-              student={item}
-              selected={selected}
-              regs={regs}
-              handleExpandedClick={() => handleExpandedClick(item.dni)}
-              handleGo={handleGo}
-            />
-          </Grid>
-        ))}
-      </Grid>
+      {students.length ? (
+        <Grid container spacing={3}>
+          {students.map((item) => (
+            <Grid item key={item.dni}>
+              <StudentCard
+                student={item}
+                selected={selected}
+                regs={regs}
+                handleExpandedClick={() => handleExpandedClick(item.dni)}
+                handleGo={handleGo}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <Empty title="Aún no hay estudiantes matriculados para mostrar" />
+      )}
     </React.Fragment>
   );
 };

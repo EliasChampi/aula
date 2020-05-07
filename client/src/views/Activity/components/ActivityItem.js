@@ -65,7 +65,7 @@ const ActivityItem = ({ show, match, history }) => {
     return () => {
       mounted = false;
     };
-  }, [code]);
+  }, [section_code,code]);
 
   const handleDownloadClick = () => {
     api
