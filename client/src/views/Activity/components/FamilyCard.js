@@ -7,6 +7,7 @@ import {
   Button,
   DialogContentText,
   CardHeader,
+  LinearProgress,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import DownloadIcon from "@material-ui/icons/CloudDownload";
@@ -67,6 +68,7 @@ const FamilyCard = ({ show, register_code, code }) => {
   const [file, setFile] = useState({});
   const [response, setResponse] = useState({});
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const classes = useStyles();
 
   useEffect(() => {
@@ -96,6 +98,7 @@ const FamilyCard = ({ show, register_code, code }) => {
       })
     );
     formData.append("file", file);
+    setLoading(true);
     api
       .store(formData)
       .then((res) => {
@@ -104,6 +107,9 @@ const FamilyCard = ({ show, register_code, code }) => {
       })
       .catch((error) => {
         show(error.message || error, "error");
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -185,6 +191,7 @@ const FamilyCard = ({ show, register_code, code }) => {
         title="Confirmar"
         handleConfirm={handleUpload}
       >
+        {loading && <LinearProgress />}
         <DialogContentText id="alert-dialog-description">
           El documento <b>{file.name}</b> será enviado al docente
         </DialogContentText>

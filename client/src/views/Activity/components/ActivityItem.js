@@ -13,6 +13,7 @@ import {
   CardMedia,
   CardActions,
   Paper,
+  LinearProgress,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import clsx from "clsx";
@@ -65,9 +66,10 @@ const ActivityItem = ({ show, match, history }) => {
     return () => {
       mounted = false;
     };
-  }, [section_code,code]);
+  }, [section_code, code]);
 
   const handleDownloadClick = () => {
+    setLoading(true);
     api
       .downloadAttached(activity.code)
       .then((r) => {
@@ -75,6 +77,9 @@ const ActivityItem = ({ show, match, history }) => {
       })
       .catch((error) => {
         show(error, "error");
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -89,70 +94,74 @@ const ActivityItem = ({ show, match, history }) => {
           </Button>
         }
       />
-      {!loading && (
-        <Card>
-          <CardHeader
-            avatar={
-              <Avatar aria-label="recipe" className={classes.avatar}>
-                <YouTubeIcon />
-              </Avatar>
-            }
-            title="Contenido de la Actividad"
-          />
-          <CardMedia
-            component={activity.videoid ? "iframe" : "img"}
-            height={480}
-            src={
-              activity.videoid
-                ? `https://www.youtube.com/embed/${activity.videoid}`
-                : "/images/mibg.svg"
-            }
-            title={activity.title}
-          />
-          <CardContent>
-            <Paper className={classes.padding}>
-              <Title title="Descripción:" />
-              <Typography variant="subtitle2">
-                <b>Aula: </b>
-                {`${section_code.substr(-2)} de ${
-                  cycleTypes[section_code.substr(4, 3)]
-                }`}
-              </Typography>
-              <Typography variant="subtitle2">
-                <b>Curso:</b> {activity.unit.Operatives[0].course.name}
-              </Typography>
-              <Typography variant="subtitle2">
-                <b>Unidad de Aprendizaje:</b> {activity.unit.name}
-              </Typography>
-              <Typography variant="subtitle2">
-                <b>Instrucciones:</b> {activity.content}
-              </Typography>
-              <Button
-                onClick={handleDownloadClick}
-                className={classes.mt}
-                disabled={!activity.attached}
-                variant="outlined"
-                color="secondary"
-                startIcon={<DownloadIcon />}
-              >
-                Material
-              </Button>
-            </Paper>
-          </CardContent>
-          <Divider />
-          <CardActions
-            className={clsx(classes.padding, classes.dflex, classes.jusAr)}
-          >
+      {loading && <LinearProgress />}
+      <Card>
+        <CardHeader
+          avatar={
+            <Avatar aria-label="recipe" className={classes.avatar}>
+              <YouTubeIcon />
+            </Avatar>
+          }
+          title="Contenido de la Actividad"
+        />
+        <CardMedia
+          component={activity.videoid ? "iframe" : "img"}
+          height={480}
+          src={
+            activity.videoid
+              ? `https://www.youtube.com/embed/${activity.videoid}`
+              : "/images/mibg.svg"
+          }
+          title={activity.title}
+        />
+        <CardContent>
+          <Paper className={classes.padding}>
+            <Title title="Descripción:" />
             <Typography variant="subtitle2">
-              <b>Creado el: </b>
-              {yourdate(activity.created_at, "[a las] hh:mm a")}
+              <b>Aula: </b>
+              {`${section_code.substr(-2)} de ${
+                cycleTypes[section_code.substr(4, 3)]
+              }`}
             </Typography>
+            {!loading && (
+              <React.Fragment>
+                <Typography variant="subtitle2">
+                  <b>Curso:</b> {activity.unit.Operatives[0].course.name}
+                </Typography>
+                <Typography variant="subtitle2">
+                  <b>Unidad de Aprendizaje:</b> {activity.unit.name}
+                </Typography>
+              </React.Fragment>
+            )}
             <Typography variant="subtitle2">
-              <b>Fecha de Entrega: </b>
-              {yourdate(activity.to_date)}
+              <b>Instrucciones:</b> {activity.content}
             </Typography>
-          </CardActions>
-        </Card>
+            <Button
+              onClick={handleDownloadClick}
+              className={classes.mt}
+              disabled={!activity.attached || loading}
+              variant="outlined"
+              color="secondary"
+              startIcon={<DownloadIcon />}
+            >
+              Material
+            </Button>
+          </Paper>
+        </CardContent>
+        <Divider />
+        <CardActions
+          className={clsx(classes.padding, classes.dflex, classes.jusAr)}
+        >
+          <Typography variant="subtitle2">
+            <b>Creado el: </b>
+            {yourdate(activity.created_at, "[a las] hh:mm a")}
+          </Typography>
+          <Typography variant="subtitle2">
+            <b>Fecha de Entrega: </b>
+            {yourdate(activity.to_date)}
+          </Typography>
+        </CardActions>
+      </Card>
       )}
     </React.Fragment>
   );

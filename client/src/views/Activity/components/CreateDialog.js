@@ -16,6 +16,7 @@ import {
   Input,
   Select,
   Paper,
+  CircularProgress,
 } from "@material-ui/core";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/styles";
@@ -56,6 +57,7 @@ const CreateDialog = ({ open, handleClose, u_code, selected }) => {
   const [videoid, setVideoId] = useState("");
   const [file, setFile] = useState({});
   const [title, setTitle] = useState("Nueva");
+  const [loading, setLoading] = useState(false);
   const { show } = useContext(ToastContext);
   const { register, handleSubmit, errors, setValue } = useForm();
 
@@ -75,8 +77,10 @@ const CreateDialog = ({ open, handleClose, u_code, selected }) => {
   };
 
   const onSubmitForm = (data) => {
+    setLoading(true);
     saveData(data)
       .then((res) => {
+        setLoading(false);
         show(res.message, "success");
         handleClose("saved");
       })
@@ -137,8 +141,12 @@ const CreateDialog = ({ open, handleClose, u_code, selected }) => {
           <Typography variant="h3" className={classes.title}>
             {title} Actividad
           </Typography>
-          <Button color="inherit" onClick={handleSubmit(onSubmitForm)}>
-            Guardar
+          <Button
+            color="inherit"
+            disabled={loading}
+            onClick={handleSubmit(onSubmitForm)}
+          >
+            {loading ? <CircularProgress size={14} /> : "Guardar"}
           </Button>
         </Toolbar>
       </AppBar>
@@ -168,7 +176,9 @@ const CreateDialog = ({ open, handleClose, u_code, selected }) => {
                       inputRef={register}
                     >
                       <option value="ac">Actividad</option>
-                      <option value="ct" disabled>Cuestionario</option>
+                      <option value="ct" disabled>
+                        Cuestionario
+                      </option>
                     </Select>
                   </FormControl>
                 </Grid>
