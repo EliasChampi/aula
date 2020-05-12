@@ -168,7 +168,7 @@ const CreateDialog = ({ open, handleClose, u_code, selected }) => {
                       inputRef={register}
                     >
                       <option value="ac">Actividad</option>
-                      <option value="ct">Cuestionario</option>
+                      <option value="ct" disabled>Cuestionario</option>
                     </Select>
                   </FormControl>
                 </Grid>
@@ -247,7 +247,7 @@ const CreateDialog = ({ open, handleClose, u_code, selected }) => {
               <Alert title="Compartir material Adjunto">
                 <Typography variant="subtitle2">
                   Sube un documento pdf, word o una imagen simple para compartir
-                  con tus estudiantes, tu archivo debe pesar como minimo 32kb y
+                  con tus estudiantes, tu archivo debe pesar como minimo 10kb y
                   maximo 3mb.
                 </Typography>
               </Alert>

@@ -87,8 +87,12 @@ const TeacherCard = ({ show, section_code, code }) => {
   };
 
   const handleType = (event) => {
+    let myscore = 15;
+    if (type === "sin") {
+      myscore = null;
+    }
+    setScore(myscore);
     setType(event.target.value);
-    setScore(15);
   };
 
   const handleScore = (event, newValue) => {
@@ -96,26 +100,31 @@ const TeacherCard = ({ show, section_code, code }) => {
   };
 
   const handleClose = () => {
-    setScore(15);
-    setObs("");
     setOpen(false);
   };
 
-  const handleRevItem = (regcode) => {
-    setSelected(regcode);
-    if (regcode.responses.length > 0) {
-      setObs(regcode.responses[0].obs);
+  const handleRevItem = (register) => {
+    let myscore = null;
+    const mystudent = {
+      code: register.code,
+      name: register.student.fullname,
+    };
+    if (register.responses.length > 0) {
+      setObs(register.responses[0].obs);
     }
+    setType("sin");
+    setScore(myscore);
+    setSelected(mystudent);
     setOpen(true);
   };
 
   const handleRevSubmit = () => {
-    const newScore =
-      type === "num"
-        ? score
-        : marks.find((item) => {
-            return item.value === score;
-          }).label;
+    let newScore = score;
+    if (type === "alf") {
+      newScore = marks.find((item) => {
+        return item.value === score;
+      }).label;
+    }
     resApi
       .update(selected.code, code, {
         score: newScore,
@@ -123,6 +132,10 @@ const TeacherCard = ({ show, section_code, code }) => {
       })
       .then((r) => {
         show(r.message, "success");
+
+        setScore(null);
+        setObs(null);
+
         fetchRegisters(true);
         handleClose();
       })
@@ -141,9 +154,7 @@ const TeacherCard = ({ show, section_code, code }) => {
       <Modal
         open={open}
         close={handleClose}
-        title={`Calificación de ${
-          selected.student && selected.student.fullname
-        }`}
+        title={`Calificación de ${selected.name}`}
         fullWidth
         handleConfirm={handleRevSubmit}
       >
@@ -156,22 +167,25 @@ const TeacherCard = ({ show, section_code, code }) => {
         >
           <MenuItem value="num">Vigesimal</MenuItem>
           <MenuItem value="alf">Alfabetica</MenuItem>
+          <MenuItem value="sin">Sin Calificación</MenuItem>
         </Select>
-        <div className={classes.margin}>
-          <Typography id="continuous-slider" gutterBottom>
-            Calificación
-          </Typography>
-          <Slider
-            value={score}
-            onChange={handleScore}
-            min={0}
-            max={20}
-            step={type === "num" ? 0.5 : null}
-            marks={type === "alf" ? marks : false}
-            valueLabelDisplay={type === "num" ? "on" : "off"}
-            aria-labelledby="continuous-slider"
-          />
-        </div>
+        {type !== "sin" && (
+          <div className={classes.margin}>
+            <Typography id="continuous-slider" gutterBottom>
+              Calificación
+            </Typography>
+            <Slider
+              value={score}
+              onChange={handleScore}
+              min={0}
+              max={20}
+              step={type === "num" ? 0.5 : null}
+              marks={type === "alf" ? marks : false}
+              valueLabelDisplay={type === "num" ? "on" : "off"}
+              aria-labelledby="continuous-slider"
+            />
+          </div>
+        )}
         <TextField
           id="obs"
           fullWidth

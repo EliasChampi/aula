@@ -129,7 +129,7 @@ const FamilyCard = ({ show, register_code, code }) => {
         <CardItem
           title="Subir Documento de Respuesta"
           subheader="Sube tu respuesta como un documento pdf, word o una imagen
-            simple, tu archivo debe pesar como minimo 32kb y maximo 3mb"
+            simple, tu archivo debe pesar como minimo 10kb y maximo 3mb"
           action={false}
         >
           <Uploader
@@ -139,7 +139,7 @@ const FamilyCard = ({ show, register_code, code }) => {
             show={show}
           />
         </CardItem>
-      ) : !response.score ? (
+      ) : !response.score && !response.obs ? (
         <CardItem
           title="Ya subiste una respuesta a esta actividad"
           subheader={`Fecha de respuesta: ${yourdate(

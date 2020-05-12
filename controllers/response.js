@@ -1,4 +1,4 @@
-const { Response, sequelize } = require("../models");
+const { Response, Activity, sequelize } = require("../models");
 const { STORAGE_FAMILY } = require("../config/storage");
 const path = require("path");
 
@@ -21,6 +21,12 @@ async function store(req, res) {
   try {
     const file = req.files.file;
     const data = JSON.parse(req.body.data);
+
+ /*    const activity = Activity.findByPk(data.activity_code);
+
+    if(new Date(activity.to_date) > new Date()) {
+
+    } */
 
     const r = await Response.create({
       register_code: data.register_code,

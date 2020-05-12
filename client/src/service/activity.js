@@ -86,7 +86,7 @@ class ActivityService {
   downloadAttached(code) {
     return new Promise((resolve, reject) => {
       request
-        .get("/activity/d/" + code, { responseType: "blob" })
+        .get("/activity_d/" + code, { responseType: "blob" })
         .then((r) => {
           resolve(r.data);
         })

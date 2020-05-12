@@ -38,7 +38,7 @@ const BySection = ({ match, history }) => {
 
   const handleGo = (reg) => {
     cache.setItem(reg.code, reg.student);
-    history.push(`/estudiante/${section_code}/${reg.code}`);
+    history.push(`/revisados/${section_code}/${reg.code}`);
   };
 
   return (

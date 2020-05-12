@@ -41,6 +41,7 @@ async function fetchBySecWithRes(req, res) {
     const values = await Register.findAll({
       where: {
         section_code: req.params.s_code,
+        state: "a"
       },
       attributes: ["code", "student_dni"],
       include: [

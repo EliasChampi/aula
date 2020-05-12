@@ -37,7 +37,7 @@ router.get(
   activity.fetchByRegWithRes
 );
 router.get("/activity/:s_code/:code", verifyToken, activity.fetchByCode);
-router.get("/activity/d/:code", verifyToken, activity.downloadAttached);
+router.get("/activity_d/:code", verifyToken, activity.downloadAttached);
 router.post("/activity", verifyToken, activity.store);
 router.put("/activity/:code", verifyToken, activity.update);
 // response
