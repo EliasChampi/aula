@@ -30,21 +30,25 @@ module.exports = function (sequelize, DataTypes) {
       sourceKey: "code",
       timestamps: false
     });
+
     OperativeTeacher.belongsTo(models.Course, {
       as: "course",
       foreignKey: "course_code",
       targetKey: "code",
     });
+
     OperativeTeacher.belongsTo(models.Section, {
       as: "section",
       foreignKey: "section_code",
       targetKey: "code",
     });
+
     OperativeTeacher.belongsTo(models.Teacher, {
       as: "teacher",
       foreignKey: "teacher_dni",
       targetKey: "dni",
     });
+
   };
   return OperativeTeacher;
 };

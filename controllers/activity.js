@@ -246,7 +246,7 @@ async function downloadAttached(req, res) {
       const date = new Date(activity.created_at);
       const newPath = `storage/teacher/${date.getFullYear()}/${
         date.getMonth() + 1
-      }`;
+        }`;
       res.download(path.join(newPath, activity.attached));
     } else {
       throw new Error("no hay adjunto");

@@ -145,7 +145,7 @@ const FamilyCard = ({ show, register_code, code }) => {
             show={show}
           />
         </CardItem>
-      ) : !response.score && !response.obs ? (
+      ) : !response.score ? (
         <CardItem
           title="Ya subiste una respuesta a esta actividad"
           subheader={`Fecha de respuesta: ${yourdate(
@@ -163,28 +163,28 @@ const FamilyCard = ({ show, register_code, code }) => {
           />
         </CardItem>
       ) : (
-        <CardItem
-          title="Su respuesta ha sido calificado:"
-          subheader={`Fecha de calificación: ${yourdate(
-            response.updated_at,
-            "[a las] hh:mm a"
-          )}`}
-          action={true}
-          handleClick={handleDownload}
-        >
-          <Typography
-            variant="h4"
-            color="textSecondary"
-            className={clsx(classes.score, classes.center)}
-          >
-            <b>Nota:</b> {response.score}
-          </Typography>
-          <br />
-          <Alert title="Observaciones:">
-            <Typography variant="subtitle2">{response.obs}</Typography>
-          </Alert>
-        </CardItem>
-      )}
+            <CardItem
+              title="Su respuesta ha sido calificado:"
+              subheader={`Fecha de calificación: ${yourdate(
+                response.updated_at,
+                "[a las] hh:mm a"
+              )}`}
+              action={true}
+              handleClick={handleDownload}
+            >
+              <Typography
+                variant="h4"
+                color="textSecondary"
+                className={clsx(classes.score, classes.center)}
+              >
+                <b>Nota:</b> {response.score === 'N' ? 'No hay calificación' : response.score}
+              </Typography>
+              <br />
+              <Alert title="Observaciones:">
+                <Typography variant="subtitle2">{response.obs}</Typography>
+              </Alert>
+            </CardItem>
+          )}
       <Modal
         open={open}
         close={() => handleSetFile({}, false)}

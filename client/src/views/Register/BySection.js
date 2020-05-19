@@ -13,9 +13,11 @@ import Operative from "views/Wrapper/Operative";
 import cache from "helpers/cache";
 
 const BySection = ({ match, history }) => {
+
   const { show } = useContext(ToastContext);
   const [registers, setRegisters] = useState([]);
   const { section_code } = match.params;
+
   useEffect(() => {
     let mounted = true;
     const fetchData = () => {

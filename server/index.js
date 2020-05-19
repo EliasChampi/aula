@@ -5,7 +5,7 @@ const app = express();
 const fileUpload = require("express-fileupload");
 app.use(
   fileUpload({
-    limits: { fileSize: 3 * 1024 * 1024 },
+    limits: { fileSize: 10 * 1024 * 1024 },
     createParentPath: true,
   })
 );

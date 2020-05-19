@@ -1,22 +1,20 @@
 "use strict";
 module.exports = function (sequelize, DataTypes) {
-  const Register = sequelize.define(
-    "Register",
-    {
-      code: {
-        type: DataTypes.STRING,
-        primaryKey: true,
-      },
-      section_code: {
-        type: DataTypes.STRING,
-      },
-      student_dni: {
-        type: DataTypes.STRING,
-      },
-      state: {
-        type: DataTypes.STRING,
-      },
+  const Register = sequelize.define("Register", {
+    code: {
+      type: DataTypes.STRING,
+      primaryKey: true,
     },
+    section_code: {
+      type: DataTypes.STRING,
+    },
+    student_dni: {
+      type: DataTypes.STRING,
+    },
+    state: {
+      type: DataTypes.STRING,
+    },
+  },
     {
       tableName: "registers",
       createdAt: "created_at",
@@ -25,8 +23,8 @@ module.exports = function (sequelize, DataTypes) {
   );
   Register.associate = function (models) {
     Register.hasMany(models.Response, {
-      as: "responses",
-      foreignKey: "register_code",
+      as: "Questions",
+      foreignKey: "question_code",
       sourceKey: "code",
     });
     Register.belongsTo(models.Student, {

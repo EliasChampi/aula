@@ -121,7 +121,7 @@ const ActivityItem = ({ show, match, history }) => {
               <b>Aula: </b>
               {`${section_code.substr(-2)} de ${
                 cycleTypes[section_code.substr(4, 3)]
-              }`}
+                }`}
             </Typography>
             {!loading && (
               <React.Fragment>

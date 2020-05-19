@@ -1,35 +1,33 @@
 "use strict";
 module.exports = function (sequelize, DataTypes) {
-  const Unit = sequelize.define(
-    "Unit",
-    {
-      code: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-      },
-      trim: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          len: [3, 3],
-        },
-      },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          len: [10, 100],
-        },
-      },
-      description: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        validate: {
-          len: [15, 300],
-        },
+  const Unit = sequelize.define("Unit", {
+    code: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    trim: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [3, 3],
       },
     },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [10, 100],
+      },
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        len: [15, 300],
+      },
+    },
+  },
     {
       tableName: "units",
       createdAt: "created_at",
@@ -44,8 +42,9 @@ module.exports = function (sequelize, DataTypes) {
       sourceKey: "code",
       timestamps: false,
     });
-    Unit.hasMany(models.Activity, {
-      as: "activities",
+
+    Unit.hasMany(models.Session, {
+      as: "sessions",
       foreignKey: "unit_code",
       sourceKey: "code",
     });

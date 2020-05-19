@@ -10,15 +10,18 @@ const unit = require("../controllers/unit");
 const activity = require("../controllers/activity");
 const stu = require("../controllers/student");
 const res = require("../controllers/response");
+
 // routes
 router.post("/auth/signin", auth.signin);
 router.get("/courses/:dni", verifyToken, op.fetchByTeacher);
 router.get("/stus_by_family/:dni", verifyToken, stu.fetchByFamily);
 router.get("/stu_by_code/:r_code", verifyToken, stu.fetchByCode);
+
 //register
 router.get("/regs_by_stu/:dni", verifyToken, reg.fetchByStudent);
 router.get("/regs_by_section/:s_code", verifyToken, reg.fetchBySection);
 router.get("/regs_res/:s_code/:a_code", verifyToken, reg.fetchBySecWithRes);
+
 // section
 router.get("/section/:code", verifyToken, section.fetchByCodeWithRelations);
 // unit
@@ -26,6 +29,7 @@ router.get("/units/:op_code", verifyToken, unit.fetchByOperative);
 router.get("/unit/:code", verifyToken, unit.fetchByCode);
 router.post("/unit", verifyToken, unit.store);
 router.put("/unit/:code", verifyToken, unit.update);
+
 // operatives
 router.get("/operatives/:code", verifyToken, unit.fetchOperatives);
 // activity

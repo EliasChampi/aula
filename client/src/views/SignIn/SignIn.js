@@ -97,7 +97,7 @@ const SignIn = (props) => {
                 <FormControlLabel
                   value="apoderado"
                   control={<Radio inputRef={register} />}
-                  label="Apoderado"
+                  label="Estudiante"
                   labelPlacement="end"
                 />
                 <FormControlLabel

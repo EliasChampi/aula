@@ -13,7 +13,7 @@ const Activity = ({ match }) => {
     <React.Fragment>
       <ActivityItem show={show} />
       <Title title="Desarrollo del Actividad" />
-      <FamilyCard if show={show} register_code={register_code} code={code} />
+      <FamilyCard show={show} register_code={register_code} code={code} />
     </React.Fragment>
   );
 };

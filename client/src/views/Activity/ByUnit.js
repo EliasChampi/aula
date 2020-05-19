@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext, useCallback } from "react";
 import { Button, Grid } from "@material-ui/core";
+
 import {
   ActivitiesTable,
   CreateDialog,
@@ -108,8 +109,8 @@ const ByUnit = (props) => {
         ))}
       </Grid>
     ) : (
-      <Empty title="Aun no registraste actividades" />
-    );
+        <Empty title="Aun no registraste actividades" />
+      );
 
   const Activities = () => (
     <ActivitiesTable

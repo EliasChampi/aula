@@ -1,16 +1,14 @@
 "use strict";
 module.exports = function (sequelize, DataTypes) {
-  const Degree = sequelize.define(
-    "Degree",
-    {
-      code: {
-        type: DataTypes.STRING,
-        primaryKey: true,
-      },
-      cycle_code: {
-        type: DataTypes.STRING,
-      },
+  const Degree = sequelize.define("Degree", {
+    code: {
+      type: DataTypes.STRING,
+      primaryKey: true,
     },
+    cycle_code: {
+      type: DataTypes.STRING,
+    },
+  },
     {
       tableName: "degrees",
       timestamps: false,
@@ -22,6 +20,7 @@ module.exports = function (sequelize, DataTypes) {
       foreignKey: "degree_code",
       sourceKey: "code",
     });
+
     Degree.belongsTo(models.Cycle, {
       as: "cycle",
       foreignKey: "cycle_code",

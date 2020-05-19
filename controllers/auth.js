@@ -1,21 +1,31 @@
-const { Teacher, Family } = require("../models");
+const { Teacher, Student, Sequelize } = require("../models");
 const config = require("../config/auth");
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
+const { year } = require("../config/utils");
 
-function signin(req, res) {
-  let Model = {};
-  let image = "default_men.png";
-  if (req.body.type === "apoderado") {
-    Model = Family;
-  } else {
-    Model = Teacher;
+
+async function promiseByModel(type, dni) {
+  if (type === "estudiante") {
+    return Student.findOne({
+      where: {
+        dni: dni,
+        [$and]: Sequelize.literal(`exists (
+          select * from registers where student_dni = "Student".dni and state = 'a'
+          and section_code like '${year}%'
+        )`)
+      }
+    })
   }
-  Model.findOne({
+  return Teacher.findOne({
     where: {
-      dni: req.body.dni,
+      dni: dni
     },
   })
+}
+
+function signin(req, res) {
+  promiseByModel
     .then((entity) => {
       if (!entity) {
         return res.status(404).send({ message: "Usuario no encontrado." });
@@ -33,16 +43,8 @@ function signin(req, res) {
       var token = jwt.sign({ dni: entity.dni }, config.secret, {
         expiresIn: parseInt(process.env.JWTTTL),
       });
-
-      if (req.body.type === "docente") {
-        image = entity.image;
-      }
       res.status(200).send({
-        dni: entity.dni,
-        name: entity.name,
-        surname: entity.surname,
-        mode: req.body.type,
-        image: image,
+        ...entity,
         accessToken: token,
       });
     })

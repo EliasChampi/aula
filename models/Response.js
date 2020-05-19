@@ -7,38 +7,36 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.STRING,
         primaryKey: true,
       },
-      activity_code: {
+      question_code: {
         type: DataTypes.INTEGER,
         primaryKey: true,
       },
-      attached: {
-        type: DataTypes.STRING,
+      repos: {
+        type: DataTypes.STRING(100),
       },
-      score: {
-        type: DataTypes.STRING,
-      },
-      obs: {
-        type: DataTypes.STRING,
+      cali: {
+        type: DataTypes.DECIMAL(2, 2),
       },
     },
     {
-      tableName: "activity_register",
-      createdAt: "created_at",
-      updatedAt: "updated_at",
+      tableName: "question_register",
+      timestamps: false
     }
   );
 
   Response.associate = function (models) {
-    Response.belongsTo(models.Activity, {
-      as: "activity",
-      foreignKey: "activity_code",
+    Response.belongsTo(models.Question, {
+      as: "question",
+      foreignKey: "question_code",
       targetKey: "code",
     });
+
     Response.belongsTo(models.Register, {
       as: "register",
       foreignKey: "register_code",
       targetKey: "code",
     });
+
   };
   return Response;
 };
