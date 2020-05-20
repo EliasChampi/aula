@@ -43,7 +43,7 @@ const Profile = ({ className, user, ...rest }) => {
         <div className={classes.details}>
           <div>
             <Typography gutterBottom variant="h3">
-              {user.name + " " + user.surname}
+              {user.fullname}
             </Typography>
             <Typography
               className={classes.locationText}

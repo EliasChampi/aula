@@ -40,7 +40,6 @@ const Profile = (props) => {
         to="/mis-datos"
       />
       <Typography variant="h4">{user.name}</Typography>
-      <Typography variant="h5">{user.surname}</Typography>
       <Typography variant="subtitle2" className={classes.upper}>
         {user.mode}
       </Typography>

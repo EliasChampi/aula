@@ -13,7 +13,6 @@ const res = require("../controllers/response");
 
 // routes
 router.post("/auth/signin", auth.signin);
-router.get("/courses/:dni", verifyToken, op.fetchByTeacher);
 router.get("/stus_by_family/:dni", verifyToken, stu.fetchByFamily);
 router.get("/stu_by_code/:r_code", verifyToken, stu.fetchByCode);
 
@@ -29,9 +28,10 @@ router.get("/units/:op_code", verifyToken, unit.fetchByOperative);
 router.get("/unit/:code", verifyToken, unit.fetchByCode);
 router.post("/unit", verifyToken, unit.store);
 router.put("/unit/:code", verifyToken, unit.update);
+router.get("/ops/:code", verifyToken, unit.fetchOperatives);
 
 // operatives
-router.get("/operatives/:code", verifyToken, unit.fetchOperatives);
+router.get("/ops_s/:s_code", verifyToken, op.fetchBySecction);
 // activity
 router.get("/activities/t/:u_code", verifyToken, activity.fetchByUnit);
 router.get("/activities/:s_code", verifyToken, year, activity.fetchBySec);

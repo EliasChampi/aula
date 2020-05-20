@@ -17,18 +17,17 @@ const Footer = props => {
   return (
     <div {...rest} className={clsx(classes.root, className)}>
       <Typography variant="body1">
-        &copy;{" "}
+        &copy;
         <Link
           component="a"
           href="https://colegiocarrioncusco.com/"
           target="_blank"
-        >
-          Colegio Carrión
+        > Aula Virtual
         </Link>
         . 2020
       </Typography>
       <Typography variant="caption">
-        Herramienta para la interacción entre apoderados y docentes
+        Herramienta para la interacción entre estudiantes y docentes
       </Typography>
     </div>
   );

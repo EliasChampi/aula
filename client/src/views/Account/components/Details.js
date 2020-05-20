@@ -8,18 +8,10 @@ import {
   Grid,
   Button,
   TextField,
-  Typography,
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
-
-const useStyles = makeStyles((theme) => ({
-  margin: {
-    margin: theme.spacing(2),
-  },
-}));
 
 const Details = ({ user }) => {
-  const classes = useStyles();
+
   const handleChange = (event) => {
     console.log(event);
   };
@@ -27,40 +19,25 @@ const Details = ({ user }) => {
   return (
     <Card>
       <form autoComplete="off" noValidate>
-        <CardHeader subheader="Informacion de mi perfil" title="Mi perfil" />
+        <CardHeader subheader="Actualizar mi Contraseña" title="Seguridad" />
         <Divider />
         <CardContent>
           <Grid container spacing={3}>
-            <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="Nombre"
-                margin="dense"
-                name="name"
-                disabled
-                value={user.name}
-              />
-            </Grid>
-            <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="Apellidos"
-                margin="dense"
-                name="surname"
-                disabled
-                value={user.surname}
-              />
-            </Grid>
-          </Grid>
-          <Typography className={classes.margin} variant="subtitle2">
-            Actualizar Contraseña
-          </Typography>
-          <Grid container spacing={3}>
-            <Grid item md={6} xs={12}>
+            <Grid item md={12} xs={12}>
               <TextField
                 fullWidth
                 label="Contraseña Actual"
+                name="surname"
+                variant="outlined"
+                type="password"
+              />
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <TextField
+                fullWidth
+                label="Nueva Contraseña"
                 name="currentpass"
+                variant="outlined"
                 onChange={handleChange}
                 type="password"
                 value={user.currentPass}
@@ -69,8 +46,9 @@ const Details = ({ user }) => {
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                label="Contraseña Nueva"
+                label="Confirmar"
                 name="newpass"
+                variant="outlined"
                 onChange={handleChange}
                 type="password"
                 value={user.newPass}

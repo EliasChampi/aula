@@ -1,39 +1,63 @@
-const { Teacher, Student, Sequelize } = require("../models");
+const { Teacher, Student, Register, Sequelize } = require("../models");
 const config = require("../config/auth");
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 const { year } = require("../config/utils");
 
-
 async function promiseByModel(type, dni) {
   if (type === "estudiante") {
-    return Student.findOne({
+    return Register.findOne({
       where: {
-        dni: dni,
-        [$and]: Sequelize.literal(`exists (
-          select * from registers where student_dni = "Student".dni and state = 'a'
-          and section_code like '${year}%'
-        )`)
-      }
-    })
+        student_dni: dni,
+        state: "a",
+        section_code: {
+          $like: year + "%",
+        },
+      },
+      include: [
+        {
+          model: Student,
+          as: "student",
+        },
+      ],
+    });
   }
-  return Teacher.findOne({
+  return await Teacher.findOne({
     where: {
-      dni: dni
+      dni: dni,
     },
-  })
+  });
 }
 
 function signin(req, res) {
-  promiseByModel
+  promiseByModel(req.body.type, req.body.dni)
     .then((entity) => {
       if (!entity) {
         return res.status(404).send({ message: "Usuario no encontrado." });
       }
-      var passwordIsValid = bcrypt.compareSync(
-        req.body.password,
-        entity.password
-      );
+      let model = {};
+      let password = entity.password;
+      if (req.body.type === "estudiante") {
+        password = entity.student.password;
+        model = {
+          dni: entity.student_dni,
+          register_code: entity.code,
+          section_code: entity.section_code,
+          name: entity.student.name,
+          fullname: entity.student.fullname,
+          image: entity.student.image,
+        };
+      } else {
+        model = {
+          dni: entity.dni,
+          name: entity.name,
+          fullname: entity.fullname,
+          image: entity.image,
+        };
+      }
+
+      var passwordIsValid = bcrypt.compareSync(req.body.password, password);
+
       if (!passwordIsValid) {
         return res.status(401).send({
           accessToken: null,
@@ -44,7 +68,8 @@ function signin(req, res) {
         expiresIn: parseInt(process.env.JWTTTL),
       });
       res.status(200).send({
-        ...entity,
+        entity: model,
+        mode: req.body.type,
         accessToken: token,
       });
     })

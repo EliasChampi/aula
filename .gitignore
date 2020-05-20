@@ -1,11 +1,6 @@
 /storage
-
 /node_modules
-
 .editorconfig
-
 package-lock.json
-
 .env
-
 api.rest

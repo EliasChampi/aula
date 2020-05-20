@@ -1,75 +1,59 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Grid } from "@material-ui/core";
 
-import { StudentCard } from "./components";
+import { StudentCard, CourseCard } from "./components";
 import { AuthContext } from "context/auth";
-import api from "service/student";
-import regApi from "service/register";
+import api from "service/operative";
 import { ToastContext } from "context/toast";
 import { Header, Empty } from "components";
 import { dayname } from "common/utils";
 import cache from "helpers/cache";
+import { cycleTypes } from "common/decorator";
 const Student = ({ history }) => {
-  const { user } = useContext(AuthContext);
+  const {
+    user,
+    user: { section_code },
+  } = useContext(AuthContext);
   const { show } = useContext(ToastContext);
-  const [students, setStudents] = useState([]);
-  const [regs, setRegs] = useState([]);
-  const [selected, setSelected] = useState("");
+  const [courses, setCourses] = useState([]);
 
   useEffect(() => {
     let mounted = true;
-    const fetchStudents = () => {
+    const fetchCourses = () => {
       api
-        .fetchByFamily(user.dni)
+        .fetchBySection(user.section_code)
         .then((r) => {
           if (mounted) {
-            setStudents(r.values);
+            setCourses(r.values);
           }
         })
         .catch((err) => {
           show(err.message, "error");
         });
     };
-    fetchStudents();
+    fetchCourses();
     return () => {
       mounted = false;
     };
   }, [user]);
 
-  const handleExpandedClick = (dni) => {
-    regApi
-      .fetchByStudent(dni)
-      .then((r) => {
-        setRegs(r.values);
-        setSelected(dni);
-      })
-      .catch((err) => {
-        show(err.message, "error");
-      });
-  };
-
-  const handleGo = (reg, student) => {
-    cache.setItem(reg.code, student);
-    history.push(`/estudiante/${reg.section_code}/${reg.code}`);
-  };
-
   return (
     <React.Fragment>
       <Header
-        subtitle="Aqui estan tus estudiantes registrados"
+        subtitle={`Estas son tus areas de 
+        ${section_code.substr(-2)} de 
+        ${cycleTypes[section_code.substr(4, 3)]}`}
         title={dayname(user.name)}
         RightButton={null}
       />
-      {students.length ? (
+      {courses.length ? (
         <Grid container spacing={3}>
-          {students.map((item) => (
-            <Grid item key={item.dni}>
-              <StudentCard
-                student={item}
-                selected={selected}
-                regs={regs}
-                handleExpandedClick={() => handleExpandedClick(item.dni)}
-                handleGo={handleGo}
+          {courses.map((item) => (
+            <Grid item key={item.code}>
+              <CourseCard
+                teacher={item.teacher}
+                course={item.course}
+                code={item.code}
               />
             </Grid>
           ))}

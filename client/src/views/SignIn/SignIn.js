@@ -93,9 +93,9 @@ const SignIn = (props) => {
               <Typography color="textSecondary" gutterBottom>
                 Ingrese sus credenciales de autenticación para acceder
               </Typography>
-              <RadioGroup row name="type" defaultValue="apoderado">
+              <RadioGroup row name="type" defaultValue="estudiante">
                 <FormControlLabel
-                  value="apoderado"
+                  value="estudiante"
                   control={<Radio inputRef={register} />}
                   label="Estudiante"
                   labelPlacement="end"

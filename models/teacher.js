@@ -17,6 +17,12 @@ module.exports = function (sequelize, DataTypes) {
     password: {
       type: DataTypes.STRING,
     },
+    fullname: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        return [this.name, ", ", this.surname].join("");
+      },
+    },
   },
     {
       tableName: "teachers",

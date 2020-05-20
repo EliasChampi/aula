@@ -14,7 +14,7 @@ const request = axios.create({
 request.interceptors.request.use(
   (config) => {
     if (cache.hasThis("user")) {
-      config.headers["x-access-token"] = cache.getItem("user").accessToken;
+      config.headers["x-access-token"] = cache.getItem("user").token;
     }
     return config;
   },

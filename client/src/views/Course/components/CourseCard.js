@@ -24,9 +24,9 @@ const CourseCard = ({ course, handleAction }) => {
   return (
     <Card className={classes.card}>
       <CardMedia
-        height={120}
+        height={200}
         component="img"
-        image={`/images/cardbg1.svg`}
+        image="/images/cardbg1.svg"
         title="Curso"
         alt="Foto de Curso"
       />
@@ -41,13 +41,13 @@ const CourseCard = ({ course, handleAction }) => {
       <Divider />
       <CardActions>
         <Button
-          color="primary"
+          color="secondary"
           onClick={() => handleAction("/estudiantes", course)}
         >
           Estudiantes
         </Button>
         <Button
-          color="primary"
+          color="secondary"
           onClick={() => handleAction("/unidades", course)}
         >
           Unidades

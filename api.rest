@@ -2,8 +2,9 @@ POST http://localhost:5000/api/auth/signin HTTP/1.1
 content-type: application/json
 
 {
-    "dni": "77245403",
-    "password": "adminer"
+    "type": "estudiante",
+    "dni": "77384260",
+    "password": "carrion"
 }
 
 ###

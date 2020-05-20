@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import BathtubIcon from "@material-ui/icons/Bathtub";
+import EmojiNatureIcon from '@material-ui/icons/EmojiNature';
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
@@ -18,7 +18,7 @@ function Empty({ title }) {
   const classes = useStyles();
   return (
     <div className={classes.wrap}>
-      <BathtubIcon color="disabled" className={classes.icon} />
+      <EmojiNatureIcon color="disabled" className={classes.icon} />
       <Typography variant="subtitle2">{title}</Typography>
     </div>
   );

@@ -9,7 +9,6 @@ import {
   Button,
   FormControl,
   Select,
-  InputLabel,
   CardActions,
   List,
   ListItem,
@@ -27,7 +26,7 @@ import { Header, withCourses } from "components";
 import cache from "helpers/cache";
 const useStyles = makeStyles((theme) => ({
   margin: {
-    margin: theme.spacing(1),
+    marginTop: theme.spacing(1),
   },
 }));
 
@@ -37,7 +36,7 @@ const CreateUnit = ({ courses, history, match, show }) => {
   const [checked, setChecked] = useState([]);
   const { register, handleSubmit, errors, setValue } = useForm();
   const { code } = match.params;
-  
+
   const saveData = (data) => {
     if (title === "Crear") {
       return api.store(data);
@@ -100,7 +99,7 @@ const CreateUnit = ({ courses, history, match, show }) => {
         }
       />
       <Card>
-        <CardHeader title={`${title} una unidad`} />
+        <CardHeader title={`${title} una unidad`} subheader="Complete todos los campos antes de guardar"/>
         <Divider />
         <CardContent>
           <Grid container spacing={3}>
@@ -110,7 +109,7 @@ const CreateUnit = ({ courses, history, match, show }) => {
                 error={!!errors.name}
                 helperText={errors.name && errors.name.message}
                 label="Nombre de Unidad"
-                margin="dense"
+                variant="outlined"
                 name="name"
                 inputRef={register({
                   required: "Campo requerido",
@@ -120,12 +119,32 @@ const CreateUnit = ({ courses, history, match, show }) => {
                   },
                 })}
               />
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <FormControl fullWidth>
+                <Select
+                  native
+                  variant="outlined"
+                  inputRef={register}
+                  inputProps={{
+                    name: "trim",
+                    id: "trim",
+                  }}
+                  defaultValue="1ro"
+                >
+                  <option value="1ro">1er Trimestre</option>
+                  <option value="2do">2do Trimestre</option>
+                  <option value="3ro">3ro Trimestre</option>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
                 error={!!errors.description}
                 helperText={errors.description && errors.description.message}
                 label="Descripcion"
-                margin="dense"
+                variant="outlined"
                 name="description"
                 multiline
                 rows="3"
@@ -143,29 +162,11 @@ const CreateUnit = ({ courses, history, match, show }) => {
                 })}
               />
             </Grid>
-            <Grid item md={6} xs={12}>
-              <FormControl fullWidth className={classes.margin}>
-                <InputLabel htmlFor="trim">Trimestre</InputLabel>
-                <Select
-                  native
-                  inputRef={register}
-                  inputProps={{
-                    name: "trim",
-                    id: "trim",
-                  }}
-                  defaultValue="1ro"
-                >
-                  <option value="1ro">1er Trimestre</option>
-                  <option value="2do">2do Trimestre</option>
-                  <option value="3ro">3ro Trimestre</option>
-                </Select>
-              </FormControl>
-            </Grid>
           </Grid>
-          <Divider />
-          <Typography variant="subtitle1">
+          <Typography variant="subtitle1" className={classes.margin}>
             Seleccione las secciones que utilizarán esta unidad
           </Typography>
+          <Divider />
           <List>
             {courses.map((item) => {
               const labelId = `checkbox-list-label-${item.code}`;
@@ -188,9 +189,9 @@ const CreateUnit = ({ courses, history, match, show }) => {
                     id={labelId}
                     primary={`${
                       item.section.degree.cycle.branch.name
-                    }: ${item.section.code.substr(-2)} de ${
+                      }: ${item.section.code.substr(-2)} de ${
                       item.section.degree.cycle.title
-                    }`}
+                      }`}
                     secondary={item.course.name}
                   />
                 </ListItem>
@@ -201,7 +202,6 @@ const CreateUnit = ({ courses, history, match, show }) => {
         <CardActions>
           <Button
             color="secondary"
-            variant="contained"
             onClick={handleSubmit(onSubmitForm)}
           >
             Guardar Cambios

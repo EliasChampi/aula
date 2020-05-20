@@ -69,7 +69,7 @@ const Topbar = (props) => {
             onClick={handleMenuClick}
             startIcon={<AccountIcon />}
           >
-            {`${user.name} ${user.surname}`}
+            {`${user.fullname}`}
           </Button>
           <Menu
             id="simple-menu"

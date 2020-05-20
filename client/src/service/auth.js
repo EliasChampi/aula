@@ -7,9 +7,12 @@ class AuthService {
     return new Promise((resolve, reject) => {
       return request
         .post("/auth/signin", payload)
-        .then((response) => {
-          cache.setItem("user", response.data);
-          resolve(response.data);
+        .then((r) => {
+          const user = r.data.entity;
+          user.mode = r.data.mode;
+          user.token = r.data.accessToken;
+          cache.setItem("user", user);
+          resolve(user);
         })
         .catch((errMessage) => {
           reject(errMessage);

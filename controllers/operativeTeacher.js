@@ -5,6 +5,7 @@ const {
   Degree,
   Cycle,
   Branch,
+  Teacher,
 } = require("../models");
 const { year } = require("../config/utils");
 async function fetchByTeacher(req, res) {
@@ -51,6 +52,30 @@ async function fetchByTeacher(req, res) {
   }
 }
 
+async function fetchBySecction(req, res) {
+  try {
+    const values = await OperativeTeacher.findAll({
+      where: {
+        section_code: req.params.s_code,
+      },
+      include: [
+        {
+          model: Course,
+          as: "course",
+        },
+        {
+          model: Teacher,
+          as: "teacher",
+        },
+      ],
+    });
+    return res.status(200).json({ values });
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+}
+
 module.exports = {
   fetchByTeacher,
+  fetchBySecction,
 };
