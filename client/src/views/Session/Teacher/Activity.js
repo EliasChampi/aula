@@ -6,7 +6,7 @@ import {
   CreateDialog,
   Mytab,
   ActivityCard,
-} from "./components";
+} from "../components";
 
 import Operative from "views/Wrapper/Operative";
 import unitApi from "service/unit";

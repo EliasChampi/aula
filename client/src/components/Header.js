@@ -1,12 +1,14 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   mb: {
-    marginBottom: theme.spacing(2)
-  }
+    marginBottom: theme.spacing(2),
+  },
 }));
+
 const Header = ({ title, subtitle, RightButton }) => {
   const classes = useStyles();
   return (
@@ -23,10 +25,15 @@ const Header = ({ title, subtitle, RightButton }) => {
         </Typography>
         <Typography variant="h4">{subtitle}</Typography>
       </Grid>
-      <Grid item>
-        {RightButton}
-      </Grid>
+      <Grid item>{RightButton}</Grid>
     </Grid>
   );
 };
+
+Header.propTypes = {
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string.isRequired,
+  RightButton: PropTypes.object.isRequired
+};
+
 export default Header;

@@ -24,10 +24,10 @@ const Routes = () => {
         path="/estudiantes/:section_code/:op_code"
       />
       <ProtectedRoute
-        component={view.Pending}
+        component={view.ActivityS}
         exact
         isAuthed={isAuthed}
-        path="/estudiante/:section_code/:register_code"
+        path="/mis-actividades/:op_code"
       />
       <ProtectedRoute
         component={view.Unit}
@@ -42,7 +42,7 @@ const Routes = () => {
         path="/crear_unidad"
       />
       <ProtectedRoute
-        component={view.ByUnit}
+        component={view.ActivityT}
         exact
         isAuthed={isAuthed}
         path="/actividades/:section_code/:op_code/:code"
@@ -84,10 +84,16 @@ const Routes = () => {
         path="/acerca-de"
       />
       <PublicRoute
-        component={view.SignIn}
+        component={view.Login}
         exact
         isAuthed={isAuthed}
         path="/login"
+      />
+      <PublicRoute
+        component={view.Recover}
+        exact
+        isAuthed={isAuthed}
+        path="/recuperar"
       />
       <ProtectedRoute
         component={view.NotFound}

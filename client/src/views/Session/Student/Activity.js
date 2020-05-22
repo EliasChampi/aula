@@ -2,20 +2,20 @@ import React, { useState, useEffect, useContext } from "react";
 import { Button, Grid } from "@material-ui/core";
 
 import activityApi from "service/activity";
-import { Mytab, NewCard } from "./components";
+import { Mytab, NewCard } from "../components";
 import { ToastContext } from "context/toast";
 import Student from "views/Wrapper/Student";
 import { RevisedTable } from "views/Revised/components";
 import { Empty } from "components";
 import { cycleTypes } from "common/decorator.js";
-const Pending = ({ match, history }) => {
+const Activity = ({ match, history }) => {
   const {
-    params: { section_code, register_code },
+    params: { code },
   } = match;
   const [activities, setActivities] = useState([]);
   const { show } = useContext(ToastContext);
 
-  useEffect(() => {
+/*   useEffect(() => {
     let mounted = true;
     const fetchActivities = () => {
       activityApi
@@ -33,11 +33,11 @@ const Pending = ({ match, history }) => {
     return () => {
       mounted = false;
     };
-  }, [section_code]);
+  }, [section_code]); */
 
   const Priories = () =>
     activities.length ? (
-      <Grid container spacing={2}>
+      {/* <Grid container spacing={2}>
         {activities.map((item) => (
           <Grid item key={item.code}>
             <NewCard
@@ -50,7 +50,7 @@ const Pending = ({ match, history }) => {
             />
           </Grid>
         ))}
-      </Grid>
+      </Grid> */}
     ) : (
       <Empty title="No hay actividades por hoy" />
     );
@@ -58,9 +58,10 @@ const Pending = ({ match, history }) => {
   const Activities = () => <RevisedTable show={show} />;
 
   return (
-    <Student
+    <div>hola mundo</div>
+/*     <Student
       title="Actividades del Estudiante"
-      register_code={register_code}
+      register_code="MICODE"
       show={show}
       RightButton={
         <Button variant="contained" onClick={() => history.goBack()}>
@@ -69,16 +70,13 @@ const Pending = ({ match, history }) => {
       }
     >
       <Mytab
-        title={`Seleccionaste matrícula: 
-        ${section_code.substr(-2)} de 
-        ${cycleTypes[section_code.substr(4, 3)]}  
-        ${section_code.substr(0, 4)}`}
+        title={`Seleccionaste matrícula: `}
         subtitle="Se mostrarán actividades solo del año Seleccionado"
         Priories={Priories}
         Activities={Activities}
       />
-    </Student>
+    </Student> */
   );
 };
 
-export default Pending;
+export default Activity;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/styles";
@@ -12,6 +12,8 @@ import {
   Button,
   LinearProgress,
 } from "@material-ui/core";
+
+import { AuthContext } from "context/auth";
 import { IMAGE } from "constants/global";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +36,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Profile = ({ className, user, ...rest }) => {
+const Profile = ({ className, ...rest }) => {
+  const { user } = useContext(AuthContext);
   const classes = useStyles();
 
   return (

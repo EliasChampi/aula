@@ -19,6 +19,33 @@ class AuthService {
         });
     });
   }
+  // update password
+  updatePassword(payload) {
+    return new Promise((resolve, reject) => {
+      request
+        .put("/auth/update", payload)
+        .then((r) => {
+          resolve(r.data);
+        })
+        .catch((errMessage) => {
+          reject(errMessage);
+        });
+    });
+  }
+  // recover password
+  recoverPassword(payload) {
+    return new Promise((resolve, reject) => {
+      request
+        .put("/auth/recover", payload)
+        .then((r) => {
+          resolve(r.data);
+        })
+        .catch((errMessage) => {
+          reject(errMessage);
+        });
+    });
+  }
+
   // logout
   logout() {
     cache.cleanAll();

@@ -22,12 +22,11 @@ async function store(req, res) {
     const file = req.files.file;
     const data = JSON.parse(req.body.data);
 
- /*    const activity = Activity.findByPk(data.activity_code);
-
+/*     const activity = Activity.findByPk(data.activity_code);
     if(new Date(activity.to_date) > new Date()) {
 
-    } */
-
+    } 
+ */
     const r = await Response.create({
       register_code: data.register_code,
       activity_code: data.activity_code,

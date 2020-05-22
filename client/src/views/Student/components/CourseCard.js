@@ -11,14 +11,14 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   card: {
     maxWidth: "250px",
     margin: "auto",
   },
 }));
 
-function CourseCard({ code, teacher, course }) {
+function CourseCard({ item, onActivityClick }) {
   const classes = useStyles();
   return (
     <Card className={classes.card}>
@@ -30,21 +30,24 @@ function CourseCard({ code, teacher, course }) {
         alt="Foto de Curso"
       />
       <CardContent>
-        <Typography variant="h4">{course.name}</Typography>
-        <Typography variant="subtitle1">Docente: {teacher.fullname}</Typography>
+        <Typography variant="h4">{item.course.name}</Typography>
+        <Typography variant="subtitle1">
+          Docente: {item.teacher.fullname}
+        </Typography>
       </CardContent>
       <Divider />
       <CardActions>
-        <Button color="secondary">Actividades</Button>
+        <Button color="secondary" onClick={() => onActivityClick(item)}>
+          Actividades
+        </Button>
       </CardActions>
     </Card>
   );
 }
 
 CourseCard.propTypes = {
-  code: PropTypes.number.isRequired,
-  teacher: PropTypes.object.isRequired,
-  course: PropTypes.object.isRequired,
+  onActivityClick: PropTypes.func.isRequired,
+  item: PropTypes.object.isRequired,
 };
 
 export default CourseCard;

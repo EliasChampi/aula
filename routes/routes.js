@@ -11,8 +11,12 @@ const activity = require("../controllers/activity");
 const stu = require("../controllers/student");
 const res = require("../controllers/response");
 
-// routes
+// auth
 router.post("/auth/signin", auth.signin);
+router.put("/auth/update", auth.updatePassword);
+router.put("/auth/recover", auth.recoverPassword);
+
+// student
 router.get("/stus_by_family/:dni", verifyToken, stu.fetchByFamily);
 router.get("/stu_by_code/:r_code", verifyToken, stu.fetchByCode);
 
